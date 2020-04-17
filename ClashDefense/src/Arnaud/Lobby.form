@@ -159,7 +159,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text1 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox1.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text1=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text1=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);&#xa;}">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text1 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox1.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text1=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text1=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(jLabel1.getClass().getName()).log(Level.SEVERE, null, ex);&#xa;}">
           <Font name="Harrington" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -169,7 +169,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text2 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox2.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text2=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text2=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);&#xa;}">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text2 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox2.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text2=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text2=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(jLabel2.getClass().getName()).log(Level.SEVERE, null, ex);&#xa;}">
           <Font name="Harrington" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -179,7 +179,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text3 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox3.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text3=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text3=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);&#xa;}">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text3 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox3.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text3=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text3=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(jLabel3.getClass().getName()).log(Level.SEVERE, null, ex);&#xa;}">
           <Font name="Harrington" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -189,7 +189,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text4 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox4.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text4=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text4=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);&#xa;}">
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String text4 = &quot;&quot;;&#xa;try {&#xa;if (jCheckBox4.isSelected()){&#xa;    res = bdd.executeQuery(&quot;SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE R&#xf4;le=&apos;DefenseurRouge&apos;)&quot;);&#xa;    while (res.next()){&#xa;    text4=res.getString(1);&#xa;}&#xa;}&#xa;else{&#xa;    text4=&quot;Vide&quot;;&#xa;}&#xa;}&#xa;catch (SQLException ex) {&#xa;    Logger.getLogger(jLabel4.getClass().getName()).log(Level.SEVERE, null, ex);&#xa;}">
           <Font name="Harrington" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">

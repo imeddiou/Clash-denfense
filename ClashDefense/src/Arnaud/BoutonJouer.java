@@ -1,8 +1,8 @@
-package clashdefense;
+package Arnaud;
 
 
 import Model.Database;
-import clashdefense.JoueurDAO;
+import Arnaud.JoueurDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

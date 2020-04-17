@@ -1,8 +1,8 @@
-package clashdefense;
+package Arnaud;
 
 
 import Model.Database;
-import clashdefense.JoueurDAO;
+import Arnaud.JoueurDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -154,7 +154,7 @@ public class Lobby extends javax.swing.JFrame {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jLabel1.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel1.setText(text1);
 
@@ -172,7 +172,7 @@ public class Lobby extends javax.swing.JFrame {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jLabel2.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel2.setText(text2);
 
@@ -190,7 +190,7 @@ public class Lobby extends javax.swing.JFrame {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jLabel3.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel3.setText(text3);
 
@@ -208,7 +208,7 @@ public class Lobby extends javax.swing.JFrame {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(jLabel4.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel4.setText(text4);
 
@@ -292,8 +292,7 @@ public class Lobby extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:try {
-    
+        // TODO add your handling code here:try {    
     }//GEN-LAST:event_formWindowActivated
 
     /**
