@@ -1,4 +1,8 @@
+package clashdefense;
 
+
+import Model.Database;
+import clashdefense.JoueurDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -66,7 +70,7 @@ public class Lobby extends javax.swing.JFrame {
             }
         }
         catch (SQLException ex) {
-            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
         }
         initComponents();
         
