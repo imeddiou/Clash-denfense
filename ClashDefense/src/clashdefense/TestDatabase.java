@@ -1,4 +1,7 @@
+package clashdefense;
 
+
+import Model.Database;
 import Utils.OutilsJDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;

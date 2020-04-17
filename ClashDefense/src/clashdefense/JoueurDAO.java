@@ -1,9 +1,12 @@
+package clashdefense;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+import Model.Database;
 import com.mysql.cj.api.mysqla.result.Resultset;
 import java.sql.ResultSet;
 import java.sql.SQLException;

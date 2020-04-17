@@ -1,4 +1,8 @@
+package clashdefense;
 
+
+import Model.Database;
+import clashdefense.JoueurDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
