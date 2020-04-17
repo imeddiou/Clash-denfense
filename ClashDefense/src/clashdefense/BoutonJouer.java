@@ -104,7 +104,7 @@ public class BoutonJouer extends javax.swing.JFrame {
             while (res.next()) {
                 dernierIdJoueur = res.getInt(1)+1;
             }
-            bdd.executeQuery("INSERT INTO joueur VALUES (" + dernierIdJoueur + ",'" + jTextField1.getText() + "')"); //ajoute le joueur à la BDD
+            bdd.executeQuery("INSERT INTO joueur VALUES (" + dernierIdJoueur + ",'" + jTextField1.getText() + "')"); //ajoute le joueur à la BDD avec un Id différent de tous les autres
             JoueurDAO joueur = new JoueurDAO(dernierIdJoueur, jTextField1.getText());
             super.dispose(); //ferme la fenêtre BoutonJouer
             Lobby lobby = new Lobby();
