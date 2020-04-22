@@ -27,10 +27,13 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
     private Boolean attaquantBleuSelectionne=false ;
     private Boolean defenseurRougeSelectionne=false ;
     private Boolean defenseurBleuSelectionne=false ;
+    private Boolean aSelectionne = false;
     private Database bdd;
     private ResultSet res;
     private Timer timer;
-    private static final int delay = 500;
+    private static final int delay = 200;
+    private int compteur = 2;
+    private int affichage = 5;
     /**
      * Get the value of joueur
      *
@@ -53,6 +56,13 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
      * Creates new form Lobby
      */
     public Lobby() {
+        try {
+            this.bdd=new Database();
+            bdd.connect();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         initComponents();
         raffraichir();
         timer= new Timer(delay,this);
@@ -87,10 +97,11 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         jCheckBox2.setSelected(attaquantBleuSelectionne);
         jCheckBox3.setSelected(defenseurRougeSelectionne);
         jCheckBox4.setSelected(defenseurBleuSelectionne);
-        jCheckBox1.setEnabled(!attaquantRougeSelectionne);
-        jCheckBox2.setEnabled(!attaquantBleuSelectionne);
-        jCheckBox3.setEnabled(!defenseurRougeSelectionne);
-        jCheckBox2.setEnabled(!defenseurBleuSelectionne);
+        //depuis le try, sert à coché la case si le rôle est déjà séléctionner par quelqu'un d'autre
+        jCheckBox1.setEnabled(!attaquantRougeSelectionne&&!aSelectionne);
+        jCheckBox2.setEnabled(!attaquantBleuSelectionne&&!aSelectionne);
+        jCheckBox3.setEnabled(!defenseurRougeSelectionne&&!aSelectionne);
+        jCheckBox4.setEnabled(!defenseurBleuSelectionne&&!aSelectionne);
         String pseudo1 = "";
         String pseudo2 = "";
         String pseudo3 = "";
@@ -105,12 +116,8 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             else{
                 pseudo1="Vide";
             }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(jLabel1.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-        jLabel1.setText(pseudo1);
-        try {
+            jLabel1.setText(pseudo1);
+        
             if (jCheckBox2.isSelected()){
                 res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='AttaquantBleu')");
                 while (res.next()){
@@ -120,41 +127,31 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             else{
                 pseudo2="Vide";
             }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(jLabel2.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-        jLabel2.setText(pseudo2);
-        try {
+            jLabel2.setText(pseudo2);
             if (jCheckBox3.isSelected()){
-                res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurRouge')");
-                while (res.next()){
-                    pseudo3=res.getString(1);
+                    res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurRouge')");
+                    while (res.next()){
+                        pseudo3=res.getString(1);
+                    }
                 }
-            }
-            else{
-                pseudo3="Vide";
-            }
-        }
-        catch (SQLException ex) {
-            Logger.getLogger(jLabel3.getClass().getName()).log(Level.SEVERE, null, ex);
-        }
-        jLabel3.setText(pseudo3);
-        try {
+                else{
+                    pseudo3="Vide";
+                }
+            jLabel3.setText(pseudo3);
             if (jCheckBox4.isSelected()){
-                res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurBleu')");
-                while (res.next()){
-                    pseudo4=res.getString(1);
-                }
+                    res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurBleu')");
+                    while (res.next()){
+                        pseudo4=res.getString(1);
+                    }
             }
             else{
                 pseudo4="Vide";
             }
+            jLabel4.setText(pseudo4);
         }
         catch (SQLException ex) {
             Logger.getLogger(jLabel4.getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        jLabel4.setText(pseudo4);
     }
 
     /**
@@ -174,22 +171,16 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowActivated(java.awt.event.WindowEvent evt) {
-                formWindowActivated(evt);
-            }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
             }
         });
 
         jCheckBox1.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
-        jCheckBox1.setSelected(attaquantRougeSelectionne);
         jCheckBox1.setText("Attaquant Rouge");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,7 +189,6 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         });
 
         jCheckBox2.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
-        jCheckBox2.setSelected(attaquantBleuSelectionne);
         jCheckBox2.setText("Attaquant Bleu");
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -207,7 +197,6 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         });
 
         jCheckBox3.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
-        jCheckBox3.setSelected(defenseurRougeSelectionne);
         jCheckBox3.setText("Défenseur Rouge");
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,7 +205,6 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         });
 
         jCheckBox4.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
-        jCheckBox4.setSelected(defenseurBleuSelectionne);
         jCheckBox4.setText("Défenseur Bleu");
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,6 +284,10 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         }
         jLabel4.setText(text4);
 
+        jLabel5.setFont(new java.awt.Font("Harrington", 1, 48)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Préparation");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,31 +298,43 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(140, 140, 140))
+                        .addGap(140, 160, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jCheckBox2)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCheckBox3)
-                            .addComponent(jCheckBox4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jCheckBox3)
+                                .addGap(0, 10, Short.MAX_VALUE)))
+                        .addContainerGap(35, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCheckBox4)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox3))
-                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jCheckBox3)
+                        .addGap(11, 11, 11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jCheckBox1)
+                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -342,13 +346,10 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
-
-        jCheckBox1.setEnabled(!attaquantRougeSelectionne);
-        jCheckBox2.setEnabled(!jCheckBox2.isSelected());
-        jCheckBox3.setEnabled(!defenseurRougeSelectionne);
-        jCheckBox2.setEnabled(!jCheckBox2.isSelected());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -358,10 +359,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         bdd.executeQuery("UPDATE partie SET IdJoueur="+joueur.getId()+",Selectionné=1 WHERE Rôle='AttaquantRouge'");
         attaquantRougeSelectionne=true;
         jLabel1.setText(joueur.getPseudo());
-        jCheckBox1.setEnabled(false);
-        jCheckBox2.setEnabled(false);
-        jCheckBox3.setEnabled(false);
-        jCheckBox4.setEnabled(false);
+        aSelectionne=true;
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
@@ -369,10 +367,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         bdd.executeQuery("UPDATE partie SET IdJoueur="+joueur.getId()+",Selectionné=1 WHERE Rôle='AttaquantBleu'");
         attaquantBleuSelectionne=true;
         jLabel2.setText(joueur.getPseudo());
-        jCheckBox1.setEnabled(false);
-        jCheckBox2.setEnabled(false);
-        jCheckBox3.setEnabled(false);
-        jCheckBox4.setEnabled(false);
+        aSelectionne=true;
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
@@ -380,10 +375,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         bdd.executeQuery("UPDATE partie SET IdJoueur="+joueur.getId()+",Selectionné=1 WHERE Rôle='DefenseurRouge'");
         defenseurRougeSelectionne=true;
         jLabel3.setText(joueur.getPseudo());
-        jCheckBox1.setEnabled(false);
-        jCheckBox2.setEnabled(false);
-        jCheckBox3.setEnabled(false);
-        jCheckBox4.setEnabled(false);
+        aSelectionne=true;
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
@@ -391,28 +383,26 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         bdd.executeQuery("UPDATE partie SET IdJoueur="+joueur.getId()+",Selectionné=1 WHERE Rôle='DefenseurBleu'");
         defenseurBleuSelectionne=true;
         jLabel4.setText(joueur.getPseudo());
-        jCheckBox1.setEnabled(false);
-        jCheckBox2.setEnabled(false);
-        jCheckBox3.setEnabled(false);
-        jCheckBox4.setEnabled(false);
+        aSelectionne=true;
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         bdd.disconnect();
     }//GEN-LAST:event_formWindowClosing
-
-    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:try { 
-    }//GEN-LAST:event_formWindowActivated
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        // TODO add your handling code here:        
-    }//GEN-LAST:event_formWindowOpened
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        raffraichir();
+        raffraichir(); //pour vérifier à chaque delay si les rôle sont séléctionnés
+        if (attaquantBleuSelectionne&&attaquantRougeSelectionne&&defenseurBleuSelectionne&&defenseurRougeSelectionne){
+            compteur+=1;
+            affichage -= (int)(compteur/5);
+            jLabel5.setText("("+affichage+")"); //sert à lancer le décompte avant le début de partie
+        }
+        if (affichage==0){
+            super.dispose();
+        }
+        
     }
     /**
      * @param args the command line arguments
@@ -458,5 +448,6 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }
