@@ -30,7 +30,7 @@ public class TestEcouteur {
         JFrame fenetre = new JFrame();
         fenetre.setSize(500,400);
         fenetre.setVisible(true);
-        fenetre.addKeyListener(new EcouteurClavier(joueur1));
+        fenetre.addKeyListener(new EcouteurClavier(joueur1)); //essai
         //connexion.close();
     }
     }
