@@ -13,14 +13,14 @@ import java.util.ArrayList;
  */
 public class TestCreationDeChemin {
     public static void main(String[] args)throws Exception {
-        CreationChemin chemin = new CreationChemin(50,80);
+        CreationChemin chemin = new CreationChemin(10,14);
         ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
         
         for(int x=0;x<map.size();x++){
             for(int y=0;y<map.get(0).size();y++){
                 if (map.get(x).get(y)==1){
                     System.out.print(map.get(x).get(y));}
-                else{System.out.print(" ");}
+                else{System.out.print(".");}
             }
             System.out.println();
         }
