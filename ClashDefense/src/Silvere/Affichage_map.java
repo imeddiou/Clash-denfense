@@ -40,6 +40,7 @@ public class Affichage_map {
             ArrayList PosX = new ArrayList();
             ArrayList PosY = new ArrayList();
             ArrayList Eq = new ArrayList();
+            ArrayList Typetour = new ArrayList();
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
                 map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple)
@@ -69,16 +70,8 @@ public class Affichage_map {
                 PosY.add(PositionY);
                 String Equipe = resultat.getString("Equipe");
                 Eq.add(Equipe);
-                //double latitude = resultat.getDouble("latitude");
-                //double longitude = resultat.getDouble("longitude");
-                //System.out.println(pseudo + " = (" + latitude + "; " + longitude + ")");
-                
-                //System.out.println(Idtour + " à la position X "+ PositionX + " et la position Y " + PositionY);
-//                ArrayList Id = new ArrayList();
-//                ArrayList PosX = new ArrayList();
-//                ArrayList PosY = new ArrayList();
-
-            
+                String Description = resultat.getString("Description");
+                Typetour.add(Description);
             }
             requete.close();
             connexion.close();
@@ -107,7 +100,8 @@ public class Affichage_map {
                 }else{
                     Case.setBackground(Color.red);
                 }
-                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png");
+                
+                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png"); // test affichage de la tour
                  JLabel img = new JLabel(icon);
                  Case.add(img);
                  
