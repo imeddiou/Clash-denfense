@@ -14,7 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -37,10 +39,10 @@ public class Affichage_map {
             ArrayList Id = new ArrayList();
             ArrayList PosX = new ArrayList();
             ArrayList PosY = new ArrayList();
-//            ArrayList Eq = new ArrayList();
+            ArrayList Eq = new ArrayList();
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
-                map[i]=new int[20];             // définition d'une map de taille 20x20
+                map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple)
             }
             for (int i=0 ; i<map.length; i=i+1){
                 for (int j=0 ; j<map[i].length; j=j+1){
@@ -48,12 +50,12 @@ public class Affichage_map {
                 }
             }
             for (int i=0 ; i<map.length; i=i+1){
-                for (int j=4 ; j<8; j=j+1){
+                for (int j=5 ; j<8; j=j+1){
                     map[i][j]=-1;                   // définition d'un premier chemin
                 }
             }
             for (int i=0 ; i<map.length; i=i+1){
-                for (int j=12 ; j<16; j=j+1){
+                for (int j=12 ; j<15; j=j+1){
                     map[i][j]=-1;                   // définition d'un deuxième chemin
                 }
             }
@@ -65,8 +67,8 @@ public class Affichage_map {
                 PosX.add(PositionX);
                 int PositionY = resultat.getInt("PositionY");
                 PosY.add(PositionY);
-//                String Equipe = resultat.getString("Equipe");
-//                Eq.add(Equipe);
+                String Equipe = resultat.getString("Equipe");
+                Eq.add(Equipe);
                 //double latitude = resultat.getDouble("latitude");
                 //double longitude = resultat.getDouble("longitude");
                 //System.out.println(pseudo + " = (" + latitude + "; " + longitude + ")");
@@ -99,13 +101,15 @@ public class Affichage_map {
                 Color Sable = new Color(255,204,102);
                 Case.setBackground(Sable);
             }else if(map[Q][R]>0){                          // affichage des tours
-//                int k = Id.indexOf(i);
-//                if(Eq.get(k).equals("Bleue")){            //changer la couleur des tours en fonction de leur équipe
-//                    Case.setBackground(Color.BLUE);
-//                }else{
-//                    Case.setBackground(Color.red);
-//                }
-                 Case.setBackground(Color.GRAY);
+                int k = Id.indexOf(i);
+                if(Eq.get(k).equals("Bleue")){            //changer la couleur des tours en fonction de leur équipe
+                    Case.setBackground(Color.BLUE);
+                }else{
+                    Case.setBackground(Color.red);
+                }
+                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png");
+                 JLabel img = new JLabel(icon);
+                 Case.add(img);
             }
             pan.add(Case);
         }
