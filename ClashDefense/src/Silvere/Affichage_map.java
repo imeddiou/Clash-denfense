@@ -110,6 +110,7 @@ public class Affichage_map {
                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png");
                  JLabel img = new JLabel(icon);
                  Case.add(img);
+                 
             }
             pan.add(Case);
         }
