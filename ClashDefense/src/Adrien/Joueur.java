@@ -260,5 +260,35 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         else{
             return true;
         } //
-}    
+}
+
+    public double getPdV(){
+        double PdV=0.0;
+        try{
+            PreparedStatement requete = connexion.prepareStatement("SELECT PdV FROM équipe WHERE Couleur='"+this.dansQuelCampEstTIl()+"' ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                PdV=resultat.getDouble("PdV");
+                System.out.println(PdV);
+                }
+            requete.close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return PdV;
+    }
+    
+    public void setPdV(double differencePdV){
+        double PdVInit=this.getPdV();
+        try {
+            PreparedStatement requete = connexion.prepareStatement("UPDATE équipe SET PdV=? WHERE Couleur='"+this.dansQuelCampEstTIl()+"'");
+            requete.setDouble(1, PdVInit+differencePdV);
+            System.out.println(requete);
+            requete.executeUpdate();
+            requete.close();
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        
+    }
 }
