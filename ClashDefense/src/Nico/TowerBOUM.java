@@ -45,7 +45,7 @@ public class TowerBOUM { //IM : au lieu de creer une connexion à chaque fois, l
         ArrayList<Integer> listeAvancees = new ArrayList<Integer>();
         for (int i=1;i<=nombreDeMonstre;i++){
             int idMonstre=i;
-            MSDC2 monstre = new MSDC2(idMonstre);
+            MSDC3 monstre = new MSDC3(idMonstre);
             double[] coordonneesMonstre = monstre.getCoordonnees();  
             if (this.LeMonstreEstDansLeRayon(coordonneesMonstre)){
                 listeIdMonstre.add(idMonstre);
@@ -107,7 +107,7 @@ public class TowerBOUM { //IM : au lieu de creer une connexion à chaque fois, l
             this.Zone();
         }else{
             int idMonstre = this.idMonstreLePlusAvance();
-            MSDC2 monstre = new MSDC2(idMonstre);
+            MSDC3 monstre = new MSDC3(idMonstre);
             int vieDuMonstre = monstre.getVie();
             vieDuMonstre = vieDuMonstre-(int)degat;
             monstre.setVie(vieDuMonstre);
@@ -118,7 +118,7 @@ public class TowerBOUM { //IM : au lieu de creer une connexion à chaque fois, l
         int nombreDeMonstre = this.nombreDeMonstre();
         for (int i=1;i<=nombreDeMonstre;i++){
             int idMonstre=i;
-            MSDC2 monstre = new MSDC2(idMonstre);
+            MSDC3 monstre = new MSDC3(idMonstre);
             double[] coordonneesMonstre = monstre.getCoordonnees();  
             if (this.LeMonstreEstDansLeRayon(coordonneesMonstre)){
                 double Vitesse = monstre.getVitesse();
@@ -132,7 +132,7 @@ public class TowerBOUM { //IM : au lieu de creer une connexion à chaque fois, l
         int nombreDeMonstre = this.nombreDeMonstre();
         for (int i=1;i<=nombreDeMonstre;i++){
             int idMonstre=i;
-            MSDC2 monstre = new MSDC2(idMonstre);
+            MSDC3 monstre = new MSDC3(idMonstre);
             double[] coordonneesMonstre = monstre.getCoordonnees();  
             if (this.LeMonstreEstDansLeRayon(coordonneesMonstre)){
                 int vieDuMonstre = monstre.getVie();
