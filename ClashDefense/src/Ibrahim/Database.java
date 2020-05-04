@@ -1,32 +1,34 @@
+package Ibrahim;
+
+
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ClashDefense;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author fanny
+ * @author ibrahim
  */
 public class Database {
     private Connection cn;
     private Statement st; 
     
     public Database(){
-        // on met un contruteur vide comme on travaille avec une seule base de donnÃ©es
+        // on met un contruteur vide comme on travaille avec une seule base de données
     }
     public void connect() throws SQLException{
         cn = DriverManager.getConnection ("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC" , "clashdefense" , "WCvYk10DhJUNKsdX");
-        this.st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+         this.st = cn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
      private ResultSet executeQueryThrowsException(String query) throws SQLException {
         if (query.contains("INSERT") || query.contains("UPDATE") || query.contains("DELETE")) {
