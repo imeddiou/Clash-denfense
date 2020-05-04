@@ -101,6 +101,8 @@ public class Defenseur extends Joueur{
             return tour; //Commentaire question : comment gérer les catchs dans ce type de méthode
         }catch(SQLException ex){
             return tour; //Commentaire question : comment gérer les catchs dans ce type de méthode
+            // IM-reponse : ex.printStackTrace();
+ 
         }
     }
     
