@@ -5,6 +5,7 @@
  */
 package Fanny;
 
+import Ibrahim.Database;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;

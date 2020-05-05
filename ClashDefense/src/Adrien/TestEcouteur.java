@@ -23,15 +23,15 @@ public class TestEcouteur {
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         CarteTest carte1= new CarteTest(new int[]{20,20});
        carte1.creerUneCarteVierge();
-       int largeurChemin= 4;
+       int largeurChemin= 0;
        carte1.creerUnCheminDroitAuMilieu(largeurChemin);
-        Joueur joueur1= new Joueur(6, "JoueurDeTest",connexion, carte1);  // Doit y avoir un joueur avec l ID 6 dans la BDD partie
+        Joueur joueur1= new Joueur(2, "JoueurDeTest",connexion, carte1);  // Doit y avoir un joueur avec l ID 6 dans la BDD partie
         
         JFrame fenetre = new JFrame();
         fenetre.setSize(500,400);
         fenetre.setVisible(true);
-        fenetre.addKeyListener(new EcouteurClavier(joueur1));
-        connexion.close();
+        fenetre.addKeyListener(new EcouteurClavier(joueur1)); //essai
+        //connexion.close();
     }
     }
     

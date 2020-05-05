@@ -6,7 +6,7 @@ package Arnaud;
  * and open the template in the editor.
  */
 
-import Model.Database;
+import Ibrahim.Database;
 import com.mysql.cj.api.mysqla.result.Resultset;
 import java.sql.ResultSet;
 import java.sql.SQLException;

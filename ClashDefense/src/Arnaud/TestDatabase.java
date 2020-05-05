@@ -1,7 +1,7 @@
 package Arnaud;
 
 
-import Model.Database;
+import Ibrahim.Database;
 import Utils.OutilsJDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;

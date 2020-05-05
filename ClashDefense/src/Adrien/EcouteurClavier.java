@@ -37,7 +37,7 @@ public class EcouteurClavier implements KeyListener{
         joueur.deplacementEnHaut();    
         System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
         }
-        if (e.getKeyCode()==39){  // Bas
+        if (e.getKeyCode()==40){  // Bas
         joueur.deplacementEnBas();   
         System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
         }
@@ -48,10 +48,12 @@ public class EcouteurClavier implements KeyListener{
     public void keyTyped ( KeyEvent event ) {
         System . out . print (" un caractère a été frappé - ");
         System . out . println (" ’"+ event . getKeyChar () +" ’");
+        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
     }
     
     public void keyReleased ( KeyEvent event ) {
         System . out . println (" touche relachée : "+ event . getKeyCode () );
+        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
     }
     
 }
