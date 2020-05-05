@@ -1,5 +1,7 @@
 package Nico;
 
+import java.util.ArrayList;
+
 public class MSDC2 {
     private int pdv;
     private double vitesse;
@@ -31,40 +33,44 @@ public class MSDC2 {
         return false;
     }
     
-    public boolean TestChateau(int carte[][]){
+    public boolean TestChateau(ArrayList<ArrayList<Integer>> carte){
         double[] coordonnees=this.getCoordonnees();
         if ((int)coordonnees[0]==0){return true;}
         return false;
     }
     
-    public void Affichage(int carte[][]){
+    public void Affichage(ArrayList<ArrayList<Integer>> carte){
         double[] coordonnees=this.getCoordonnees();
         int i = (int)coordonnees[0];
         int j = (int)coordonnees[1];
-        for(int x=0;x<carte.length;x++){
-            for(int y=0;y<carte[0].length;y++){
+        for(int x=0;x<carte.size();x++){
+            for(int y=0;y<carte.get(0).size();y++){
                 if (i==x && j==y){System.out.print("B");}
-                else{System.out.print(carte[x][y]);}}
+                else{
+                    if(carte.get(x).get(y)==this.getChemin()){System.out.print(-this.getChemin());}
+                    else{System.out.print(".");}
+                }
+            }
             System.out.println();}
     System.out.println();        
     }
     
-    public boolean MurDevant(int carte[][], int vecteur[][]){
+    public boolean MurDevant(ArrayList<ArrayList<Integer>> carte, int vecteur[][]){
         double[] coordonnees=this.getCoordonnees();
         int direction=this.getDirection();
         int sens[] = vecteur[direction];
-        if (carte[(int)coordonnees[0]+sens[0]][(int)coordonnees[1]+sens[1]]!=this.getChemin()){return true;}
+        if (carte.get((int)coordonnees[0]+sens[0]).get((int)coordonnees[1]+sens[1])!=this.getChemin()){return true;}
         return false;
     }
-    public boolean FautIlAllerADroite(int carte[][], int vecteur[][]){
+    public boolean FautIlAllerADroite(ArrayList<ArrayList<Integer>> carte, int vecteur[][]){
         double[] coordonnees=this.getCoordonnees();
         int direction=this.getDirection();
         int[] sensDroite = vecteur[(direction+1)%4];
-        int testDroite=carte[(int)coordonnees[0]+sensDroite[0]][(int)coordonnees[1]+sensDroite[1]];
+        int testDroite=carte.get((int)coordonnees[0]+sensDroite[0]).get((int)coordonnees[1]+sensDroite[1]);
         if (testDroite==this.getChemin()){return true;}
         else{return false;}
     }
-    public int Avancer(int carte[][]){
+    public int Avancer(ArrayList<ArrayList<Integer>> carte){
         double[] coordonnees=this.getCoordonnees();
         int avancee=this.getAvancee();
         int direction=this.getDirection();

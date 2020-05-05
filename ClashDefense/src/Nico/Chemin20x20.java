@@ -16,6 +16,7 @@ public class Chemin20x20 {
     //limite gauche absisse incluse
     private int largeurdroitelimite = 8;
     //limite droite absisse incluse
+    //le i et j initiaux de l'autre équipe seront donc 0 et 15
     
     public Chemin20x20(){}
     
@@ -35,10 +36,10 @@ public class Chemin20x20 {
         //Les deux vecteurs HautBas et GaucheDroite
         int[] XY = {i,j};
         //Vecteurs de position du curseur de création du chemin central
-        map.get(XY[0]).set(XY[1],1);
+        map.get(XY[0]).set(XY[1],-1);
         //On implémente 1 pour le chemin central
-        map.get(XY[0]).set(XY[1]-1,2);
-        map.get(XY[0]).set(XY[1]+1,2);
+        map.get(XY[0]).set(XY[1]-1,-2);
+        map.get(XY[0]).set(XY[1]+1,-2);
         //Et 2 pour ses deux chemins adjacents 
         int moyenne = -3;
         int longueurDesSegments = 4;
@@ -64,9 +65,9 @@ public class Chemin20x20 {
                     XY[0]=XY[0]+HB[direction];
                     XY[1]=XY[1]+GD[direction];
                     //ALors on met à jour les coordonnées du curseur
-                    map.get(XY[0]).set(XY[1],1);
-                    map.get(XY[0]+GD[direction]).set(XY[1]+HB[direction],2);
-                    map.get(XY[0]-GD[direction]).set(XY[1]-HB[direction],2);
+                    map.get(XY[0]).set(XY[1],-1);
+                    map.get(XY[0]+GD[direction]).set(XY[1]+HB[direction],-2);
+                    map.get(XY[0]-GD[direction]).set(XY[1]-HB[direction],-2);
                     //Et on implémente le chemin central et les chemins adjacents dans la map
                     min++;
                     //La proba de tourner au prochain tour augmente alors d'un cran
@@ -93,15 +94,15 @@ public class Chemin20x20 {
                         while(ordonneePrecedente-XY[0]<4){
                             //Donc si le virage est trop serré on le "desserre" assez
                             XY[0]=XY[0]-1;
-                            map.get(XY[0]).set(XY[1],1);
-                            map.get(XY[0]).set(XY[1]-1,2);
-                            map.get(XY[0]).set(XY[1]+1,2);
+                            map.get(XY[0]).set(XY[1],-1);
+                            map.get(XY[0]).set(XY[1]-1,-2);
+                            map.get(XY[0]).set(XY[1]+1,-2);
                             //Tout en implémentant les chemins adjacents
                         }
                     }
-                    map.get(XY[0]-1).set(XY[1]-GD[direction],2);
-                    map.get(XY[0]-1).set(XY[1],2);
-                    map.get(XY[0]).set(XY[1]-GD[direction],2);
+                    map.get(XY[0]-1).set(XY[1]-GD[direction],-2);
+                    //map.get(XY[0]-1).set(XY[1],-2);
+                    map.get(XY[0]).set(XY[1]-GD[direction],-2);
                     //On implémente le chemin adjacent dans la coin externe au tournant
                     min = moyenne;
                     //On repart sur une proba calculée de rester dans cette position ou de tourner
@@ -111,9 +112,9 @@ public class Chemin20x20 {
                     //Et on retient l'ordonnée à cet endroit là pour savoir où on en est
                 }else{
                     //Et si la direction était sur la droite ou sur la gauche
-                    map.get(XY[0]+1).set(XY[1]+GD[direction],2);
-                    map.get(XY[0]+1).set(XY[1],2);
-                    map.get(XY[0]).set(XY[1]+GD[direction],2);
+                    map.get(XY[0]+1).set(XY[1]+GD[direction],-2);
+                    //map.get(XY[0]+1).set(XY[1],-2);
+                    map.get(XY[0]).set(XY[1]+GD[direction],-2);
                     //On implémente le chemin adjacent dans la coin externe au tournant
                     direction = 0;
                     //On se remet droit
@@ -122,30 +123,30 @@ public class Chemin20x20 {
                 }
             }
         }
-        map.get(1).set(Math.min(j,XY[1])-1,2);
-        map.get(2).set(Math.min(j,XY[1])-1,2);
-        map.get(3).set(Math.min(j,XY[1])-1,2);
-        map.get(1).set(Math.max(j,XY[1])+1,2);
-        map.get(2).set(Math.max(j,XY[1])+1,2);
-        map.get(3).set(Math.max(j,XY[1])+1,2);
+        map.get(1).set(Math.min(j,XY[1])-1,-2);
+        map.get(2).set(Math.min(j,XY[1])-1,-2);
+        map.get(3).set(Math.min(j,XY[1])-1,-2);
+        map.get(1).set(Math.max(j,XY[1])+1,-2);
+        map.get(2).set(Math.max(j,XY[1])+1,-2);
+        map.get(3).set(Math.max(j,XY[1])+1,-2);
         for (int k=Math.min(j,XY[1]);k<=Math.max(j,XY[1]);k++){
-            map.get(2).set(k,1);
-            map.get(1).set(k,2);
-            map.get(3).set(k,2);
+            map.get(2).set(k,-1);
+            map.get(1).set(k,-2);
+            map.get(3).set(k,-2);
         }
-        map.get(0).set(j,1);
-        map.get(1).set(j,1);
-        map.get(2).set(j,1);
-        map.get(0).set(j-1,2);
-        map.get(0).set(j+1,2);
-        map.get(1).set(j-1,2);
-        map.get(1).set(j+1,2);
-        map.get(3).set(XY[1],1);
-        map.get(4).set(XY[1],1);
-        map.get(3).set(XY[1]-1,2);
-        map.get(3).set(XY[1]+1,2);
-        map.get(4).set(XY[1]-1,2);
-        map.get(4).set(XY[1]+1,2);
+        map.get(0).set(j,-1);
+        map.get(1).set(j,-1);
+        map.get(2).set(j,-1);
+        map.get(0).set(j-1,-2);
+        map.get(0).set(j+1,-2);
+        map.get(1).set(j-1,-2);
+        map.get(1).set(j+1,-2);
+        map.get(3).set(XY[1],-1);
+        map.get(4).set(XY[1],-1);
+        map.get(3).set(XY[1]-1,-2);
+        map.get(3).set(XY[1]+1,-2);
+        map.get(4).set(XY[1]-1,-2);
+        map.get(4).set(XY[1]+1,-2);
         //On insère les chemins pour que l'arrivée soit en coordonnees [0,j]
         this.Symetrie(map);
         //On symétrise la map

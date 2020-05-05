@@ -10,7 +10,7 @@ public class TestChemin20x20 {
         for(int x=0;x<map.size();x++){
             for(int y=0;y<map.get(0).size();y++){
                 if (map.get(x).get(y)!=0){
-                    System.out.print(map.get(x).get(y));}
+                    System.out.print(-map.get(x).get(y));}
                 else{System.out.print(".");}
             }
             System.out.println();

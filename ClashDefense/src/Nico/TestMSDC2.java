@@ -20,8 +20,8 @@ public class TestMSDC2 {
         MSDC2 monstre = new MSDC2(vie,vitesse,atk,direction,avancee,chemin,coordonnees);
         int valeurTest=3;
         while (valeurTest==3){
-            monstre.Affichage(carte);
-            valeurTest=monstre.Avancer(carte);
+            //monstre.Affichage(carte);
+            //valeurTest=monstre.Avancer(carte);
         }
         if(valeurTest==1){System.out.println("Le monstre est mort");}
         if(valeurTest==2){System.out.println("Le monstre a atteint le château et lui a retiré "+monstre.getAtk()+" points de vie");}
