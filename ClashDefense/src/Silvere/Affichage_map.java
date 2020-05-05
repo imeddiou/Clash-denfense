@@ -64,7 +64,7 @@ public class Affichage_map {
                     map[i][j]=-1;                   // définition d'un deuxième chemin
                 }
             }
-           
+           // début programme d'affichage de la carte et des éléments
             while (resultat.next()) {
                 int Idtour = resultat.getInt("Idtour");
                 Id.add(Idtour);
@@ -112,9 +112,7 @@ public class Affichage_map {
                   ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
                   JLabel img = new JLabel(icon);
                   Case.add(img);
-                }
-
-                 
+                }        
                  
             }
             pan.add(Case);
