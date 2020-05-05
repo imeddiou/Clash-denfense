@@ -6,13 +6,17 @@
 package Silvere;
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -34,7 +38,7 @@ public class Affichage_map {
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Idtour, PositionX, PositionY FROM tour;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour;");
             ResultSet resultat = requete.executeQuery();
             ArrayList Id = new ArrayList();
             ArrayList PosX = new ArrayList();
@@ -43,7 +47,7 @@ public class Affichage_map {
             ArrayList Typetour = new ArrayList();
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
-                map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple)
+                map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple) à récupérer du code de Nico
             }
             for (int i=0 ; i<map.length; i=i+1){
                 for (int j=0 ; j<map[i].length; j=j+1){
@@ -79,7 +83,7 @@ public class Affichage_map {
             map[(int)PosX.get(i)][(int)PosY.get(i)]=(int)Id.get(i) ;    // On place les tours à leurs positions
         
         }
-        JFrame fenetre = new JFrame();                                  //création de la map
+        JFrame fenetre = new JFrame();  //création de la map
         JPanel pan = new JPanel (new GridLayout (20,20));
         Border blackline = BorderFactory.createLineBorder(Color.black,1);
         for(int i = 0; i<400;i++){
@@ -94,16 +98,23 @@ public class Affichage_map {
                 Color Sable = new Color(255,204,102);
                 Case.setBackground(Sable);
             }else if(map[Q][R]>0){                          // affichage des tours
-                int k = Id.indexOf(i);
-                if(Eq.get(k).equals("Bleue")){            //changer la couleur des tours en fonction de leur équipe
+                int k = Id.indexOf(map[Q][R]);
+                if(Eq.get(k).equals("Bleue")){            //changer la couleur des tours en fonction de leurs équipes
                     Case.setBackground(Color.BLUE);
                 }else{
                     Case.setBackground(Color.red);
                 }
-                
-                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png"); // test affichage de la tour
-                 JLabel img = new JLabel(icon);
-                 Case.add(img);
+                if(Typetour.get(k).equals("tourClassique")){// identifier les types de tours
+                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                  JLabel img = new JLabel(icon);
+                  Case.add(img);  
+                }else if(Typetour.get(k).equals("tour3")){
+                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                  JLabel img = new JLabel(icon);
+                  Case.add(img);
+                }
+
+                 
                  
             }
             pan.add(Case);
