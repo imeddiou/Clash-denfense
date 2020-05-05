@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -418,7 +420,7 @@ public class Monstre {
    public String getEquipe(){
        String equipe=new String ("Blanc");
        try{
-            PreparedStatement requete = connexion.prepareStatement("SELECT Equipe FROM Monstre WHERE IdMonstre=1 ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Equipe FROM Monstre WHERE IdMonstre="+this.idMonstre+" ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 equipe=resultat.getString("Equipe");
@@ -430,24 +432,71 @@ public class Monstre {
        return equipe;
    }
    
-   public boolean lEquipeEstReconnue(){
-       boolean reponse=true;
-       if (this.getEquipe()=="Blanc"){
-           reponse=false;
+   public boolean lEquipeEstTElleReconnue(){
+       if (this.getEquipe().equals("Blanc")){
+           return false;
        }
-       return reponse;
+       return true;
    }
    
    public String getEquipeAdverse(){
-       return "bleue";
+       if (this.getEquipe().equals("Bleue")){
+        return "Rouge";
+        }
+       if (this.getEquipe().equals("Rouge")){
+            return "Bleue";
+       }
+       return "Blanc";
+   }
+   
+   public void AfficherCatactérisiqueMonstre() throws Exception{
+       System.out.println("Id : "+this.idMonstre);
+       System.out.println("Coordonnées : "+this.getCoordonnees());
+       System.out.println("Attaque : "+this.getAtk());
+       System.out.println("Avancée : "+this.getAvancee());
+       System.out.println("Direction : "+this.getDirection());
+       System.out.println("Equipe : "+this.getEquipe());
+       System.out.println("Taille : "+this.getTaille());
+       System.out.println("Vie : "+this.getVie());
+       System.out.println("Vitesse : "+ this.getVitesse());
+       System.out.println("Vie equipe adverse : "+this.getVieEquipeAdverse());
+       
    }
    
    public double getVieEquipeAdverse(){
-       return 0.0;
+       double PdV=0.0;
+        try{
+            PreparedStatement requete = connexion.prepareStatement("SELECT PdV FROM équipe WHERE Couleur='"+this.getEquipeAdverse()+"' ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                PdV=resultat.getDouble("PdV");
+                }
+            requete.close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return PdV;
    }
    
-   public void setVieAdverse(){
-       
+   public void setVieAdversaire(double differencePdV){
+       double vieAdversaireInit=this.getVieEquipeAdverse();
+        try {
+            PreparedStatement requete = connexion.prepareStatement("UPDATE équipe SET PdV=? WHERE Couleur='"+this.getEquipeAdverse()+"'");
+            requete.setDouble(1, vieAdversaireInit+differencePdV);
+            System.out.println(requete);
+            requete.executeUpdate();
+            requete.close();
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+   }
+   // get Atk deffectueu
+   public void attaqueChateau(double attaque){   // A terme il faut récupérer l'attauqe dans la BDD
+       try{
+       this.setVieAdversaire(-1.0*attaque);
+       } catch (Exception ex) {
+            Logger.getLogger(Monstre.class.getName()).log(Level.SEVERE, null, ex);
+        }
    }
    
    
