@@ -12,7 +12,7 @@ public class Chemin20x20 {
     //ordonnee initiale du chemin
     private int j = 4;
     //absisse initiale du chemin
-    private int largeurgauchelimite = 0;
+    private int largeurgauchelimite = 1;
     //limite gauche absisse incluse
     private int largeurdroitelimite = 8;
     //limite droite absisse incluse
@@ -101,7 +101,7 @@ public class Chemin20x20 {
                         }
                     }
                     map.get(XY[0]-1).set(XY[1]-GD[direction],-2);
-                    //map.get(XY[0]-1).set(XY[1],-2);
+                    map.get(XY[0]-1).set(XY[1],-2);
                     map.get(XY[0]).set(XY[1]-GD[direction],-2);
                     //On implémente le chemin adjacent dans la coin externe au tournant
                     min = moyenne;
@@ -113,7 +113,7 @@ public class Chemin20x20 {
                 }else{
                     //Et si la direction était sur la droite ou sur la gauche
                     map.get(XY[0]+1).set(XY[1]+GD[direction],-2);
-                    //map.get(XY[0]+1).set(XY[1],-2);
+                    map.get(XY[0]+1).set(XY[1],-2);
                     map.get(XY[0]).set(XY[1]+GD[direction],-2);
                     //On implémente le chemin adjacent dans la coin externe au tournant
                     direction = 0;
