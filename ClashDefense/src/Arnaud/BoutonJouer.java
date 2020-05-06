@@ -1,6 +1,5 @@
 package Arnaud;
 
-
 import Ibrahim.Database;
 import Ibrahim.JoueurDAO;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Arnaud
@@ -21,19 +19,19 @@ import java.util.logging.Logger;
 public class BoutonJouer extends javax.swing.JFrame {
 
     private Database bdd;
+
     /**
      * Creates new form Interface
      */
     public BoutonJouer() {
         initComponents();
         try {
-            this.bdd=new Database();
+            this.bdd = new Database();
             bdd.connect();
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -95,10 +93,10 @@ public class BoutonJouer extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int dernierIdJoueur = 0;
-            
+
             ResultSet res = bdd.executeQuery("SELECT MAX(IdJoueur) FROM joueur");
             while (res.next()) {
-                dernierIdJoueur = res.getInt(1)+1;
+                dernierIdJoueur = res.getInt(1) + 1;
             }
             bdd.executeQuery("INSERT INTO joueur VALUES (" + dernierIdJoueur + ",'" + jTextField1.getText() + "')"); //ajoute le joueur à la BDD avec un Id différent de tous les autres
             JoueurDAO joueur = new JoueurDAO(dernierIdJoueur, jTextField1.getText());
@@ -109,8 +107,8 @@ public class BoutonJouer extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
