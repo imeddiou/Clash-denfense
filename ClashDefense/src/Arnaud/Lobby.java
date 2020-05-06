@@ -316,7 +316,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         getContentPane().add(jLabel6);
         jLabel6.setBounds(0, 0, 0, 0);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Arnaud/background_joueur.jpg"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/background_joueur.jpg"))); // NOI18N
         jLabel7.setToolTipText("");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(-10, 0, 670, 300);
