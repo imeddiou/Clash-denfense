@@ -1,6 +1,7 @@
 package Arnaud;
 
 
+import Ibrahim.JoueurDAO;
 import Ibrahim.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
