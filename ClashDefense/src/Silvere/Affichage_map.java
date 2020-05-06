@@ -134,11 +134,15 @@ public class Affichage_map {
                   ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
                   JLabel img = new JLabel(icon);
                   Case.add(img);  
-                }else if(Typetour.get(k).equals("tour3")){
+                }else if(Typetour.get(k).equals("tourIncendiaire")){
                   ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
                   JLabel img = new JLabel(icon);
                   Case.add(img);
-                }        
+                }else if(Typetour.get(k).equals("tourPrécise")){
+                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                  JLabel img = new JLabel(icon);
+                  Case.add(img);
+                }
                  
             }else if(map[Q][R]==-3){    //affichage du défenseur rouge
                 Case.setBackground(Color.red);
@@ -166,8 +170,18 @@ public class Affichage_map {
        
     
         for(int i=0; i<IdM.size(); i=i+1){  //affichage des monstres
-            if(TypeMonstre.get(i).equals("test")){
+            if(TypeMonstre.get(i).equals("gobelin")){
                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\gobelin.png");
+                JLabel img = new JLabel(icon);
+                img.setBounds(300, 100, 42, 32);
+                fenetre.add(img);
+            }else if(TypeMonstre.get(i).equals("giant")){
+                ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\giant.png");
+                JLabel img = new JLabel(icon);
+                img.setBounds(300, 100, 42, 32);
+                fenetre.add(img);
+            }else if(TypeMonstre.get(i).equals("knight")){
+                ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\knight.png");
                 JLabel img = new JLabel(icon);
                 img.setBounds(300, 100, 42, 32);
                 fenetre.add(img);
