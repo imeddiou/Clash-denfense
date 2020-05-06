@@ -86,7 +86,7 @@ public class BoutonJouer extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/background_joueur.jpg"))); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(-30, -60, 590, 530);
+        jLabel2.setBounds(-10, -50, 590, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
