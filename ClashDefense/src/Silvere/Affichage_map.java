@@ -96,7 +96,7 @@ public class Affichage_map {
                 Double PositionXM = resultat2.getDouble("PositionX");
                 PosXM.add(PositionXM);
                 Double PositionYM = resultat2.getDouble("PositionY");
-                PosXM.add(PositionYM);
+                PosYM.add(PositionYM);
                 String EquipeM = resultat2.getString("Equipe");
                 EqM.add(EquipeM);
                 String DescriptionM =resultat2.getString("Description");
@@ -173,17 +173,23 @@ public class Affichage_map {
             if(TypeMonstre.get(i).equals("gobelin")){
                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\gobelin.png");
                 JLabel img = new JLabel(icon);
-                img.setBounds(300, 100, 42, 32);
+                int x = (int) Math.floor((double) PosXM.get(i));
+                int y = (int) Math.floor((double) PosYM.get(i));
+                img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
             }else if(TypeMonstre.get(i).equals("giant")){
                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\giant.png");
                 JLabel img = new JLabel(icon);
-                img.setBounds(300, 100, 42, 32);
+                int x = (int) Math.floor((double) PosXM.get(i));
+                int y = (int) Math.floor((double) PosYM.get(i));
+                img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
             }else if(TypeMonstre.get(i).equals("knight")){
                 ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\knight.png");
                 JLabel img = new JLabel(icon);
-                img.setBounds(300, 100, 42, 32);
+                int x = (int) Math.floor((double) PosXM.get(i));
+                int y = (int) Math.floor((double) PosYM.get(i));
+                img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
             }
             
