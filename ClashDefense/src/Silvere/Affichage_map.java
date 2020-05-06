@@ -88,6 +88,8 @@ public class Affichage_map {
                 Eq.add(Equipe);
                 String Description = resultat.getString("Description");
                 Typetour.add(Description);
+            }
+//            While(resultat2.next()){
 //                int IdMonstre = resultat2.getInt("IdMonstre");
 //                IdM.add(IdMonstre);
 //                Double PositionXM = resultat2.getDouble(PositionX);
@@ -98,7 +100,8 @@ public class Affichage_map {
 //                EqM.add(EquipeM);
 //                String DescriptionM =resultat2.getString(Description);
 //                TypeMonstre.add(DescriptionM);
-            }
+//        }
+            
             requete.close();
             connexion.close();
         for(int i=0;i<Id.size();i=i+1){
