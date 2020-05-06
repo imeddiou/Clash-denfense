@@ -5,6 +5,13 @@
  */
 package Fanny;
 
+import Ibrahim.Database;
+import Utils.OutilsJDBC;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author ibrahim
@@ -16,6 +23,21 @@ public class TestJoueurRequete {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        Database baseDeDonnées = new Database();
+        try {
+            
+            baseDeDonnées.connect();      
+            JoueurRequête joueurrequête = new JoueurRequête();
+            joueurrequête.joueurRequêteInsertion(baseDeDonnées, "Fanny");
+            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM joueur");
+            OutilsJDBC.afficherResultSet(resultat);
+            baseDeDonnées.disconnect();             
+            } catch (SQLException ex) {
+            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        
     }
     
-}
+
