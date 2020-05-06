@@ -22,7 +22,7 @@ public class EquipeRequête {
     
     
     
-    public void équipeRequêteModificationIdJoueur(int idJoueur){
+    public void équipeRequêteModificationIdJoueur(int idJoueur){//IM : ajouter baseDedonnées.connect() avant la requete
         try {
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Rôle FROM partie WHERE IdJoueur = 'idjoueur'");
             if (resultat0.getString("Rôle").contains("bleu")){
