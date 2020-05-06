@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import Nico.Chemin20x20;
 
 /**
  *
@@ -58,21 +59,23 @@ public class Affichage_map {
             for (int i=0 ; i<map.length; i=i+1){
                 map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple) à récupérer du code de Nico
             }
+            Chemin20x20 chemin = new Chemin20x20();
+            ArrayList<ArrayList<Integer>> map2 = chemin.CreationMap();
             for (int i=0 ; i<map.length; i=i+1){
                 for (int j=0 ; j<map[i].length; j=j+1){
-                    map[i][j]=0;
+                    map[i][j]=map2.get(i).get(j);
                 }
             }
-            for (int i=0 ; i<map.length; i=i+1){
-                for (int j=5 ; j<8; j=j+1){
-                    map[i][j]=-1;                   // définition d'un premier chemin
-                }
-            }
-            for (int i=0 ; i<map.length; i=i+1){
-                for (int j=12 ; j<15; j=j+1){
-                    map[i][j]=-1;                   // définition d'un deuxième chemin
-                }
-            }
+//            for (int i=0 ; i<map.length; i=i+1){
+//                for (int j=5 ; j<8; j=j+1){
+//                    map[i][j]=-1;                   // définition d'un premier chemin
+//                }
+//            }
+//            for (int i=0 ; i<map.length; i=i+1){
+//                for (int j=12 ; j<15; j=j+1){
+//                    map[i][j]=-1;                   // définition d'un deuxième chemin
+//                }
+//            }
             map[17][9]=-3; // position des defenseur et attaquant pour test
             map[12][17]=-4;
             map[5][18]=-5;
@@ -120,7 +123,7 @@ public class Affichage_map {
             if(map[Q][R]==0){                              // zone de construction des tours
                 Color Brown = new Color(51,0,0); 
                 Case.setBackground(Brown);
-            }else if(map[Q][R]==-1){                        // chemins
+            }else if(map[Q][R]==-1||map[Q][R]==-2){                        // chemins
                 Color Sable = new Color(255,204,102);
                 Case.setBackground(Sable);
             }else if(map[Q][R]>0){                          // affichage des tours
