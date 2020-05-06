@@ -6,6 +6,7 @@
 package Silvere;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -39,12 +40,19 @@ public class Affichage_map {
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
             PreparedStatement requete = connexion.prepareStatement("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour;");
+            PreparedStatement requete2 = connexion.prepareStatement("SELECT IdMonstre, PositionX, PositionY, Equipe, Description FROM monstre;");
             ResultSet resultat = requete.executeQuery();
+            ResultSet resultat2 = requete2.executeQuery();
             ArrayList Id = new ArrayList();
             ArrayList PosX = new ArrayList();
             ArrayList PosY = new ArrayList();
             ArrayList Eq = new ArrayList();
             ArrayList Typetour = new ArrayList();
+            ArrayList IdM = new ArrayList();
+            ArrayList PosXM = new ArrayList();
+            ArrayList PosYM = new ArrayList();
+            ArrayList EqM = new ArrayList();
+            ArrayList TypeMonstre = new ArrayList();
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
                 map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple) à récupérer du code de Nico
@@ -64,6 +72,10 @@ public class Affichage_map {
                     map[i][j]=-1;                   // définition d'un deuxième chemin
                 }
             }
+            map[17][9]=-3;
+            map[12][17]=-4;
+            map[5][18]=-5;
+            map[8][3]=-6;
            // début programme d'affichage de la carte et des éléments
             while (resultat.next()) {
                 int Idtour = resultat.getInt("Idtour");
@@ -76,6 +88,16 @@ public class Affichage_map {
                 Eq.add(Equipe);
                 String Description = resultat.getString("Description");
                 Typetour.add(Description);
+                int IdMonstre = resultat2.getInt("IdMonstre");
+                IdM.add(IdMonstre);
+                Double PositionXM = resultat2.getDouble(PositionX);
+                PosXM.add(PositionXM);
+                Double PositionYM = resultat2.getDouble(PositionY);
+                PosXM.add(PositionYM);
+                String EquipeM = resultat2.getString(Equipe);
+                EqM.add(EquipeM);
+                String DescriptionM =resultat2.getString(Description);
+                TypeMonstre.add(DescriptionM);
             }
             requete.close();
             connexion.close();
@@ -114,13 +136,43 @@ public class Affichage_map {
                   Case.add(img);
                 }        
                  
+            }else if(map[Q][R]==-3){    //affichage du défenseur rouge
+                Case.setBackground(Color.red);
+                Case.setLayout(new FlowLayout());
+                JLabel Drouge = new JLabel("D");
+                Case.add(Drouge);
+            }else if(map[Q][R]==-4){     // affichage de l'attaquant rouge
+                Case.setBackground(Color.red);
+                Case.setLayout(new FlowLayout());
+                JLabel Drouge = new JLabel("A");
+                Case.add(Drouge);
+            }else if(map[Q][R]==-5){     // affichage du défenseur bleu
+                Case.setBackground(Color.BLUE);
+                Case.setLayout(new FlowLayout());
+                JLabel Drouge = new JLabel("D");
+                Case.add(Drouge);
+            }else if(map[Q][R]==-6){     // affichage de l'attaquant bleu
+                Case.setBackground(Color.BLUE);
+                Case.setLayout(new FlowLayout());
+                JLabel Drouge = new JLabel("A");
+                Case.add(Drouge);
             }
             pan.add(Case);
         }
+       
         pan.setBorder(blackline);
         fenetre.add(pan);
         fenetre.setVisible(true);
         fenetre.setSize(850,650);
+        for(int i=0; i<IdM.size(); i=i+1){  //affichage des monstres
+            if(TypeMonstre.get(i).equals("test")){
+                ImageIcon icon = new ImageIcon("");
+                JLabel img = new JLabel(icon);
+                img.setBounds(300, 100, 42, 32);
+                fenetre.add(img);
+            }
+            
+        }
 //        for (int i = 0; i<map.length; i=i+1){
 //            for (int j = 0; j<map[j].length; j=j+1)
 //            System.out.println(map[i][j]);
