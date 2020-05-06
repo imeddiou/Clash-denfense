@@ -72,8 +72,6 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
     
     public void raffraichir(){
         try{        
-                this.bdd=new Database();
-                bdd.connect();
                 res = bdd.executeQuery("SELECT Selectionné FROM partie WHERE Rôle='AttaquantRouge'");
                 while (res.next()) {
                     attaquantRougeSelectionne = res.getBoolean(1);
@@ -130,20 +128,20 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             }
             jLabel2.setText(pseudo2);
             if (jCheckBox3.isSelected()){
-                    res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurRouge')");
-                    while (res.next()){
-                        pseudo3=res.getString(1);
-                    }
+                res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurRouge')");
+                while (res.next()){
+                    pseudo3=res.getString(1);
                 }
-                else{
-                    pseudo3="Vide";
-                }
+            }
+            else{
+                pseudo3="Vide";
+            }
             jLabel3.setText(pseudo3);
             if (jCheckBox4.isSelected()){
-                    res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurBleu')");
-                    while (res.next()){
-                        pseudo4=res.getString(1);
-                    }
+                res = bdd.executeQuery("SELECT pseudo FROM joueur WHERE joueur.IdJoueur=(SELECT IdJoueur FROM partie WHERE Rôle='DefenseurBleu')");
+                while (res.next()){
+                    pseudo4=res.getString(1);
+                }
             }
             else{
                 pseudo4="Vide";
@@ -173,45 +171,62 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(600, 250));
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
+        getContentPane().setLayout(null);
 
         jCheckBox1.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
         jCheckBox1.setText("Attaquant Rouge");
+        jCheckBox1.setOpaque(false);
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jCheckBox1);
+        jCheckBox1.setBounds(50, 20, 250, 37);
 
         jCheckBox2.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
         jCheckBox2.setText("Attaquant Bleu");
+        jCheckBox2.setOpaque(false);
         jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jCheckBox2);
+        jCheckBox2.setBounds(50, 90, 230, 37);
 
         jCheckBox3.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
         jCheckBox3.setText("Défenseur Rouge");
+        jCheckBox3.setOpaque(false);
         jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox3ActionPerformed(evt);
             }
         });
+        getContentPane().add(jCheckBox3);
+        jCheckBox3.setBounds(330, 20, 250, 37);
 
         jCheckBox4.setFont(new java.awt.Font("Harrington", 1, 24)); // NOI18N
         jCheckBox4.setText("Défenseur Bleu");
+        jCheckBox4.setOpaque(false);
         jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox4ActionPerformed(evt);
             }
         });
+        getContentPane().add(jCheckBox4);
+        jCheckBox4.setBounds(330, 90, 230, 37);
 
         jLabel1.setFont(new java.awt.Font("Harrington", 1, 14)); // NOI18N
         String text1 = "";
@@ -230,6 +245,8 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             Logger.getLogger(jLabel1.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel1.setText(text1);
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(50, 60, 250, 25);
 
         jLabel2.setFont(new java.awt.Font("Harrington", 1, 14)); // NOI18N
         String text2 = "";
@@ -248,6 +265,8 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             Logger.getLogger(jLabel2.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel2.setText(text2);
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(50, 130, 150, 25);
 
         jLabel3.setFont(new java.awt.Font("Harrington", 1, 14)); // NOI18N
         String text3 = "";
@@ -266,6 +285,8 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             Logger.getLogger(jLabel3.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel3.setText(text3);
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(330, 60, 390, 25);
 
         jLabel4.setFont(new java.awt.Font("Harrington", 1, 14)); // NOI18N
         String text4 = "";
@@ -284,73 +305,21 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             Logger.getLogger(jLabel4.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         jLabel4.setText(text4);
+        getContentPane().add(jLabel4);
+        jLabel4.setBounds(330, 130, 130, 25);
 
         jLabel5.setFont(new java.awt.Font("Harrington", 1, 48)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Préparation");
+        getContentPane().add(jLabel5);
+        jLabel5.setBounds(0, 160, 600, 50);
+        getContentPane().add(jLabel6);
+        jLabel6.setBounds(0, 0, 0, 0);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(140, 160, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCheckBox2)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCheckBox3)
-                                .addGap(0, 10, Short.MAX_VALUE)))
-                        .addContainerGap(35, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jCheckBox3)
-                        .addGap(11, 11, 11))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jCheckBox1)
-                        .addGap(18, 18, 18)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
-        );
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Arnaud/background_joueur.jpg"))); // NOI18N
+        jLabel7.setToolTipText("");
+        getContentPane().add(jLabel7);
+        jLabel7.setBounds(-10, 0, 670, 300);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -450,5 +419,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }
