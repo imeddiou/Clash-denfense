@@ -28,7 +28,7 @@ public class TestDatabase {
         ResultSet resultat = baseDeDonnee.executeQuery("SELECT * FROM partie");
         OutilsJDBC.afficherResultSet(resultat);
         baseDeDonnee.disconnect();
-        
+        int a=0;
         
         
     }
