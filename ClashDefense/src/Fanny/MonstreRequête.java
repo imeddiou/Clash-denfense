@@ -32,7 +32,8 @@ public class MonstreRequête {
             int pdV = resultat0.getInt("PdV");
             int direction = resultat0.getInt("Direction");
             int avancée = resultat0.getInt("Avancée");
-            baseDeDonnées.executeQuery("INSERT INTO monstre (`IdMonstre`,`Description`,`PositionX`,`PositionY`,`Equipe`,`Vitesse`,`PdV`,`Direction`,`Avancée`) VALUES ('dernierIdMonstre','description','"+positionX+"','"+positionY+"','couleur','"+vitesse+"','"+pdV+"','"+direction+"','"+avancée+"')");
+            baseDeDonnées.executeQuery("INSERT INTO monstre (`IdMonstre`,`Description`,`PositionX`,`PositionY`,`Equipe`,`Vitesse`,`PdV`,`Direction`,`Avancée`)"
+                    + " VALUES ('dernierIdMonstre','description','"+positionX+"','"+positionY+"','couleur','"+vitesse+"','"+pdV+"','"+direction+"','"+avancée+"')");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
