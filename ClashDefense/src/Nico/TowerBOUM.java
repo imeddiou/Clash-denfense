@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class TowerBOUM {
+public class TowerBOUM { //IM : au lieu de creer une connexion à chaque fois, le mieux de définir une variable Database et d'établir une connexion dans le constructeur
     private int idTour;
     
     //private int vie=1;
