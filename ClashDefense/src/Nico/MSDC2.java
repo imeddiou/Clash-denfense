@@ -6,15 +6,17 @@ public class MSDC2 {
     private int pdv;
     private double vitesse;
     private int atk;
+    private int[] dureeEffet;
     private int direction;
     private int avancee;
     private int chemin;
     private double[] coordonnees;
     
-    public MSDC2(int pdv,double vitesse,int atk,int direction,int avancee,int chemin,double[] coordonnees){
+    public MSDC2(int pdv,double vitesse,int atk,int[] dureeEffet,int direction,int avancee,int chemin,double[] coordonnees){
         this.pdv=pdv;
         this.vitesse=vitesse;
         this.atk=atk;
+        this.dureeEffet=dureeEffet;
         this.direction=direction;
         this.avancee=avancee;
         this.chemin=chemin;
@@ -33,7 +35,7 @@ public class MSDC2 {
         return false;
     }
     
-    public boolean TestChateau(ArrayList<ArrayList<Integer>> carte){
+    public boolean TestChateau(){
         double[] coordonnees=this.getCoordonnees();
         if ((int)coordonnees[0]==0){return true;}
         return false;
@@ -70,7 +72,7 @@ public class MSDC2 {
         if (testDroite==this.getChemin()){return true;}
         else{return false;}
     }
-    public int Avancer(ArrayList<ArrayList<Integer>> carte){
+    public void Avancer(ArrayList<ArrayList<Integer>> carte){
         double[] coordonnees=this.getCoordonnees();
         int avancee=this.getAvancee();
         int direction=this.getDirection();
@@ -79,8 +81,8 @@ public class MSDC2 {
         // vecteur[1] est le déplacement vers le bas
         // vecteur[2] est le déplacement vers la gauche
         // vecteur[3] est le déplacement vers le haut
-        if(this.TestVie()){return 1;}
-        if(this.TestChateau(carte)){return 2;}
+        //if(this.TestVie()){return 1;}
+        //if(this.TestChateau(carte)){return 2;}
         if(this.MurDevant(carte,vecteur)==true){
             if (this.FautIlAllerADroite(carte,vecteur)==true){direction=(direction+1)%4;
             }else{direction=(direction+3)%4;}
@@ -90,7 +92,6 @@ public class MSDC2 {
         this.setDirection(direction);
         avancee++;
         this.setAvancee(avancee);
-        return 3;
     }
 
     public int getChemin() {
@@ -147,5 +148,15 @@ public class MSDC2 {
 
     public void setCoordonnees(double[] coordonnees) {
         this.coordonnees = coordonnees;
-    }    
+    }
+
+    public int[] getDureeEffet() {
+        return dureeEffet;
+    }
+
+    public void setDureeEffet(int[] dureeEffet) {
+        this.dureeEffet = dureeEffet;
+    }
+    
+    
 }
