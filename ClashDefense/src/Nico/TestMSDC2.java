@@ -17,7 +17,8 @@ public class TestMSDC2 {
         int avancee = 0;
         int chemin = 1;
         int atk = 1;
-        MSDC2 monstre = new MSDC2(vie,vitesse,atk,direction,avancee,chemin,coordonnees);
+        int[] dureeEffet = {0,0,0,0};
+        MSDC2 monstre = new MSDC2(vie,vitesse,atk,dureeEffet,direction,avancee,chemin,coordonnees);
         int valeurTest=3;
         while (valeurTest==3){
             //monstre.Affichage(carte);
