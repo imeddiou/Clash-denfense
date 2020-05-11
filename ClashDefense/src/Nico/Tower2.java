@@ -9,18 +9,18 @@ public class Tower2 {
     private double rayon;
     private int degat;
     private double vitesse;
-    private double timingSteun;
+    private double timing;
     private int nombreDeMonstreTouches;
     private int niveau;
     private int type;
     private double coordonnees[];
     
-    public Tower2(int vie,double rayon,int degat,double vitesse,double timingSteun,int nombreDeMonstreTouches,int niveau,int type,double[] coordonnees){
+    public Tower2(int vie,double rayon,int degat,double vitesse,double timing,int nombreDeMonstreTouches,int niveau,int type,double[] coordonnees){
         this.vie=vie;
         this.rayon=rayon;
         this.degat=degat;
         this.vitesse=vitesse;
-        this.timingSteun=timingSteun;
+        this.timing=timing;
         this.nombreDeMonstreTouches=nombreDeMonstreTouches;
         this.niveau=niveau;
         this.type=type;
@@ -42,10 +42,11 @@ public class Tower2 {
         return false;
     }
     
-    public ArrayList<MSDC2> lesNmonstresLesPlusAvances(int n,ArrayList<MSDC2> listeMonstre){
+    public ArrayList<MSDC2> lesNmonstresLesPlusAvances(ArrayList<MSDC2> listeMonstre){
         ArrayList<Integer> listeId = new ArrayList<Integer>();
         ArrayList<Integer> listeAvancees = new ArrayList<Integer>();
         ArrayList<MSDC2> nPremiersMonstre = new ArrayList<MSDC2>();
+        int n = this.getNombreDeMonstreTouches();
         if (n>listeMonstre.size()){n = listeMonstre.size();}
         for (int i=0;i<listeMonstre.size();i++){
             MSDC2 monstre = listeMonstre.get(i);
@@ -71,33 +72,59 @@ public class Tower2 {
         if (vie<=0){return true;}return false;
     }
     
-    public void Type1(ArrayList<MSDC2> listeMonstre){
+    public void Type1(ArrayList<MSDC2> listeMonstre){//Degat
         double degat = this.getDegat();
         for (int i=0;i<listeMonstre.size();i++){
             MSDC2 monstre = listeMonstre.get(i);
             int vieDuMonstre = monstre.getPdv();
-            vieDuMonstre = vieDuMonstre-((int)degat+(int)(this.getNiveau()*0.6));
+            vieDuMonstre = vieDuMonstre-((int)degat+(int)(this.getNiveau()*1.5));
             monstre.setPdv(vieDuMonstre);
             listeMonstre.set(i,monstre);
         }
     }
-    public void Type2(ArrayList<MSDC2> listeMonstre){
-        double timingSteun = this.getTimingSteun();
+    public void Type2(ArrayList<MSDC2> listeMonstre){//Ralentissement
+        double timing = this.getTiming();
         for (int i=0;i<listeMonstre.size();i++){
             MSDC2 monstre = listeMonstre.get(i);
             double vitesse = monstre.getVitesse();
-            vitesse = 3000;
+            vitesse = vitesse + (timing+this.getNiveau()*500);
             monstre.setVitesse(vitesse);
+            int[] dureeeffet = monstre.getDureeEffet();
+            dureeeffet[0] = 4;
+            monstre.setDureeEffet(dureeeffet);
+            listeMonstre.set(i,monstre);
+        }
+    }
+        public void Type3(ArrayList<MSDC2> listeMonstre){//Steun
+        double timing = this.getTiming();
+        for (int i=0;i<listeMonstre.size();i++){
+            MSDC2 monstre = listeMonstre.get(i);
+            int[] dureeeffet = monstre.getDureeEffet();
+            dureeeffet[1] = 1 + (int)(niveau*1.1);
+            monstre.setDureeEffet(dureeeffet);
+            listeMonstre.set(i,monstre);
+        }
+    }
+    public void Type4(ArrayList<MSDC2> listeMonstre){//Degat continu
+        double timing = this.getTiming();
+        double degat = this.getDegat();
+        for (int i=0;i<listeMonstre.size();i++){
+            MSDC2 monstre = listeMonstre.get(i);
+            int[] dureeeffet = monstre.getDureeEffet();
+            dureeeffet[2] = 3;
+            dureeeffet[3] = (int)degat+(int)(this.getNiveau()*1.5);
+            monstre.setDureeEffet(dureeeffet);
             listeMonstre.set(i,monstre);
         }
     }
     
-    public int action(ArrayList<MSDC2> listeMonstreOfficielle){
-        if (this.testVie()){return 1;}
-        ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(this.getNombreDeMonstreTouches(),listeMonstreOfficielle);
+    public void action(ArrayList<MSDC2> listeMonstreOfficielle){
+        //if (this.testVie()){return 1;}
+        ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(listeMonstreOfficielle);
         if(this.getType()==1){this.Type1(listeMonstre);}
         if(this.getType()==2){this.Type2(listeMonstre);}
-        return 2;
+        if(this.getType()==3){this.Type3(listeMonstre);}
+        if(this.getType()==4){this.Type4(listeMonstre);}
     }
 
     public int getVie() {
@@ -140,12 +167,12 @@ public class Tower2 {
         this.coordonnees = coordonnees;
     }
 
-    public double getTimingSteun() {
-        return timingSteun;
+    public double getTiming() {
+        return timing;
     }
 
-    public void setTimingSteun(double timingSteun) {
-        this.timingSteun = timingSteun;
+    public void setTiming(double timing) {
+        this.timing = timing;
     }
 
     public int getNiveau() {
