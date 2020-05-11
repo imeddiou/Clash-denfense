@@ -1,10 +1,6 @@
 
 package Nico;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,13 +9,21 @@ public class Tower2 {
     private double rayon;
     private int degat;
     private double vitesse;
+    private double timingSteun;
+    private int nombreDeMonstreTouches;
+    private int niveau;
+    private int type;
     private double coordonnees[];
     
-    public Tower2(int vie,double rayon,int degat, double vitesse, double[] coordonnees){
+    public Tower2(int vie,double rayon,int degat,double vitesse,double timingSteun,int nombreDeMonstreTouches,int niveau,int type,double[] coordonnees){
         this.vie=vie;
         this.rayon=rayon;
         this.degat=degat;
         this.vitesse=vitesse;
+        this.timingSteun=timingSteun;
+        this.nombreDeMonstreTouches=nombreDeMonstreTouches;
+        this.niveau=niveau;
+        this.type=type;
         this.coordonnees=coordonnees;
     }
     
@@ -38,53 +42,62 @@ public class Tower2 {
         return false;
     }
     
-    public int idMonstreLePlusAvance()throws Exception{    
-        int nombreDeMonstre = this.nombreDeMonstre();
-        ArrayList<Integer> listeIdMonstre = new ArrayList<Integer>();
+    public ArrayList<MSDC2> lesNmonstresLesPlusAvances(int n,ArrayList<MSDC2> listeMonstre){
+        ArrayList<Integer> listeId = new ArrayList<Integer>();
         ArrayList<Integer> listeAvancees = new ArrayList<Integer>();
-        for (int i=1;i<=nombreDeMonstre;i++){
-            int idMonstre=i;
-            MSDC3 monstre = new MSDC3(idMonstre);
+        ArrayList<MSDC2> nPremiersMonstre = new ArrayList<MSDC2>();
+        if (n>listeMonstre.size()){n = listeMonstre.size();}
+        for (int i=0;i<listeMonstre.size();i++){
+            MSDC2 monstre = listeMonstre.get(i);
             double[] coordonneesMonstre = monstre.getCoordonnees();  
             if (this.LeMonstreEstDansLeRayon(coordonneesMonstre)){
-                listeIdMonstre.add(idMonstre);
+                listeId.add(i);
                 int avancee = monstre.getAvancee();
                 listeAvancees.add(avancee);
             }
         }
-        if (listeIdMonstre.isEmpty()){return 0;}
-        int indexMaxAvancee = listeAvancees.indexOf(Collections.max(listeAvancees));
-        int idMonstreLePlusAvance =listeIdMonstre.get(indexMaxAvancee);
-        return idMonstreLePlusAvance;
+        if (listeAvancees.isEmpty()){return nPremiersMonstre;}
+        for (int i=0;i<n;i++){
+            int indexMaxAvancee = listeAvancees.indexOf(Collections.max(listeAvancees));
+            int idMonstreLePlusAvance =listeId.get(indexMaxAvancee);
+            nPremiersMonstre.add(listeMonstre.get(idMonstreLePlusAvance));
+            listeAvancees.remove(indexMaxAvancee);
+            listeId.remove(indexMaxAvancee);
+        }
+        return nPremiersMonstre;
     }   
-    public boolean testVie()throws Exception{
+    public boolean testVie(){
         int vie = this.getVie();
         if (vie<=0){return true;}return false;
-    } 
-      
-    public int DefoncerLeMonstre(int carte[][])throws Exception{
-        double degat = this.getDegat();
-        if(this.testVie()){
-            return 0;
-        }else{
-            int idMonstre = this.idMonstreLePlusAvance();
-            MSDC3 monstre = new MSDC3(idMonstre);
-            int vieDuMonstre = monstre.getVie();
-            vieDuMonstre = vieDuMonstre-(int)degat;
-            monstre.setVie(vieDuMonstre);
-        }
-        return 1;
     }
-
-    public int nombreDeMonstre()throws Exception{
-        Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-        PreparedStatement requete = connexion.prepareStatement("SELECT IdMonstre FROM monstre;");
-        ResultSet resultat = requete.executeQuery();
-        int nombre=0;
-        while (resultat.next()) {nombre++;}
-        requete.close();
-        connexion.close();
-        return nombre;
+    
+    public void Type1(ArrayList<MSDC2> listeMonstre){
+        double degat = this.getDegat();
+        for (int i=0;i<listeMonstre.size();i++){
+            MSDC2 monstre = listeMonstre.get(i);
+            int vieDuMonstre = monstre.getPdv();
+            vieDuMonstre = vieDuMonstre-((int)degat+(int)(this.getNiveau()*0.6));
+            monstre.setPdv(vieDuMonstre);
+            listeMonstre.set(i,monstre);
+        }
+    }
+    public void Type2(ArrayList<MSDC2> listeMonstre){
+        double timingSteun = this.getTimingSteun();
+        for (int i=0;i<listeMonstre.size();i++){
+            MSDC2 monstre = listeMonstre.get(i);
+            double vitesse = monstre.getVitesse();
+            vitesse = 3000;
+            monstre.setVitesse(vitesse);
+            listeMonstre.set(i,monstre);
+        }
+    }
+    
+    public int action(ArrayList<MSDC2> listeMonstreOfficielle){
+        if (this.testVie()){return 1;}
+        ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(this.getNombreDeMonstreTouches(),listeMonstreOfficielle);
+        if(this.getType()==1){this.Type1(listeMonstre);}
+        if(this.getType()==2){this.Type2(listeMonstre);}
+        return 2;
     }
 
     public int getVie() {
@@ -126,6 +139,39 @@ public class Tower2 {
     public void setCoordonnees(double[] coordonnees) {
         this.coordonnees = coordonnees;
     }
+
+    public double getTimingSteun() {
+        return timingSteun;
+    }
+
+    public void setTimingSteun(double timingSteun) {
+        this.timingSteun = timingSteun;
+    }
+
+    public int getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(int niveau) {
+        this.niveau = niveau;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public int getNombreDeMonstreTouches() {
+        return nombreDeMonstreTouches;
+    }
+
+    public void setNombreDeMonstreTouches(int nombreDeMonstreTouches) {
+        this.nombreDeMonstreTouches = nombreDeMonstreTouches;
+    }
+    
     
    
 }
