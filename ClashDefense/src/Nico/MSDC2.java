@@ -32,7 +32,7 @@ public class MSDC2 {//Monstre Suiveur De Chemin version 2
     public boolean TestChateau(){//Cette classe permet de vérifier si le monstre a atteint le château
         double[] coordonnees=this.getCoordonnees();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         if ((int)coordonnees[0]==0){return true;}//Si l'ordonnée du monstre est celle du chêteau alors on déclare que le monstre a atteint le château
-        //le ==0 a été choisi arbitrairement ici, et il faudra faire attention à l'équipe à laquelle appartient le monstre
+        //le ==0 a été choisi arbitrairement ici, et il faudra faire attention à l'équipe à laquelle appartient le monstre. Pour l'autre équipe ce 0 serait ici un 19
         return false;
     }
     
