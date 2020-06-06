@@ -20,7 +20,12 @@ public class MonstreRequête {
     private Database baseDeDonnées;
     
     
-    public void monstreRequêteInsertionMonstre(String description, String couleur){ //IM : ajouter baseDedonnées.connect() avant la requete         
+    public void monstreRequêteInsertionMonstre(String description, String couleur){ //IM : ajouter baseDedonnées.connect() avant la requete   
+           try { 
+        baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             int dernierIdMonstre = 0; 
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = 'description', Couleur = 'couleur'");
@@ -38,13 +43,20 @@ public class MonstreRequête {
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }     
+        baseDeDonnées.disconnect();
         
     }
     
     
-    public void monstreRequêteModificationPosition (int idMonstre, double positionX, double positionY){  //IM : ajouter baseDedonnées.connect() avant la requete
+    public void monstreRequêteModificationPosition (int idMonstre, double positionX, double positionY){  
+           try { 
+        baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
         baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = 'positionX' WHERE IdMonstre = 'idMonstre' ");
         baseDeDonnées.executeQuery("UPDATE monstre SET PositionY = 'positionY' WHERE IdMonstre = 'idMonstre' ");
         ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
+        baseDeDonnées.disconnect();
     }            
 }

@@ -23,7 +23,13 @@ public class EquipeRequête {
     
     
     
-    public void équipeRequêteModificationIdJoueur(int idJoueur){//IM : ajouter baseDedonnées.connect() avant la requete
+    public void équipeRequêteModificationIdJoueur(int idJoueur){
+        try {
+        //IM : ajouter baseDedonnées.connect() avant la requete
+        baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Rôle FROM partie WHERE IdJoueur = 'idjoueur'");
             if (resultat0.getString("Rôle").contains("bleu")){
@@ -43,8 +49,12 @@ public class EquipeRequête {
                 }
             }
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM équipe");
+            resultat0.close();
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }          
+        baseDeDonnées.disconnect();
+        
+        
     }
 }

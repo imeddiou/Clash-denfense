@@ -25,7 +25,11 @@ public class JoueurRequête {
     private Database baseDeDonnées;
     
     public void joueurRequêteInsertion(String pseudo){ //IM : ajouter baseDedonnées.connect() avant la requete
-          
+         try { 
+        baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             int dernierIdJoueur = 0; 
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdJoueur) FROM joueur");
@@ -37,11 +41,18 @@ public class JoueurRequête {
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }     
+        baseDeDonnées.disconnect();
         
     }
     
     public void joueurRequêteModificationPseudo(String pseudo, int id){ //IM : ajouter baseDedonnées.connect() avant la requete
+           try { 
+        baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
         baseDeDonnées.executeQuery("UPDATE joueur SET Pseudo = 'pseudo' WHERE IdJoueur = 'id'");
         ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM joueur");
+        baseDeDonnées.disconnect();
     }
 }
