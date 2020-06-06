@@ -9,12 +9,19 @@ public class Attaque {//C'est la classe qui fait avancer le monstre
     public static void main(String[] args){
         Chemin20x20 carte = new Chemin20x20();//On créé un nouveau chemin
         ArrayList<ArrayList<Integer>> map = carte.CreationMap();//Et on récupère la carte
-            int chemin = 1+(int)(Math.random()*((3-1)+1));//Le monstre part aléatoirement sur le chemin de gauche, central ou de droite
-            double coordonnees[] = {19,chemin+2};//On se place au bon endroit pour le départ du monstre
-            chemin = map.get(19).get(chemin+2);//On récupère la constante qui permettra au monstre de suivre aveuglément son chemin
+            int chemin = (int)(Math.random()*(2+1));//Le monstre part aléatoirement sur le chemin de gauche (0), central (1) ou de droite (2)
+            //on peut lire en général min+(int)(Math.random()*((max-min)+1))
+            double coordonnees[] = {19,chemin+3};//On se place au bon endroit pour le départ du monstre
+            chemin = map.get(19).get(chemin+3);//On récupère la constante qui permettra au monstre de suivre aveuglément son chemin
+            //C'est ici le cas du monstre qui monte le chemin de gauche de la map
+            //Si on veut le monstre qui descende du chemin à droite de la map on remplacera les 2 lignes de codes précédentes par les lignes suivantes:
+            //double coordonnees[] = {0,chemin+13};
+            //chemin = map.get(0).get(chemin+13);
+            //et on fera attention de mettre la direction à 1 comme expliquè plus bas
             double vitesse = 1000;//Le monstre avance toutes les 1000 microsecondes
             int vie = 1;//On établit arbitrairement une vie > 0
-            int direction = 3;//On se dirige vers le haut, cela change en fonction de l'équipe du monstre. Si on veut aller vers le bas la direction serait 1
+            int direction = 3;//On se dirige vers le haut, cela change en fonction de l'équipe du monstre. Si on veut aller vers le bas la direction serait 1, il faudra alors remplacer cette ligne de code par:
+            //int direction = 1;
             int avancee = 0;//L'avancée du monstre est initialement 0
             int atk = 1;//On fixe les dégâts que le monstre pourra causer à la tour à 1
             int[] dureeEffet = {0,0,0,0};//Ce vecteur détermine le durée de chacun des effets qui inflige le monstre. On a initialement un vecteur vide puisque le monstre ne subit initialement aucun effet
