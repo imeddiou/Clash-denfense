@@ -5,7 +5,9 @@
  */
 package View;
 
+import Model.Database;
 import Silvere.*;
+import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -19,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import javafx.scene.image.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -37,23 +40,17 @@ public class Affichage_map {
      */
     public static void main(String[] args) {
         try {
-
-            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-
-            PreparedStatement requete = connexion.prepareStatement("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour;");
-            PreparedStatement requete2 = connexion.prepareStatement("SELECT IdMonstre, PositionX, PositionY, Equipe, Description FROM monstre;");
-            ResultSet resultat = requete.executeQuery();
-            ResultSet resultat2 = requete2.executeQuery();
+       
             ArrayList Id = new ArrayList();
             ArrayList PosX = new ArrayList();
             ArrayList PosY = new ArrayList();
             ArrayList Eq = new ArrayList();
-            ArrayList Typetour = new ArrayList();
+            ArrayList<String> Typetour = new ArrayList();
             ArrayList IdM = new ArrayList();
             ArrayList PosXM = new ArrayList();
             ArrayList PosYM = new ArrayList();
             ArrayList EqM = new ArrayList();
-            ArrayList TypeMonstre = new ArrayList();
+            ArrayList<String> TypeMonstre = new ArrayList();
 
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
@@ -79,6 +76,9 @@ public class Affichage_map {
             map[5][18]=-5;
             map[8][3]=-6;
            // début programme d'affichage de la carte et des éléments
+            Database db = new Database();
+            db.connect();
+            ResultSet resultat = db.executeQuery("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour");
             while (resultat.next()) {
                 int Idtour = resultat.getInt("Idtour");
                 Id.add(Idtour);
@@ -91,6 +91,7 @@ public class Affichage_map {
                 String Description = resultat.getString("Description");
                 Typetour.add(Description);
             }
+           ResultSet resultat2 = db.executeQuery("SELECT IdMonstre, PositionX, PositionY, Equipe, Description FROM monstre");
             while(resultat2.next()){
                 int IdMonstre = resultat2.getInt("IdMonstre");
                 IdM.add(IdMonstre);
@@ -104,8 +105,7 @@ public class Affichage_map {
                 TypeMonstre.add(DescriptionM);
         }
             
-            requete.close();
-            connexion.close();
+       
         for(int i=0;i<Id.size();i=i+1){
             map[(int)PosX.get(i)][(int)PosY.get(i)]=(int)Id.get(i) ;    // On place les tours à leurs positions
         
@@ -131,16 +131,17 @@ public class Affichage_map {
                 }else{
                     Case.setBackground(Color.red);
                 }
-                if(Typetour.get(k).equals("tourClassique")){// identifier les types de tours
-                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourclassique.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                System.out.print(Typetour.get(k));
+                if(Typetour.get(k).contains("tourClassique")){// identifier les types de tours
+                  ImageIcon icon = new ImageIcon("/Image/tourclassique.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
                   JLabel img = new JLabel(icon);
                   Case.add(img);  
-                }else if(Typetour.get(k).equals("tourIncendiaire")){
-                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                }else if(Typetour.get(k).contains("tourIncendiaire")){
+                  ImageIcon icon = new ImageIcon("/Image/tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
                   JLabel img = new JLabel(icon);
                   Case.add(img);
-                }else if(Typetour.get(k).equals("tourPrécise")){
-                  ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                }else if(Typetour.get(k).contains("tourPrécise")){
+                  ImageIcon icon = new ImageIcon("/Image/tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
                   JLabel img = new JLabel(icon);
                   Case.add(img);
                 }
@@ -171,22 +172,22 @@ public class Affichage_map {
        
     
         for(int i=0; i<IdM.size(); i=i+1){  //affichage des monstres
-            if(TypeMonstre.get(i).equals("gobelin")){
-                ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\gobelin.png");
+            if(TypeMonstre.get(i).contains("gobelin")){
+                ImageIcon icon = new ImageIcon("/Image/gobelin.png");
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
                 img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
-            }else if(TypeMonstre.get(i).equals("giant")){
-                ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\giant.png");
+            }else if(TypeMonstre.get(i).contains("giant")){
+                ImageIcon icon = new ImageIcon("/Image/giant.png");
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
                 img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
-            }else if(TypeMonstre.get(i).equals("knight")){
-                ImageIcon icon = new ImageIcon("C:\\Users\\Silvère BARDIN\\Desktop\\images_tours_monstres\\knight.png");
+            }else if(TypeMonstre.get(i).contains("knight")){
+                ImageIcon icon = new ImageIcon("/Image/knight.png");
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
@@ -195,6 +196,13 @@ public class Affichage_map {
             }
             
         }
+     //   new javax.swing.ImageIcon(getClass().getResource
+      //  jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/background_joueur.jpg"))); // NOI18N
+
+         ImageIcon icon = new ImageIcon("/Image/knight.png");
+                JLabel img = new JLabel();           
+                img.setIcon(new javax.swing.ImageIcon("/Image/background_joueur.jpg"));
+                fenetre.add(img);
         pan.setBorder(blackline);
         fenetre.add(pan);
         fenetre.setVisible(true);
@@ -209,6 +217,7 @@ public class Affichage_map {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+       
 
    
     }
