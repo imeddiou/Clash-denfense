@@ -23,7 +23,7 @@ public class JoueurRequête {
     public JoueurRequête() {
     }      
     
-    public void joueurRequêteInsertion(Database baseDeDonnées, String pseudo){ //IM : ajouter baseDedonnées.connect() avant la requete
+    public void joueurRequêteInsertion(Database baseDeDonnées, String pseudo){ 
           
         try {
             int dernierIdJoueur = 0; 
@@ -38,8 +38,5 @@ public class JoueurRequête {
         
     }
     
-    public void joueurRequêteModificationPseudo(Database baseDeDonnées, String pseudo, int id){ //IM : ajouter baseDedonnées.connect() avant la requete
-        baseDeDonnées.executeQuery("UPDATE joueur SET Pseudo = 'pseudo' WHERE IdJoueur = 'id'");
-        ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM joueur");
-    }
+    
 }

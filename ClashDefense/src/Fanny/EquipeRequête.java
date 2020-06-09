@@ -21,7 +21,7 @@ public class EquipeRequête {
     public EquipeRequête() {
     }    
     
-    public void équipeRequêteModificationIdJoueur(Database baseDeDonnées,int idJoueur){//IM : ajouter baseDedonnées.connect() avant la requete
+    public void équipeRequêteModificationIdJoueur(Database baseDeDonnées,int idJoueur){
         try {
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Rôle FROM partie WHERE IdJoueur = '"+idJoueur+"'");
             String Rôle = "";

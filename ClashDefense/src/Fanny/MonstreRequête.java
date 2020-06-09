@@ -20,10 +20,9 @@ public class MonstreRequête {
     public MonstreRequête() {
     }
     
-    public void monstreRequêteInsertionMonstre(Database baseDeDonnées,String description, String couleur){ //IM : ajouter baseDedonnées.connect() avant la requete         
+    public void monstreRequêteInsertionMonstre(Database baseDeDonnées,String description, String couleur){          
         try {            
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
-            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM cataloguemonstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");        
             int dernierIdMonstre = 0; 
             double positionX = 0.0;
             double positionY = 0.0;
@@ -34,13 +33,15 @@ public class MonstreRequête {
             while (resultat0.next()){
                 dernierIdMonstre = resultat0.getInt(1)+1;                
             }
+            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM cataloguemonstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
             while (resultat1.next()){
-                positionX = resultat0.getDouble("PositionX");
-                positionY = resultat0.getDouble("PositionY");
-                vitesse = resultat0.getDouble("Vitesse");
-                pdV = resultat0.getInt("PdV");
-                direction = resultat0.getInt("Direction");
-                avancée = resultat0.getInt("Avancée");
+                dernierIdMonstre = dernierIdMonstre + resultat1.getInt(1);
+                positionX = resultat1.getDouble("PositionX");
+                positionY = resultat1.getDouble("PositionY");
+                vitesse = resultat1.getDouble("Vitesse");
+                pdV = resultat1.getInt("PdV");
+                direction = resultat1.getInt("Direction");
+                avancée = resultat1.getInt("Avancée");
             }                
             baseDeDonnées.executeQuery("INSERT INTO monstre VALUES ('"+dernierIdMonstre+"','"+description+"','"+positionX+"','"+positionY+"','"+couleur+"','"+vitesse+"','"+pdV+"','"+direction+"','"+avancée+"')");
         } catch (SQLException ex) {
@@ -50,9 +51,7 @@ public class MonstreRequête {
     }
     
     
-    public void monstreRequêteModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  //IM : ajouter baseDedonnées.connect() avant la requete
-        baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = '"+positionX+"' WHERE IdMonstre = '"+idMonstre+"' ");
-        baseDeDonnées.executeQuery("UPDATE monstre SET PositionY = '"+positionY+"' WHERE IdMonstre = '"+idMonstre+"' ");
-        ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
+    public void monstreRequêteModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  
+           
     }            
 }

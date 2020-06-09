@@ -26,9 +26,9 @@ public class TestMonstreRequete {
         Database baseDeDonnées = new Database();
         try {
             
-            baseDeDonnées.connect();      
+            baseDeDonnées.connect();    
             MonstreRequête monstrerequête = new MonstreRequête();
-            monstrerequête.monstreRequêteInsertionMonstre(baseDeDonnées, "Chevalier", "Bleue");
+            monstrerequête.monstreRequêteInsertionMonstre(baseDeDonnées, "Gobelin", "Bleue");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 

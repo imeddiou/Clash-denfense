@@ -5,7 +5,6 @@
  */
 package Fanny;
 
-import Fanny.EquipeRequête;
 import Ibrahim.Database;
 import Utils.OutilsJDBC;
 import java.sql.ResultSet;
@@ -15,30 +14,29 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author ibrahim
+ * @author fanny
  */
-public class TestEquipeRequete {
+public class TestTourRequête {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        // IM : test des class      
         Database baseDeDonnées = new Database();
         try {
             
-            baseDeDonnées.connect();   
-            EquipeRequête equiperequête = new EquipeRequête();
-            equiperequête.équipeRequêteModificationIdJoueur(baseDeDonnées, 5);
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM équipe");
+            baseDeDonnées.connect();    
+            TourRequête tourrequête = new TourRequête();
+            tourrequête.tourRequêteInsertionMonstre(baseDeDonnées, "tourClassique", "Blanc");
+            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 
             
             } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
     }
+}
     
 
