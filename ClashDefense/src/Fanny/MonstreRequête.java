@@ -20,7 +20,7 @@ public class MonstreRequête {
     public MonstreRequête() {
     }
     
-    public void monstreRequêteInsertion(Database baseDeDonnées,String description, String couleur){          
+    public void monstreInsertion(Database baseDeDonnées,String description, String couleur){          
         try {             
             int dernierIdMonstre = 0;
             int idMax= 0;
@@ -30,7 +30,7 @@ public class MonstreRequête {
                 idMax = resultat0.getInt(1);
             }
                 if (idMax == 0){
-                    ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT IdMonstre FROM catalogueMonstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+                    ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT IdMonstre FROM cataloguemonstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
                     while (resultat1.next()){
                         dernierIdMonstre = resultat1.getInt(1)+1;
                     }
@@ -64,20 +64,33 @@ public class MonstreRequête {
         
     }
     
-    
-    public void monstreRequêteModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  
-           try {  
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT PositionX FROM monstre WHERE idMonstre = '"+idMonstre+"' ");        
+    public void pertePdV (Database baseDeDonnées,String description, int idMonstre){
+        try {
+            int degat = 0;
+            int pdv = 0;
+            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Dégât FROM cataloguetour WHERE Description = '"+description+"'");
             while (resultat0.next()){
-                positionX = resultat0.getDouble("PositionX");                
+                degat = resultat0.getInt("Dégât");
             }
-            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT PositionY FROM monstre WHERE idMonstre = '"+idMonstre+"' ");
+            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT PdV FROM monstre WHERE IdMonstre = '"+idMonstre+"'");
             while (resultat1.next()){
-                positionY = resultat1.getDouble("PositionY"); 
-            }                
-            baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE idMonstre = '"+idMonstre+"' ");
+                pdv = resultat1.getInt("PdV") - degat;
+            }
+            if (pdv > 0){
+                baseDeDonnées.executeQuery("UPDATE monstre SET PdV = '"+pdv+"' WHERE IdMonstre = '"+idMonstre+"' ");
+            }
+            else {
+                baseDeDonnées.executeQuery("UPDATE monstre SET PdV = '0' WHERE IdMonstre = '"+idMonstre+"' ");
+            } 
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
+    }
+    
+    
+    public void ModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  
+              
+            baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE idMonstre = '"+idMonstre+"' ");
+
     }            
 }

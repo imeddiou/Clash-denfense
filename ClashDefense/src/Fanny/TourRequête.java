@@ -20,35 +20,50 @@ public class TourRequête {
     public TourRequête() {
     }
     
-    public void tourRequêteInsertion(Database baseDeDonnées,String description, String couleur){          
-        try {            
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdTour) FROM tour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");        
-            int dernierIdTour = 0; 
+    public void tourInsertion(Database baseDeDonnées,String description, String couleur){          
+        try {             
+            int dernierIdTour = 0;
+            int idMax= 0;
+            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdTour) FROM tour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+            System.out.println(resultat0.isClosed());
+            while (resultat0.next()){
+                idMax = resultat0.getInt(1);
+            }
+                if (idMax == 0){
+                    ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT IdTour FROM cataloguetour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+                    while (resultat1.next()){
+                        dernierIdTour = resultat1.getInt(1)+1;
+                    }
+                }  
+                else{
+                    ResultSet resultat2 = baseDeDonnées.executeQuery("SELECT MAX(IdTour) FROM tour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+                    while (resultat2.next()){
+                        dernierIdTour = resultat2.getInt(1)+1;
+                    }
+                }                
+                       
             double positionX = 0.0;
             double positionY = 0.0;
+            double vitesse = 0.0;
             int niveau = 0;
             int pdV = 0;
             double portée = 0.0;
             double fréquenceDeTir = 0.0;
             double dégât = 0.0;
-            while (resultat0.next()){
-                dernierIdTour = resultat0.getInt(1)+1;                
-            }
             ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM cataloguetour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
             while (resultat1.next()){
-                dernierIdTour = dernierIdTour + resultat1.getInt(1);
                 positionX = resultat1.getDouble("PositionX");
                 positionY = resultat1.getDouble("PositionY");
                 niveau = resultat1.getInt("Niveau");
                 pdV = resultat1.getInt("PdV");
-                portée = resultat1.getDouble("Portée");
-                fréquenceDeTir = resultat1.getDouble("FréquenceDeTir");
-                dégât = resultat1.getDouble("Dégât");
+                portée = resultat1.getInt("Portée");
+                fréquenceDeTir = resultat1.getInt("FréquenceDeTir");
+                dégât = resultat1.getInt("Dégât");
             }                
-            baseDeDonnées.executeQuery("INSERT INTO tour VALUES ('"+dernierIdTour+"','"+description+"','"+positionX+"','"+positionY+"','"+couleur+"','"+niveau+"','"+pdV+"','"+portée+"','"+fréquenceDeTir+"','"+dégât+"')");
+            baseDeDonnées.executeQuery("INSERT INTO monstre VALUES ('"+dernierIdTour+"','"+description+"','"+positionX+"','"+positionY+"','"+couleur+"','"+niveau+"','"+pdV+"','"+portée+"','"+fréquenceDeTir+"','"+dégât+"')");
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }       
         
     }
 }

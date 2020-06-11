@@ -23,7 +23,7 @@ public class JoueurRequête {
     public JoueurRequête() {
     }      
     
-    public void joueurRequêteInsertion(Database baseDeDonnées, String pseudo){ 
+    public void joueurInsertion(Database baseDeDonnées, String pseudo){ 
           
         try {
             int dernierIdJoueur = 0; 

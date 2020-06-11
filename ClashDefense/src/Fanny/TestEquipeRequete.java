@@ -30,7 +30,8 @@ public class TestEquipeRequete {
             
             baseDeDonnées.connect();   
             EquipeRequête equiperequête = new EquipeRequête();
-            equiperequête.équipeRequêteModificationIdJoueur(baseDeDonnées, 5);
+            //equiperequête.ModificationIdJoueur(baseDeDonnées, 5);
+            equiperequête.pertePdV(baseDeDonnées, "chevalier", "Bleue");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM équipe");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 

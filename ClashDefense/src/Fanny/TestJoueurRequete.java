@@ -28,7 +28,7 @@ public class TestJoueurRequete {
             
             baseDeDonnées.connect();      
             JoueurRequête joueurrequête = new JoueurRequête();
-            joueurrequête.joueurRequêteInsertion(baseDeDonnées, "Fanny");
+            joueurrequête.joueurInsertion(baseDeDonnées, "Fanny");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM joueur");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect();             

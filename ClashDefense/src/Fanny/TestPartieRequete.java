@@ -30,7 +30,7 @@ public class TestPartieRequete {
             
             baseDeDonnées.connect();   
             EquipeRequête equiperequête = new EquipeRequête();
-            equiperequête.équipeRequêteModificationIdJoueur(baseDeDonnées, 5);
+            equiperequête.ModificationIdJoueur(baseDeDonnées, 5);
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM partie");
             OutilsJDBC.afficherResultSet(resultat);
             Chemin20x20 map = new Chemin20x20();

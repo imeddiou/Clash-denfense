@@ -28,7 +28,7 @@ public class TestTourRequête {
             
             baseDeDonnées.connect();    
             TourRequête tourrequête = new TourRequête();
-            tourrequête.tourRequêteInsertion(baseDeDonnées, "tourClassique", "Blanc");
+            tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Blanc");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 
