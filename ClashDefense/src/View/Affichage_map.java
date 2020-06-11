@@ -5,9 +5,7 @@
  */
 package View;
 
-import Model.Database;
 import Silvere.*;
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -21,13 +19,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import javafx.scene.image.Image;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import Nico.Chemin20x20;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,45 +39,41 @@ public class Affichage_map {
      */
     public static void main(String[] args) {
         try {
-       
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour;");
+            PreparedStatement requete2 = connexion.prepareStatement("SELECT IdMonstre, PositionX, PositionY, Equipe, Description FROM monstre;");
+            ResultSet resultat = requete.executeQuery();
+            ResultSet resultat2 = requete2.executeQuery();
             ArrayList Id = new ArrayList();
             ArrayList PosX = new ArrayList();
             ArrayList PosY = new ArrayList();
             ArrayList Eq = new ArrayList();
-            ArrayList<String> Typetour = new ArrayList();
+            ArrayList Typetour = new ArrayList();
             ArrayList IdM = new ArrayList();
             ArrayList PosXM = new ArrayList();
             ArrayList PosYM = new ArrayList();
             ArrayList EqM = new ArrayList();
-            ArrayList<String> TypeMonstre = new ArrayList();
+            ArrayList TypeMonstre = new ArrayList();
 
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
                 map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple) à récupérer du code de Nico
             }
+            Chemin20x20 chemin = new Chemin20x20();
+            ArrayList<ArrayList<Integer>> map2 = chemin.CreationMap();
             for (int i=0 ; i<map.length; i=i+1){
                 for (int j=0 ; j<map[i].length; j=j+1){
-                    map[i][j]=0;
+                    map[i][j]=map2.get(i).get(j);
                 }
             }
-            for (int i=0 ; i<map.length; i=i+1){
-                for (int j=5 ; j<8; j=j+1){
-                    map[i][j]=-1;                   // définition d'un premier chemin
-                }
-            }
-            for (int i=0 ; i<map.length; i=i+1){
-                for (int j=12 ; j<15; j=j+1){
-                    map[i][j]=-1;                   // définition d'un deuxième chemin
-                }
-            }
+
             map[17][9]=-3; // position des defenseur et attaquant pour test
             map[12][17]=-4;
             map[5][18]=-5;
             map[8][3]=-6;
            // début programme d'affichage de la carte et des éléments
-            Database db = new Database();
-            db.connect();
-            ResultSet resultat = db.executeQuery("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour");
             while (resultat.next()) {
                 int Idtour = resultat.getInt("Idtour");
                 Id.add(Idtour);
@@ -91,7 +86,6 @@ public class Affichage_map {
                 String Description = resultat.getString("Description");
                 Typetour.add(Description);
             }
-           ResultSet resultat2 = db.executeQuery("SELECT IdMonstre, PositionX, PositionY, Equipe, Description FROM monstre");
             while(resultat2.next()){
                 int IdMonstre = resultat2.getInt("IdMonstre");
                 IdM.add(IdMonstre);
@@ -105,7 +99,8 @@ public class Affichage_map {
                 TypeMonstre.add(DescriptionM);
         }
             
-       
+            requete.close();
+            connexion.close();
         for(int i=0;i<Id.size();i=i+1){
             map[(int)PosX.get(i)][(int)PosY.get(i)]=(int)Id.get(i) ;    // On place les tours à leurs positions
         
@@ -121,7 +116,7 @@ public class Affichage_map {
             if(map[Q][R]==0){                              // zone de construction des tours
                 Color Brown = new Color(51,0,0); 
                 Case.setBackground(Brown);
-            }else if(map[Q][R]==-1){                        // chemins
+            }else if(map[Q][R]==-1||map[Q][R]==-2){                        // chemins
                 Color Sable = new Color(255,204,102);
                 Case.setBackground(Sable);
             }else if(map[Q][R]>0){                          // affichage des tours
@@ -131,19 +126,19 @@ public class Affichage_map {
                 }else{
                     Case.setBackground(Color.red);
                 }
-                System.out.print(Typetour.get(k));
-                if(Typetour.get(k).contains("tourClassique")){// identifier les types de tours
-                  ImageIcon icon = new ImageIcon("/Image/tourclassique.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
-                  JLabel img = new JLabel(icon);
-                  Case.add(img);  
-                }else if(Typetour.get(k).contains("tourIncendiaire")){
-                  ImageIcon icon = new ImageIcon("/Image/tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                if(Typetour.get(k).equals("tourClassique")){// identifier les types de tours
+                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourclassique.png")); 
                   JLabel img = new JLabel(icon);
                   Case.add(img);
-                }else if(Typetour.get(k).contains("tourPrécise")){
-                  ImageIcon icon = new ImageIcon("/Image/tourincendiaire.png"); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                }else if(Typetour.get(k).equals("tourPrécise")){
+                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourprecise.png")); 
                   JLabel img = new JLabel(icon);
                   Case.add(img);
+                }else if(Typetour.get(k).equals("tourIncendiaire")){
+                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourincendiare.png")); 
+                  JLabel img = new JLabel(icon);
+                  Case.add(img);
+                
                 }
                  
             }else if(map[Q][R]==-3){    //affichage du défenseur rouge
@@ -168,26 +163,27 @@ public class Affichage_map {
                 Case.add(Drouge);
             }
             pan.add(Case);
+            
         }
        
     
         for(int i=0; i<IdM.size(); i=i+1){  //affichage des monstres
-            if(TypeMonstre.get(i).contains("gobelin")){
-                ImageIcon icon = new ImageIcon("/Image/gobelin.png");
+            if(TypeMonstre.get(i).equals("gobelin")){
+                ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("gobelin.png"));
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
                 img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
-            }else if(TypeMonstre.get(i).contains("giant")){
-                ImageIcon icon = new ImageIcon("/Image/giant.png");
+            }else if(TypeMonstre.get(i).equals("giant")){
+                ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("giant.png"));
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
                 img.setBounds(x, y, 42, 32);
                 fenetre.add(img);
-            }else if(TypeMonstre.get(i).contains("knight")){
-                ImageIcon icon = new ImageIcon("/Image/knight.png");
+            }else if(TypeMonstre.get(i).equals("knight")){
+                ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("knight.png"));
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
@@ -196,28 +192,14 @@ public class Affichage_map {
             }
             
         }
-     //   new javax.swing.ImageIcon(getClass().getResource
-      //  jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/background_joueur.jpg"))); // NOI18N
-
-         ImageIcon icon = new ImageIcon("/Image/knight.png");
-                JLabel img = new JLabel();           
-                img.setIcon(new javax.swing.ImageIcon("/Image/background_joueur.jpg"));
-                fenetre.add(img);
         pan.setBorder(blackline);
         fenetre.add(pan);
         fenetre.setVisible(true);
         fenetre.setSize(850,650);
-//        for (int i = 0; i<map.length; i=i+1){
-//            for (int j = 0; j<map[j].length; j=j+1)
-//            System.out.println(map[i][j]);
-//     }
-//        for (int i = 0; i<map.length; i=i+1){
-//            System.out.println(map[i]);
-//        }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-       
 
    
     }
