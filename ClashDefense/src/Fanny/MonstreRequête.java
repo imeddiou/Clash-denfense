@@ -20,7 +20,7 @@ public class MonstreRequête {
     public MonstreRequête() {
     }
     
-    public void monstreRequêteInsertionMonstre(Database baseDeDonnées,String description, String couleur){          
+    public void monstreRequêteInsertion(Database baseDeDonnées,String description, String couleur){          
         try {            
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");        
             int dernierIdMonstre = 0; 
