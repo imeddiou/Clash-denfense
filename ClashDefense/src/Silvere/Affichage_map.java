@@ -174,6 +174,7 @@ public class Affichage_map {
                 Case.add(Drouge);
             }
             pan.add(Case);
+            
         }
        
     
