@@ -20,7 +20,7 @@ public class TourRequête {
     public TourRequête() {
     }
     
-    public void tourRequêteInsertionMonstre(Database baseDeDonnées,String description, String couleur){          
+    public void tourRequêteInsertion(Database baseDeDonnées,String description, String couleur){          
         try {            
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdTour) FROM tour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");        
             int dernierIdTour = 0; 
