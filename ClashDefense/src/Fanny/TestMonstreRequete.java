@@ -28,7 +28,8 @@ public class TestMonstreRequete {
             
             baseDeDonnées.connect();    
             MonstreRequête monstrerequête = new MonstreRequête();
-            monstrerequête.monstreRequêteInsertionMonstre(baseDeDonnées, "Gobelin", "Bleue");
+            monstrerequête.monstreRequêteInsertion(baseDeDonnées, "Chevalier", "Bleue");
+            //monstrerequête.monstreRequêteModificationPosition(baseDeDonnées, 2, 100, 100);
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 

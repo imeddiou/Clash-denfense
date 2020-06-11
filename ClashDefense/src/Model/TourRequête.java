@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Fanny;
+package Model;
 
+import Fanny.*;
 import Ibrahim.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,12 +17,19 @@ import java.util.logging.Logger;
  * @author fanny
  */
 public class TourRequête {
+    Database baseDeDonnées;
+    
     
     public TourRequête() {
+        try {
+            baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(TourRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
-    public void tourRequêteInsertion(Database baseDeDonnées,String description, String couleur){          
-        try {            
+    public void tourRequêteInsertion(String description, String couleur){          
+        try {  
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdTour) FROM tour WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");        
             int dernierIdTour = 0; 
             double positionX = 0.0;
@@ -48,7 +56,7 @@ public class TourRequête {
             baseDeDonnées.executeQuery("INSERT INTO tour VALUES ('"+dernierIdTour+"','"+description+"','"+positionX+"','"+positionY+"','"+couleur+"','"+niveau+"','"+pdV+"','"+portée+"','"+fréquenceDeTir+"','"+dégât+"')");
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }     
+        }
         
     }
 }

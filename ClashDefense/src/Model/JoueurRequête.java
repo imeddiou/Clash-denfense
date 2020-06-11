@@ -19,40 +19,31 @@ import javax.imageio.ImageIO;
  * @author fanny
  */
 public class JoueurRequête {
-    
-    private String pseudo;
-    private int id;
     private Database baseDeDonnées;
+
     
-    public void joueurRequêteInsertion(String pseudo){ //IM : ajouter baseDedonnées.connect() avant la requete
-         try { 
-        baseDeDonnées.connect();
+    public JoueurRequête() {
+        try {
+            baseDeDonnées.connect();
         } catch (SQLException ex) {
-            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }      
+    
+    public void joueurRequêteInsertion(String pseudo){ 
+          
         try {
             int dernierIdJoueur = 0; 
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdJoueur) FROM joueur");
             while (resultat0.next()){
                 dernierIdJoueur = resultat0.getInt(1)+1;
             }
-            baseDeDonnées.executeQuery("INSERT INTO joueur (`IdJoueur`,`Pseudo`) VALUES ('id','pseudo')");
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM joueur");
+            baseDeDonnées.executeQuery("INSERT INTO joueur VALUES ('"+dernierIdJoueur+"','"+pseudo+"')");
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }     
-        baseDeDonnées.disconnect();
         
     }
     
-    public void joueurRequêteModificationPseudo(String pseudo, int id){ //IM : ajouter baseDedonnées.connect() avant la requete
-           try { 
-        baseDeDonnées.connect();
-        } catch (SQLException ex) {
-            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        baseDeDonnées.executeQuery("UPDATE joueur SET Pseudo = 'pseudo' WHERE IdJoueur = 'id'");
-        ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM joueur");
-        baseDeDonnées.disconnect();
-    }
+    
 }

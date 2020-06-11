@@ -18,45 +18,47 @@ import java.util.logging.Logger;
  */
 public class MonstreRequête {
     private Database baseDeDonnées;
-    
-    
-    public void monstreRequêteInsertionMonstre(String description, String couleur){ //IM : ajouter baseDedonnées.connect() avant la requete   
-           try { 
-        baseDeDonnées.connect();
-        } catch (SQLException ex) {
-            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    public MonstreRequête() {
         try {
+            baseDeDonnées.connect();
+        } catch (SQLException ex) {
+            Logger.getLogger(MonstreRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void monstreRequêteInsertion(String description, String couleur){          
+        try {            
+            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");        
             int dernierIdMonstre = 0; 
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = 'description', Couleur = 'couleur'");
+            double positionX = 0.0;
+            double positionY = 0.0;
+            double vitesse = 0.0;
+            int pdV = 0;
+            int direction = 0;
+            int avancée = 0;
             while (resultat0.next()){
-                dernierIdMonstre = resultat0.getInt(1)+1;
+                dernierIdMonstre = resultat0.getInt(1)+1;                
             }
-            double positionX = resultat0.getDouble("PositionX");
-            double positionY = resultat0.getDouble("PositionY");
-            double vitesse = resultat0.getDouble("Vitesse");
-            int pdV = resultat0.getInt("PdV");
-            int direction = resultat0.getInt("Direction");
-            int avancée = resultat0.getInt("Avancée");
-            baseDeDonnées.executeQuery("INSERT INTO monstre (`IdMonstre`,`Description`,`PositionX`,`PositionY`,`Equipe`,`Vitesse`,`PdV`,`Direction`,`Avancée`) VALUES ('dernierIdMonstre','description','"+positionX+"','"+positionY+"','couleur','"+vitesse+"','"+pdV+"','"+direction+"','"+avancée+"')");
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
+            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM cataloguemonstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+            while (resultat1.next()){
+                dernierIdMonstre = dernierIdMonstre + resultat1.getInt(1);
+                positionX = resultat1.getDouble("PositionX");
+                positionY = resultat1.getDouble("PositionY");
+                vitesse = resultat1.getDouble("Vitesse");
+                pdV = resultat1.getInt("PdV");
+                direction = resultat1.getInt("Direction");
+                avancée = resultat1.getInt("Avancée");
+            }                
+            baseDeDonnées.executeQuery("INSERT INTO monstre VALUES ('"+dernierIdMonstre+"','"+description+"','"+positionX+"','"+positionY+"','"+couleur+"','"+vitesse+"','"+pdV+"','"+direction+"','"+avancée+"')");
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }     
-        baseDeDonnées.disconnect();
         
     }
     
     
     public void monstreRequêteModificationPosition (int idMonstre, double positionX, double positionY){  
-           try { 
-        baseDeDonnées.connect();
-        } catch (SQLException ex) {
-            Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = 'positionX' WHERE IdMonstre = 'idMonstre' ");
-        baseDeDonnées.executeQuery("UPDATE monstre SET PositionY = 'positionY' WHERE IdMonstre = 'idMonstre' ");
-        ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
-        baseDeDonnées.disconnect();
+         baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = "+positionX+", PositionY = "+positionY+" where IdMonstre = "+idMonstre);
     }            
 }
