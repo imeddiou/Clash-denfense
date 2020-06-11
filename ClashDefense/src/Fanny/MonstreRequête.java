@@ -87,6 +87,29 @@ public class MonstreRequête {
         } 
     }
     
+    public void perteElixir (Database baseDeDonnées,String description, String couleur){
+        try {
+            int cout = 0;
+            double elixir = 0;
+            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Coût FROM cataloguemonstre WHERE Description = '"+description+"'");
+            while (resultat0.next()){
+                cout = resultat0.getInt("Coût");
+            }
+            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT Elixir FROM équipe WHERE Couleur = '"+couleur+"'");
+            while (resultat1.next()){
+                elixir = resultat1.getDouble("Elixir") - cout;
+            }
+            if (elixir > 0){
+                baseDeDonnées.executeQuery("UPDATE équipe SET Elixir = '"+elixir+"' WHERE Couleur = '"+couleur+"' ");
+            }
+            else {
+                baseDeDonnées.executeQuery("UPDATE équipe SET Elixir = '0' WHERE Couleur = '"+couleur+"' ");
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     
     public void ModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  
               

@@ -72,4 +72,6 @@ public class EquipeRequête {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
+    
+    
 }

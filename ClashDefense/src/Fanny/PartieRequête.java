@@ -22,33 +22,8 @@ public class PartieRequête {
         
     }
     
-    public void ModificationIdJoueur(Database baseDeDonnées,int idJoueur){
-        try {
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Rôle FROM partie WHERE IdJoueur = '"+idJoueur+"'");
-            String Rôle = "";
-            while (resultat0.next()){
-                Rôle = resultat0.getString("Rôle");
-            }
-                if (Rôle.contains("Bleu")){
-                    if (Rôle.contains("Attaquant")){
-                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurAttaquant = '"+idJoueur+"' WHERE Couleur = 'Bleue' ");                    
-                    }
-                    else{
-                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurDéfenseur = '"+idJoueur+"' WHERE Couleur = 'Bleue' ");                    
-                    }
-                }
-                else {
-                    if (Rôle.contains("Attaquant")){
-                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurAttaquant = '"+idJoueur+"' WHERE Couleur = 'Rouge' ");                    
-                    }
-                    else{
-                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurDéfenseur = '"+idJoueur+"' WHERE Couleur = 'Rouge' ");                    
-                    }
-                }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }          
+    public void ModificationIdJoueur(Database baseDeDonnées,int idJoueur, String rôle){
+        baseDeDonnées.executeQuery("UPDATE partie SET IdJoueur = '"+idJoueur+"' WHERE Rôle = '"+rôle+"' ");        
     }
     
     

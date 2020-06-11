@@ -28,8 +28,9 @@ public class TestTourRequête {
             
             baseDeDonnées.connect();    
             TourRequête tourrequête = new TourRequête();
-            tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Blanc");
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
+            //tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Blanc");
+            tourrequête.perteElixir(baseDeDonnées, "tourClassique", "Rouge");
+            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM équipe");
             OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 
             

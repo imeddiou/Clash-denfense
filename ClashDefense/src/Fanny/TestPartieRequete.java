@@ -29,15 +29,15 @@ public class TestPartieRequete {
         try {
             
             baseDeDonnées.connect();   
-            EquipeRequête equiperequête = new EquipeRequête();
-            equiperequête.ModificationIdJoueur(baseDeDonnées, 5);
+            PartieRequête partierequête = new PartieRequête();
+            partierequête.ModificationIdJoueur(baseDeDonnées, 20, "AttaquantBleu");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM partie");
             OutilsJDBC.afficherResultSet(resultat);
-            Chemin20x20 map = new Chemin20x20();
-          ArrayList<ArrayList<Integer>> mapString =  map.CreationMap();
-            System.out.println(mapString.toString());
-            PartieRequête partie = new PartieRequête();
-            partie.partieRequêteStockageMap(baseDeDonnées, mapString);
+//            Chemin20x20 map = new Chemin20x20();
+//            ArrayList<ArrayList<Integer>> mapString =  map.CreationMap();
+//            System.out.println(mapString.toString());
+//            PartieRequête partie = new PartieRequête();
+//            partie.partieRequêteStockageMap(baseDeDonnées, mapString);
             baseDeDonnées.disconnect(); 
             } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
