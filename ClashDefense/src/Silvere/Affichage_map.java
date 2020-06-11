@@ -67,16 +67,7 @@ public class Affichage_map {
                     map[i][j]=map2.get(i).get(j);
                 }
             }
-//            for (int i=0 ; i<map.length; i=i+1){
-//                for (int j=5 ; j<8; j=j+1){
-//                    map[i][j]=-1;                   // définition d'un premier chemin
-//                }
-//            }
-//            for (int i=0 ; i<map.length; i=i+1){
-//                for (int j=12 ; j<15; j=j+1){
-//                    map[i][j]=-1;                   // définition d'un deuxième chemin
-//                }
-//            }
+
             map[17][9]=-3; // position des defenseur et attaquant pour test
             map[12][17]=-4;
             map[5][18]=-5;
@@ -135,18 +126,15 @@ public class Affichage_map {
                     Case.setBackground(Color.red);
                 }
                 if(Typetour.get(k).equals("tourClassique")){// identifier les types de tours
-                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourclassique.png")); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
-                  JOptionPane.showMessageDialog(null, icon);
+                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourclassique.png")); 
                   JLabel img = new JLabel(icon);
                   Case.add(img);
                 }else if(Typetour.get(k).equals("tourPrécise")){
-                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourprecise.png")); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
-                  JOptionPane.showMessageDialog(null, icon); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourprecise.png")); 
                   JLabel img = new JLabel(icon);
                   Case.add(img);
                 }else if(Typetour.get(k).equals("tourIncendiaire")){
-                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourincendiare.png")); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
-                  JOptionPane.showMessageDialog(null, icon); // test affichage de la tour; mettre dans la base de donnée le graphisme des tours et des monstres
+                  ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("tourincendiare.png")); 
                   JLabel img = new JLabel(icon);
                   Case.add(img);
                 
@@ -181,7 +169,6 @@ public class Affichage_map {
         for(int i=0; i<IdM.size(); i=i+1){  //affichage des monstres
             if(TypeMonstre.get(i).equals("gobelin")){
                 ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("gobelin.png"));
-                JOptionPane.showMessageDialog(null, icon);
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
@@ -189,7 +176,6 @@ public class Affichage_map {
                 fenetre.add(img);
             }else if(TypeMonstre.get(i).equals("giant")){
                 ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("giant.png"));
-                JOptionPane.showMessageDialog(null, icon);
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
@@ -197,7 +183,6 @@ public class Affichage_map {
                 fenetre.add(img);
             }else if(TypeMonstre.get(i).equals("knight")){
                 ImageIcon icon = new ImageIcon(Affichage_map.class.getResource("knight.png"));
-                JOptionPane.showMessageDialog(null, icon);
                 JLabel img = new JLabel(icon);
                 int x = (int) Math.floor((double) PosXM.get(i));
                 int y = (int) Math.floor((double) PosYM.get(i));
@@ -210,13 +195,7 @@ public class Affichage_map {
         fenetre.add(pan);
         fenetre.setVisible(true);
         fenetre.setSize(850,650);
-//        for (int i = 0; i<map.length; i=i+1){
-//            for (int j = 0; j<map[j].length; j=j+1)
-//            System.out.println(map[i][j]);
-//     }
-//        for (int i = 0; i<map.length; i=i+1){
-//            System.out.println(map[i]);
-//        }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
