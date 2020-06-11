@@ -25,8 +25,10 @@ public class MonstreRequête {
             int dernierIdMonstre = 0;
             int idMax= 0;
             ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT MAX(IdMonstre) FROM monstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
+            System.out.println(resultat0.isClosed());
             while (resultat0.next()){
                 idMax = resultat0.getInt(1);
+            }
                 if (idMax == 0){
                     ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT IdMonstre FROM catalogueMonstre WHERE Description = '"+description+"' AND Equipe = '"+couleur+"'");
                     while (resultat1.next()){
@@ -39,7 +41,7 @@ public class MonstreRequête {
                         dernierIdMonstre = resultat2.getInt(1)+1;
                     }
                 }                
-            }           
+                       
             double positionX = 0.0;
             double positionY = 0.0;
             double vitesse = 0.0;

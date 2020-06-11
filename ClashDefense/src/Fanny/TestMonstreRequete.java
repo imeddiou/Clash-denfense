@@ -32,7 +32,6 @@ public class TestMonstreRequete {
             //monstrerequête.monstreRequêteModificationPosition(baseDeDonnées, 2, 100, 100);
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
             OutilsJDBC.afficherResultSet(resultat);
-            baseDeDonnées.disconnect(); 
             
             } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
