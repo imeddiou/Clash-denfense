@@ -7,8 +7,10 @@ package Fanny;
 
 import Ibrahim.Database;
 import Utils.OutilsJDBC;
+import controller.Chemin20x20;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,8 +33,12 @@ public class TestPartieRequete {
             equiperequête.équipeRequêteModificationIdJoueur(baseDeDonnées, 5);
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM partie");
             OutilsJDBC.afficherResultSet(resultat);
+            Chemin20x20 map = new Chemin20x20();
+          ArrayList<ArrayList<Integer>> mapString =  map.CreationMap();
+            System.out.println(mapString.toString());
+            PartieRequête partie = new PartieRequête();
+            partie.partieRequêteStockageMap(baseDeDonnées, mapString);
             baseDeDonnées.disconnect(); 
-            
             } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -8,6 +8,7 @@ package Fanny;
 import Ibrahim.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,6 +63,13 @@ public class PartieRequête {
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
+        String mapString = "";
+        mapString = map.toString();
+        
+        System.out.println(mapString);
+        baseDeDonnées.executeQuery("UPDATE partie SET Map = '" + mapString + "'"  );
     }
     
 }
