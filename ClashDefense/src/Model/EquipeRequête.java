@@ -17,44 +17,43 @@ import java.util.logging.Logger;
  * @author fanny
  */
 public class EquipeRequête {
-    private String couleur;
-    private int IdJoueur;
     private Database baseDeDonnées;
+
     
-    
-    
-    public void équipeRequêteModificationIdJoueur(int idJoueur){
+    public EquipeRequête() {
         try {
-        //IM : ajouter baseDedonnées.connect() avant la requete
-        baseDeDonnées.connect();
+            baseDeDonnées.connect();
         } catch (SQLException ex) {
             Logger.getLogger(EquipeRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }    
+    
+    public void équipeRequêteModificationIdJoueur(int idJoueur){
         try {
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Rôle FROM partie WHERE IdJoueur = 'idjoueur'");
-            if (resultat0.getString("Rôle").contains("bleu")){
-                if (resultat0.getString("Rôle").contains("attaquant")){
-                    baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurAttaquant = 'idJoueur' WHERE Couleur = 'Bleue' ");                    
-                }
-                else{
-                    baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurDéfenseur = 'idJoueur' WHERE Couleur = 'Bleue' ");                    
-                }
+            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Rôle FROM partie WHERE IdJoueur = '"+idJoueur+"'");
+            String Rôle = "";
+            while (resultat0.next()){
+                Rôle = resultat0.getString("Rôle");
             }
-            else {
-                if (resultat0.getString("Rôle").contains("attaquant")){
-                    baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurAttaquant = 'idJoueur' WHERE Couleur = 'Rouge' ");                    
+                if (Rôle.contains("Bleu")){
+                    if (Rôle.contains("Attaquant")){
+                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurAttaquant = '"+idJoueur+"' WHERE Couleur = 'Bleue' ");                    
+                    }
+                    else{
+                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurDéfenseur = '"+idJoueur+"' WHERE Couleur = 'Bleue' ");                    
+                    }
                 }
-                else{
-                    baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurDéfenseur = 'idJoueur' WHERE Couleur = 'Rouge' ");                    
+                else {
+                    if (Rôle.contains("Attaquant")){
+                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurAttaquant = '"+idJoueur+"' WHERE Couleur = 'Rouge' ");                    
+                    }
+                    else{
+                        baseDeDonnées.executeQuery("UPDATE équipe SET IdJoueurDéfenseur = '"+idJoueur+"' WHERE Couleur = 'Rouge' ");                    
+                    }
                 }
-            }
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM équipe");
-            resultat0.close();
+            
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }          
-        baseDeDonnées.disconnect();
-        
-        
     }
 }
