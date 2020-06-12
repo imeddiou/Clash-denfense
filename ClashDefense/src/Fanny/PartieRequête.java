@@ -9,6 +9,7 @@ import Ibrahim.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,10 +41,50 @@ public class PartieRequête {
     }
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
         String mapString = "";
-        mapString = map.toString();
+        for(int i=0; i< map.size();i++){
+            for(int k=0;k<map.get(0).size();k++){
+                 mapString += map.get(i).get(k)+ " ";
+            }
+        }
+       
         
         System.out.println(mapString);
         baseDeDonnées.executeQuery("UPDATE partie SET Map = '" + mapString + "'"  );
+    }
+    public ArrayList<ArrayList<Integer>> partieRequêteSelectMapAsMatrix(Database db){
+       ResultSet rs =  db.executeQuery("SELECT DISTINCT Map FROM partie");
+      ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
+       String mapString = "";
+        try {
+            while(rs.next()){
+                mapString = rs.getString("Map");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String[] mapStringSplitted = mapString.split(" ");
+         for (int i=0;i<20;i++){
+            ArrayList<Integer> ligneMap = new ArrayList<Integer>();
+            for (int j=0;j<20;j++){
+                ligneMap.add(0);}
+            mapFinal.add(ligneMap);
+         }
+        System.out.println(mapStringSplitted.length);
+        for(int i=0;i<mapStringSplitted.length;i++){
+            for(int j=0;j<20;j++){
+                for(int k=0; k<20; k++){
+                    int nbr = Integer.parseInt(mapStringSplitted[i]);
+                 mapFinal.get(j).set(k,nbr);
+                }
+              }
+            }
+             System.out.println(mapFinal);
+
+        
+      
+      
+        
+        return mapFinal;
     }
     
 }

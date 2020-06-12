@@ -30,7 +30,7 @@ public class TestPartieRequete {
             
             baseDeDonnées.connect();   
             PartieRequête partierequête = new PartieRequête();
-            partierequête.ModificationIdJoueur(baseDeDonnées, 20, "AttaquantBleu");
+            //partierequête.ModificationIdJoueur(baseDeDonnées, 20, "AttaquantBleu");
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM partie");
             OutilsJDBC.afficherResultSet(resultat);
 //            Chemin20x20 map = new Chemin20x20();
@@ -38,6 +38,7 @@ public class TestPartieRequete {
 //            System.out.println(mapString.toString());
 //            PartieRequête partie = new PartieRequête();
 //            partie.partieRequêteStockageMap(baseDeDonnées, mapString);
+               partierequête.partieRequêteSelectMapAsMatrix(baseDeDonnées);
             baseDeDonnées.disconnect(); 
             } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);

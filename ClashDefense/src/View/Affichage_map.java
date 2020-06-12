@@ -39,9 +39,7 @@ public class Affichage_map {
      */
     public static void main(String[] args) {
         try {
-
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-
             PreparedStatement requete = connexion.prepareStatement("SELECT Idtour, PositionX, PositionY, Equipe, Description FROM tour;");
             PreparedStatement requete2 = connexion.prepareStatement("SELECT IdMonstre, PositionX, PositionY, Equipe, Description FROM monstre;");
             ResultSet resultat = requete.executeQuery();
@@ -56,7 +54,6 @@ public class Affichage_map {
             ArrayList PosYM = new ArrayList();
             ArrayList EqM = new ArrayList();
             ArrayList TypeMonstre = new ArrayList();
-
             int[][] map =new int[20][];
             for (int i=0 ; i<map.length; i=i+1){
                 map[i]=new int[20];             // définition d'une map de taille 20x20 (map exemple) à récupérer du code de Nico
@@ -68,7 +65,6 @@ public class Affichage_map {
                     map[i][j]=map2.get(i).get(j);
                 }
             }
-
             map[17][9]=-3; // position des defenseur et attaquant pour test
             map[12][17]=-4;
             map[5][18]=-5;
