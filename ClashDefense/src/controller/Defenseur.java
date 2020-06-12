@@ -137,7 +137,7 @@ public class Defenseur extends Joueur{
     
     
     
-    // CELLE CI DESSOUS N A PAS ETE TESTE
+
     public void construireUneTourIci (Tour tour1, String couleur){   // On va chercher une tour dans le catalogue, TOUR NON MISE DANS LA BDD POUR L INSTANT, JUSTE SUR LA CARTE, PAS DE DELAI D ATTENTE POUR L INSTANT, A terme l'id serait de mettre ici l'ID de la tour catalogue
         if (this.aiJeAssezDElixirPourFaireCa(0)){ // Pas de coût en Elixir pour la BDD pour l'instant
             int posXTour=(int) Math.round(tour1.getX());
@@ -151,6 +151,26 @@ public class Defenseur extends Joueur{
                 this.faireApparaitreTourSurLaCarte(posXTour, posYTour);       
         }       
     }
+    }
+        
+    public int coutTourType(int idTypeDeTour){  // 1 pour tourClassqiue, 2 pour toruPrécise, 3 pour tourIncendiaire
+        int idTour=0;
+        int coutTour=0;
+            
+        try {
+            PreparedStatement requete = connexion.prepareStatement("SELECT coût FROM catalogueTour WHERE IdTour="+idTypeDeTour+";");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                coutTour = resultat.getInt("coût");
+            }
+
+            requete.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+            
+    return coutTour;
+    }    
 }
     
-}
+

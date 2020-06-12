@@ -18,8 +18,16 @@ import java.util.logging.Logger;
  * @author PC d'Adrien
  */
 public class Monstre {
+    Connection connexion;
     private int idMonstre;
-    private Connection connexion;
+    private String description;
+    private double positionX;
+    private double positionY;
+    private String equipe;
+    private double vitesse;
+    private int pdv;
+    private int direction;
+    private int avancee;
     // On choisit un monstre dans la BDD
     //private int pdv=20;
     // Chaque monstre possède une vie
@@ -36,9 +44,17 @@ public class Monstre {
     //private double coordonnees[]={7,3};
     // Chaque monstre possède des coordonnées, et lorsque celui ci est de taille autre que 0 les coordonnées du monstre sont alors celles de leur centre 
     
-    public Monstre(int idMonstre, Connection connexion){
-        this.idMonstre=idMonstre;
+    public Monstre(Connection connexion, int idMonstre ,  String description, double positionX, double positionY,String equipe,double vitesse, int pdv,int direction, int avancee){
         this.connexion=connexion;
+        this.idMonstre=idMonstre;
+        this.description = description;
+        this.positionX=positionX;
+        this.positionY=positionY;
+        this.equipe=equipe;
+        this.vitesse=vitesse;
+        this.pdv=pdv;
+        this.direction=direction;
+        this.avancee=avancee;
     }
    
     public void AfficherLeMonstre(int carte[][])throws Exception{
@@ -214,19 +230,8 @@ public class Monstre {
             //connexion.close();
         return taille;
     }
-    public double getVitesse() throws Exception{
-            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM monstre WHERE IdMonstre=?;");
-            requete.setInt(1,this.idMonstre);
-            ResultSet resultat = requete.executeQuery();
-            double vitesse=0;
-            while (resultat.next()) {
-                vitesse = resultat.getDouble("Vitesse");}
-            requete.close();
-            connexion.close();
-        return vitesse;
-    }
-    public int getDirection() throws Exception{
+
+    public int getDirectionBDD() throws Exception{
             //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
             PreparedStatement requete = connexion.prepareStatement("SELECT Direction FROM monstre WHERE IdMonstre=?;");
             requete.setInt(1,this.idMonstre);
@@ -238,7 +243,7 @@ public class Monstre {
             //connexion.close();
         return direction;
     }
-    public int getAvancee() throws Exception{
+    public int getAvanceeBDD() throws Exception{
             //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
             PreparedStatement requete = connexion.prepareStatement("SELECT Avancee FROM monstre WHERE IdMonstre=?;");
             requete.setInt(1,this.idMonstre);
@@ -296,7 +301,7 @@ public class Monstre {
         requete.close();
         //connexion.close();
     }
-    public void setVitesse(double vitesse)throws Exception{
+    public void setVitesseBDD(double vitesse)throws Exception{
         //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Vitesse=? WHERE IdMonstre=?;");
         requete.setDouble(1,vitesse);
@@ -305,15 +310,15 @@ public class Monstre {
         requete.close();
         //connexion.close();
     }
-    public void setDirection(int direction)throws Exception{
-        //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-        PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Direction=? WHERE IdMonstre=?;");
-        requete.setInt(1,direction);
-        requete.setInt(2,this.idMonstre);
-        requete.executeUpdate();
-        requete.close();
-        //connexion.close();
-    }
+//    public void setDirection(int direction)throws Exception{
+//        //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+//        PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Direction=? WHERE IdMonstre=?;");
+//        requete.setInt(1,direction);
+//        requete.setInt(2,this.idMonstre);
+//        requete.executeUpdate();
+//        requete.close();
+//        //connexion.close();
+//    }
     public void setAvancee(int avancee)throws Exception{
         //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Avancee=? WHERE IdMonstre=?;");
@@ -417,7 +422,7 @@ public class Monstre {
     
     //Ajouts Adrien à la classe monstre commencé par Nicolas :
     
-   public String getEquipe(){
+   public String getEquipeBDD(){
        String equipe=new String ("Blanc");
        try{
             PreparedStatement requete = connexion.prepareStatement("SELECT Equipe FROM Monstre WHERE IdMonstre="+this.idMonstre+" ;");
@@ -433,17 +438,17 @@ public class Monstre {
    }
    
    public boolean lEquipeEstTElleReconnue(){
-       if (this.getEquipe().equals("Blanc")){
+       if (this.getEquipeBDD().equals("Blanc")){
            return false;
        }
        return true;
    }
    
    public String getEquipeAdverse(){
-       if (this.getEquipe().equals("Bleue")){
+       if (this.getEquipeBDD().equals("Bleue")){
         return "Rouge";
         }
-       if (this.getEquipe().equals("Rouge")){
+       if (this.getEquipeBDD().equals("Rouge")){
             return "Bleue";
        }
        return "Blanc";
@@ -451,16 +456,15 @@ public class Monstre {
    
    public void AfficherCatactérisiqueMonstre() throws Exception{
        System.out.println("Id : "+this.idMonstre);
-       System.out.println("Coordonnées : "+this.getCoordonnees());
-       System.out.println("Attaque : "+this.getAtk());
-       System.out.println("Avancée : "+this.getAvancee());
-       System.out.println("Direction : "+this.getDirection());
-       System.out.println("Equipe : "+this.getEquipe());
-       System.out.println("Taille : "+this.getTaille());
-       System.out.println("Vie : "+this.getVie());
-       System.out.println("Vitesse : "+ this.getVitesse());
-       System.out.println("Vie equipe adverse : "+this.getVieEquipeAdverse());
-       
+       System.out.println("Description : "+this.description);
+       System.out.println("PositionX : "+this.positionX);
+       System.out.println("PositionY : "+this.positionY);
+       System.out.println("Equipe : "+this.equipe);
+       System.out.println("Vitesse : "+this.vitesse);
+       System.out.println("PdV : "+this.pdv);
+       System.out.println("Direction : "+this.direction);
+       System.out.println("AVancee : "+ this.avancee);
+       System.out.println("Vie equipe adverse : "+this.getVieEquipeAdverse());   
    }
    
    public double getVieEquipeAdverse(){
@@ -498,6 +502,89 @@ public class Monstre {
             Logger.getLogger(Monstre.class.getName()).log(Level.SEVERE, null, ex);
         }
    }
+
+    public int getIdMonstre() {
+        return idMonstre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPositionX() {
+        return positionX;
+    }
+
+    public double getPositionY() {
+        return positionY;
+    }
+
+    public int getPdv() {
+        return pdv;
+    }
+
+    public double getVitesse() {
+        return vitesse;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public int getAvancee() {
+        return avancee;
+    }
+
+    public String getEquipe() {
+        return equipe;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+   
+    
+
+    public void setIdMonstre(int idMonstre) {
+        this.idMonstre = idMonstre;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPositionX(double positionX) {
+        this.positionX = positionX;
+    }
+
+    public void setPositionY(double positionY) {
+        this.positionY = positionY;
+    }
+
+    public void setEquipe(String equipe) {
+        this.equipe = equipe;
+    }
+
+    public void setPdv(int nouveauxPdv) {
+        this.pdv = nouveauxPdv;
+    }
+    
+    public void setDirection(int nouvelleDirection) {
+        this.direction = nouvelleDirection;
+    }
+
+    public void setVitesse(double vitesse) {
+        this.vitesse = vitesse;
+    }
+   
+   
    
    
 }

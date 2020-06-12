@@ -202,7 +202,7 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
     public String dansQuelCampEstTIl(){  
         String equipe = "n'est pas inscrit dans la partie";
         try {
-            PreparedStatement requete = connexion.prepareStatement("SELECT Couleur FROM équipe WHERE IdJoueur1="+this.id+"||IdJoueur2="+this.id+";");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.id+"||IdJoueurDéfenseur="+this.id+";");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
             String couleur = resultat.getString("Couleur");
@@ -223,7 +223,7 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         double Elixir = 0;
         try {
         
-            PreparedStatement requete = connexion.prepareStatement("SELECT Elixir FROM équipe WHERE IdJoueur1="+this.id+"||IdJoueur2="+this.id+";");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Elixir FROM équipe WHERE IdJoueurAttaquant="+this.id+"||IdJoueurDéfenseur="+this.id+";");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
             Elixir = resultat.getDouble("Elixir");
@@ -241,7 +241,7 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         try {
         double elixirActuel= this.getElixirEquipe();
 
-            PreparedStatement requete = connexion.prepareStatement("UPDATE équipe SET Elixir=? WHERE IdJoueur1="+this.id+"||IdJoueur2="+this.id);
+            PreparedStatement requete = connexion.prepareStatement("UPDATE équipe SET Elixir=? WHERE IdJoueurAttaquant="+this.id+"||IdJoueurDéfenseur="+this.id);
             requete.setDouble(1, elixirActuel+differenceElixir);
             requete.executeUpdate();
 

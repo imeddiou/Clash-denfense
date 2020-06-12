@@ -231,7 +231,7 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         double Elixir = 0;
         try {
         
-            PreparedStatement requete = connexion.prepareStatement("SELECT Elixir FROM équipe WHERE IdJoueur1="+this.id+"||IdJoueur2="+this.id+";");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Elixir FROM équipe WHERE IdJoueurAttaquant="+this.id+"||IdJoueurDéfenseur="+this.id+";");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
             Elixir = resultat.getDouble("Elixir");

@@ -32,16 +32,20 @@ public class TestDefenseur {
            //Commentaire titre : Création du joueur et mise sur la carte
            Defenseur DavidLuiz= new Defenseur(5, "JoueurDeTest", connexion, carte1);   // Besoin d'un joueur avec l'ID 5 dans partie, à modifier l iD si ce n'est pas le cas
            DavidLuiz.faireApparaitreJoueurSurLaCarte();
+           
+           System.out.println(DavidLuiz.dansQuelCampEstTIl());
+           System.out.println("Cout de la tour classique : "+ DavidLuiz.coutTourType(1));
 
 
            // Commentaire titre : Partie 1 - Création de la tour et apparition sur la carte
-           //Tour Mertesacker= new Tour(19,"Tour de niveau 5", 1.0, 1.0, "Rouge", 12.00,1.00);
+           //Tour Mertesacker= new Tour(this.IdMaxTour,"Tour de niveau 5", 1.0, 1.0, "Rouge", 12.00,1.00,1.00);
            //DavidLuiz.introduireTourDansLaBDD(Mertesacker);
-           //DavidLuiz.construireUneTourIci(Mertesacker, "Rouge");
-           DavidLuiz.introduireTourDansLaBDD(DavidLuiz.extraireTourDuCatalogueTour(1));
-           carte1.afficherPlan();
+           DavidLuiz.construireUneTourIci(2, "Rouge");
+           //DavidLuiz.introduireTourDansLaBDD(DavidLuiz.extraireTourDuCatalogueTour(1));
+           //carte1.afficherPlan();
            
-           System.out.println(DavidLuiz.IdMaxTour());
+           DavidLuiz.setElixir(20);
+           
            
            connexion.close();
         } catch (SQLException ex){
