@@ -54,7 +54,7 @@ public class PartieRequête {
     }
     public ArrayList<ArrayList<Integer>> partieRequêteSelectMapAsMatrix(Database db){
        ResultSet rs =  db.executeQuery("SELECT DISTINCT Map FROM partie");
-      ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
+       ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
        String mapString = "";
         try {
             while(rs.next()){
@@ -67,19 +67,19 @@ public class PartieRequête {
          for (int i=0;i<20;i++){
             ArrayList<Integer> ligneMap = new ArrayList<Integer>();
             for (int j=0;j<20;j++){
-                ligneMap.add(0);}
+                ligneMap.add(Integer.parseInt(mapStringSplitted[i+j]));}
             mapFinal.add(ligneMap);
          }
-        System.out.println(mapStringSplitted.length);
-        for(int i=0;i<mapStringSplitted.length;i++){
-            for(int j=0;j<20;j++){
-                for(int k=0; k<20; k++){
-                    int nbr = Integer.parseInt(mapStringSplitted[i]);
-                 mapFinal.get(j).set(k,nbr);
-                }
-              }
-            }
-             System.out.println(mapFinal);
+        //System.out.println(mapStringSplitted.length);
+//        for(int i=0;i<mapStringSplitted.length;i++){
+//            for(int j=0;j<20;j++){
+//                for(int k=0; k<20; k++){
+//                    int nbr = Integer.parseInt(mapStringSplitted[i]);
+//                 mapFinal.get(j).set(k,nbr);
+//                }
+//              }
+//            }
+//            System.out.println(mapFinal);
 
         
       

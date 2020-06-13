@@ -25,10 +25,16 @@ public class TestDatabase {
         // TODO code application logic here
         Database baseDeDonnee = new Database();
         baseDeDonnee.connect(); 
-        ResultSet resultat = baseDeDonnee.executeQuery("SELECT * FROM partie");
-        OutilsJDBC.afficherResultSet(resultat);
+        ResultSet res=baseDeDonnee.executeQuery("SELECT Description,PositionX,PositionY FROM tour");
+        while (res.next()){
+            System.out.println(res.getString(1));
+            System.out.println(res.getDouble(2));
+            System.out.println(res.getDouble(3));
+        }
+        OutilsJDBC.afficherResultSet(res);
         baseDeDonnee.disconnect();
-        int a=0;
+        
+        
         
         
     }
