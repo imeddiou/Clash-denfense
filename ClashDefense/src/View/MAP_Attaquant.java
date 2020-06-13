@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
@@ -24,7 +26,7 @@ import javax.swing.Timer;
  *
  * @author ibrahim
  */
-public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener {
+public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener, KeyListener {
 
     private Timer timer;
     private static final int delay = 200;
@@ -51,6 +53,9 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener 
         catch (SQLException ex) {
             Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
         initComponents();
         raffraichir();
         
@@ -81,9 +86,22 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener 
         setPreferredSize(new java.awt.Dimension(1000, 800));
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 800));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(100, 800));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jPanel1KeyTyped(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Map.png"))); // NOI18N
         jLabel1.setText("Carte");
@@ -183,6 +201,20 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener 
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void jPanel1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyTyped
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_jPanel1KeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -237,17 +269,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener 
             listeTour.add(new ArrayList<Double>());
             PartieRequête requeteMap = new PartieRequête();
             map=requeteMap.partieRequêteSelectMapAsMatrix(bdd);
-            for(int i=0 ; i<map.get(0).size(); i++){
-                for(int j=0 ; j<map.get(0).size(); j++){
-                    if (map.get(i).get(j)<0){
-                        ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/chemin.png"));
-                        JLabel img = new JLabel(icon);
-                        img.setBounds(i*30, j*30, 30, 30);
-                        jLabel1.add(img);
-                    }
-                    
-                }
-            }    
+                
                         
             res=bdd.executeQuery("SELECT Description,PositionX,PositionY FROM monstre");
             while (res.next()){
@@ -294,16 +316,36 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener 
             while (res.next()){
                 jTextField2.setText(res.getString(1));
             }
-//            Graphics quadrillage= getGraphics();
-//            PartieRequête requeteMap = new PartieRequête();
-//            map=requeteMap.partieRequêteSelectMapAsMatrix(bdd);
-//            quadrillage=this.getGraphics();
-//            for(int i=0 ; i<map.get(0).size(); i++){
-//                for(int j=0 ; j<map.get(0).size(); j++){
-//                    quadrillage.drawRect(i*30+187, j*30, 30, 30);
-//                }
-//            }
-            
+            res=bdd.executeQuery("SELECT Rôle,PositionX,PositionY FROM partie");
+            while(res.next()){
+                if (res.getString(1).contains("Bleu")){
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/joueurBleue.png"));
+                    JLabel img = new JLabel(icon);
+                    Double x = res.getDouble(2)*30;
+                    Double y = res.getDouble(3)*30;
+                    img.setBounds(x.intValue(),y.intValue(),30,30);
+                    jLabel1.add(img);
+                }else{
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/joueurRouge.png"));
+                    JLabel img = new JLabel(icon);
+                    Double x = res.getDouble(2)*30;
+                    Double y = res.getDouble(3)*30;
+                    img.setBounds(x.intValue(),y.intValue(),30,30);
+                    jLabel1.add(img);
+                }
+            }
+                       
+            for(int i=0 ; i<map.get(0).size(); i++){
+                for(int j=0 ; j<map.get(0).size(); j++){
+                    if (map.get(i).get(j)<0){
+                        ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/chemin.png"));
+                        JLabel img = new JLabel(icon);
+                        img.setBounds(i*30, j*30, 30, 30);
+                        jLabel1.add(img);
+                    }
+                    
+                }
+            }
         }
         catch (SQLException ex) {
             Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
@@ -330,4 +372,56 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener 
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        try {
+            this.joueur= new JoueurDAO(20,"pseudo");
+            res=bdd.executeQuery("SELECT PositionX,PositionY FROM partie WHERE IdJoueur="+this.joueur.getId());
+            Double x = 0.0;
+            Double y = 0.0;
+            while (res.next()){
+                x = res.getDouble(1);
+                y = res.getDouble(2);
+            }
+            char touche = e.getKeyChar();
+            if (touche=='q'){  //Gauche
+                if (x>=(double)1){
+                    x=x-1;
+                    bdd.executeQuery("UPDATE partie SET PositionX="+x+" WHERE IdJoueur="+this.joueur.getId());
+                }
+            }
+            if (touche=='d'){  // Droite
+                    if (x<=(double)18){
+                    x=x+1;
+                    bdd.executeQuery("UPDATE partie SET PositionX="+x+" WHERE IdJoueur="+this.joueur.getId());
+                }
+            }
+            if (touche=='z'){  // Haut
+                    if (y>=(double)1){
+                    y=y-1;
+                    bdd.executeQuery("UPDATE partie SET PositionY="+y+" WHERE IdJoueur="+this.joueur.getId());
+                    }
+            }
+            if (touche=='s'){  // Bas
+                    if (y<=(double)18){
+                    y=y+1;
+                    bdd.executeQuery("UPDATE partie SET PositionY="+y+" WHERE IdJoueur="+this.joueur.getId());
+                    }
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

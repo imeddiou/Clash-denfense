@@ -29,6 +29,13 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         this.connexion=connexion;
         this.carte=carte;
     }
+
+    public Joueur(int id, String pseudo) {
+        this.id = id;
+        this.pseudo = pseudo;
+    }
+    
+    
     
     // Get
     

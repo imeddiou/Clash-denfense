@@ -5,14 +5,10 @@
  */
 package controller;
 
-import Adrien.*;
+import Ibrahim.JoueurDAO;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Arrays;
-import javax.swing.JFrame;
 
 /**
  *
@@ -23,6 +19,10 @@ public class EcouteurClavier implements KeyListener{
     
     public EcouteurClavier(Joueur joueur){
         this.joueur=joueur;
+    }
+    
+    public EcouteurClavier(JoueurDAO j){
+        this.joueur=new Joueur(j.getId(),j.getPseudo());
     }
     
     public void keyPressed(KeyEvent e){
