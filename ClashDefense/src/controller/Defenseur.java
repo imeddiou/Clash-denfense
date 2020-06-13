@@ -49,7 +49,7 @@ public class Defenseur extends Joueur{
         this.carte.setCase(caseTour, 4);
     }
     
-    public int IdMaxTour() throws SQLException{
+        public int IdMaxTour() throws SQLException{
         try {
             int maxId=0;
             PreparedStatement requete = connexion.prepareStatement("SELECT IdTour FROM tour ;");
@@ -101,6 +101,7 @@ public class Defenseur extends Joueur{
             requete.close();
             return tour; //Commentaire question : comment gérer les catchs dans ce type de méthode
         }catch(SQLException ex){
+            System.out.println("Erreur : la tour n'a pas pu être extraite");
             return tour; //Commentaire question : comment gérer les catchs dans ce type de méthode
             // IM-reponse : ex.printStackTrace();
  
@@ -127,33 +128,28 @@ public class Defenseur extends Joueur{
             //connexion.close();
 
         } catch (SQLException ex) {
+            System.out.println("Erreur : la tour n'a pas pu etre insérée dans la base de donnée");
             ex.printStackTrace();
         }
     }
     
-    public void retirerTourBDD(int idTour){
-        
-    }
-    
-    
-    
 
-    public void construireUneTourIci (Tour tour1, String couleur){   // On va chercher une tour dans le catalogue, TOUR NON MISE DANS LA BDD POUR L INSTANT, JUSTE SUR LA CARTE, PAS DE DELAI D ATTENTE POUR L INSTANT, A terme l'id serait de mettre ici l'ID de la tour catalogue
-        if (this.aiJeAssezDElixirPourFaireCa(0)){ // Pas de coût en Elixir pour la BDD pour l'instant
-            int posXTour=(int) Math.round(tour1.getX());
-            int posYTour=(int) Math.round(tour1.getY());
-            System.out.println(posXTour);
-            System.out.println(posYTour);
-            if(this.puisJeConstruireUneTourIci(posXTour,posYTour)){   // Supprimer les termes entre parenthèse quand les tests seront OK, a terme c est la position du joueur qui sera utile 
-                this.setElixir(0);  //Pas de coût Elixir dans la BDD pour l'instant
+    
+    
+    
+    public void construireUneTourIci (int idTypeTour, String couleur){   // On va chercher une tour dans le catalogue, TOUR NON MISE DANS LA BDD POUR L INSTANT, JUSTE SUR LA CARTE, PAS DE DELAI D ATTENTE POUR L INSTANT, A terme l'id serait de mettre ici l'ID de la tour catalogue
+        if (this.aiJeAssezDElixirPourFaireCa(this.coutTourType(idTypeTour))){ // Pas de coût en Elixir pour la BDD pour l'instant
+            Tour tour=this.extraireTourDuCatalogueTour(idTypeTour);
+            //if(this.puisJeConstruireUneTourIci(posXTour,posYTour)){   
+                this.setElixir(-this.coutTourType(idTypeTour));  
                 // Manque la partie de patience du temps
-                this.introduireTourDansLaBDD(tour1);
-                this.faireApparaitreTourSurLaCarte(posXTour, posYTour);       
-        }       
+                this.introduireTourDansLaBDD(tour);
+                //this.faireApparaitreTourSurLaCarte(posXTour, posYTour);       
+        //}       
     }
-    }
-        
-    public int coutTourType(int idTypeDeTour){  // 1 pour tourClassqiue, 2 pour toruPrécise, 3 pour tourIncendiaire
+}
+
+        public int coutTourType(int idTypeDeTour){  // 1 pour tourClassqiue, 2 pour toruPrécise, 3 pour tourIncendiaire
         int idTour=0;
         int coutTour=0;
             
@@ -166,11 +162,12 @@ public class Defenseur extends Joueur{
 
             requete.close();
         } catch (SQLException ex) {
+            System.out.println("Erreur : Le cout de la tour n'a pas été trouvé");
             ex.printStackTrace();
         }
             
     return coutTour;
-    }    
+}
 }
     
 
