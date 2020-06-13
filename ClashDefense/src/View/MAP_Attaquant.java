@@ -29,7 +29,7 @@ import javax.swing.Timer;
 public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener, KeyListener {
 
     private Timer timer;
-    private static final int delay = 200;
+    private static final int delay = 100;
     private Database bdd;
     private ResultSet res;
     private JoueurDAO joueur;
@@ -256,7 +256,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
     public void raffraichir(){
         jLabel1.removeAll();
         jLabel1.setIcon(null);
-        jLabel1.setIcon(new ImageIcon(getClass().getResource("/Image/Map.png")));
+        jLabel1.setIcon(new ImageIcon(getClass().getResource("/Image/Map.png"))); //dessin de la carte
         try {
             ArrayList<ArrayList> listeMonstre = new ArrayList<ArrayList>();
             ArrayList<ArrayList> listeTour = new ArrayList<ArrayList>();
@@ -269,8 +269,28 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
             listeTour.add(new ArrayList<Double>());
             PartieRequête requeteMap = new PartieRequête();
             map=requeteMap.partieRequêteSelectMapAsMatrix(bdd);
-                
-                        
+            
+            //on dessine les joueurs
+            res=bdd.executeQuery("SELECT Rôle,PositionX,PositionY FROM partie");
+            while(res.next()){
+                if (res.getString(1).contains("Bleu")){
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/joueurBleue.png"));
+                    JLabel img = new JLabel(icon);
+                    Double x = res.getDouble(2)*30;
+                    Double y = res.getDouble(3)*30;
+                    img.setBounds(x.intValue(),y.intValue(),30,30);
+                    jLabel1.add(img);
+                }else{
+                    ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/joueurRouge.png"));
+                    JLabel img = new JLabel(icon);
+                    Double x = res.getDouble(2)*30;
+                    Double y = res.getDouble(3)*30;
+                    img.setBounds(x.intValue(),y.intValue(),30,30);
+                    jLabel1.add(img);
+                }
+            }  
+            
+            //on dessine les montres et les tours en utilisant l'Icon des jLabel.         
             res=bdd.executeQuery("SELECT Description,PositionX,PositionY FROM monstre");
             while (res.next()){
                 listeMonstre.get(0).add(res.getString(1));
@@ -308,6 +328,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
                 img.setBounds(x.intValue(),y.intValue(),30,30);
                 jLabel1.add(img);
             }
+            //on met a jour les PdV des équipe
             res=bdd.executeQuery("SELECT PdV FROM équipe WHERE couleur='Bleue'");
             while (res.next()){
                 jTextField1.setText(res.getString(1));
@@ -316,25 +337,8 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
             while (res.next()){
                 jTextField2.setText(res.getString(1));
             }
-            res=bdd.executeQuery("SELECT Rôle,PositionX,PositionY FROM partie");
-            while(res.next()){
-                if (res.getString(1).contains("Bleu")){
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/joueurBleue.png"));
-                    JLabel img = new JLabel(icon);
-                    Double x = res.getDouble(2)*30;
-                    Double y = res.getDouble(3)*30;
-                    img.setBounds(x.intValue(),y.intValue(),30,30);
-                    jLabel1.add(img);
-                }else{
-                    ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/joueurRouge.png"));
-                    JLabel img = new JLabel(icon);
-                    Double x = res.getDouble(2)*30;
-                    Double y = res.getDouble(3)*30;
-                    img.setBounds(x.intValue(),y.intValue(),30,30);
-                    jLabel1.add(img);
-                }
-            }
-                       
+            
+            //on dessine le chemin           
             for(int i=0 ; i<map.get(0).size(); i++){
                 for(int j=0 ; j<map.get(0).size(); j++){
                     if (map.get(i).get(j)<0){
@@ -375,6 +379,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
 
     @Override
     public void keyTyped(KeyEvent e) {
+        //on gère le mouvement du joueur
         try {
             this.joueur= new JoueurDAO(20,"pseudo");
             res=bdd.executeQuery("SELECT PositionX,PositionY FROM partie WHERE IdJoueur="+this.joueur.getId());
