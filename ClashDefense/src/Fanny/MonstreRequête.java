@@ -81,6 +81,7 @@ public class MonstreRequête {
             }
             else {
                 baseDeDonnées.executeQuery("UPDATE monstre SET PdV = '0' WHERE IdMonstre = '"+idMonstre+"' ");
+                baseDeDonnées.executeQuery("DELETE FROM monstre WHERE IdMonstre = '"+idMonstre+"' ");
             } 
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);

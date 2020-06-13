@@ -50,7 +50,7 @@ public class EquipeRequête {
         }          
     }
     
-    public void pertePdV (Database baseDeDonnées,String description, String couleur){
+    public void pertePdV (Database baseDeDonnées,String description,int idMonstre, String couleur){
         try {
             int degat = 0;
             int pdv = 0;
@@ -64,9 +64,11 @@ public class EquipeRequête {
             }
             if (pdv > 0){
                 baseDeDonnées.executeQuery("UPDATE équipe SET PdV = '"+pdv+"' WHERE Couleur = '"+couleur+"' ");
+                baseDeDonnées.executeQuery("DELETE FROM monstre WHERE IdMonstre = '"+idMonstre+"' ");
             }
             else {
                 baseDeDonnées.executeQuery("UPDATE équipe SET PdV = '0' WHERE Couleur = '"+couleur+"' ");
+                baseDeDonnées.executeQuery("DELETE FROM monstre WHERE IdMonstre = '"+idMonstre+"' ");
             } 
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
