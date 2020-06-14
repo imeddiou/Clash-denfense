@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Attaque {//C'est la classe qui fait avancer le monstre
+    //cocucou adri
     public static void main(String[] args){
         Chemin20x20 carte = new Chemin20x20();//On créé un nouveau chemin
         ArrayList<ArrayList<Integer>> map = carte.CreationMap();//Et on récupère la carte
