@@ -43,7 +43,9 @@ public class Defenseur extends Joueur{
             XYaverifier.add((double)X);
             XYaverifier.add((double)Y);
             if (!listePositionTour.contains(XYaverifier)){
-                reponse=true;
+                if(carte.get(Y).get(X)==0){
+                    reponse=true;
+                }
             }
             
         } catch (SQLException ex) {
@@ -133,7 +135,7 @@ public class Defenseur extends Joueur{
     
     public void introduireTourDansLaBDD(Tour tour0, String couleur){
         try {
-            System.out.println("2eme try");
+            
             PreparedStatement requete = connexion.prepareStatement("SELECT MAX(IdTour) FROM tour");
             ResultSet resultat = requete.executeQuery();
             int idTourMax = 0;
@@ -172,7 +174,7 @@ public class Defenseur extends Joueur{
             Tour tour=this.extraireTourDuCatalogueTour(idTypeTour);
             
             try {
-                System.out.println("1er try");
+                
                 PreparedStatement requete = connexion.prepareStatement("SELECT PositionX,PositionY FROM partie WHERE IdJoueur="+this.id);
                 ResultSet resultat = requete.executeQuery();
                 Double posXTourDouble = 0.0;
@@ -184,7 +186,7 @@ public class Defenseur extends Joueur{
                 int posXTour = posXTourDouble.intValue();
                 int posYTour = posYTourDouble.intValue();
                 if(this.puisJeConstruireUneTourIci(posXTour,posYTour)){  
-                    System.out.println("1er if");
+                    
                     this.setElixir(-this.coutTourType(idTypeTour));  
                     this.introduireTourDansLaBDD(tour, couleur);
                     this.faireApparaitreTourSurLaCarte(posXTour, posYTour);    
