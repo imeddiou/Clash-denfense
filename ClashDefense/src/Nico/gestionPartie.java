@@ -2,21 +2,20 @@
 package Nico;
 
 public class gestionPartie {
-    public void disparitionMonstre(int ID){
+    //public void disparitionMonstre(int ID){
         //supprimer le monstre avec l'ID de la BDD
-    }
-    public void enleverVieChateau(int equipe, int ID){
+    //}
+    //public void enleverVieChateau(int equipe, int ID){
         //récupérer la vie du château
         //récupérer l 'atk du monstre avec l'ID dans la BDD
         //Faire la différence
-        disparitionMonstre(ID);
-    }
-    public void disparitionTour(int ID){
+        //disparitionMonstre(ID);
+    //}
+    //public void disparitionTour(int ID){
         //supprimer la tour avce l'ID de la BDD
-    }
+    //}
     public void nouveauMonstre(){
         //On met à 0 le compteur de vitesse
-        //On iniitialise sa postion selon l'équipe
         //On rajoute le monstre à la liste des monstres de la BDD
     }
     public void actionMonstre(){
@@ -34,7 +33,7 @@ public class gestionPartie {
                 //Sinon
                     ////On rajoute 1 au compteur de vitesse dans la BDD d'action
             //On compare avec le compteur dans la BDD catalogue
-            //Si le compteur actif > compteur catalogue
+            //Si le compteur actif >= compteur catalogue
                 //On met à 0 le compteur
                 //On avance le monstre
             //Si la vie du monstre est négative:
@@ -49,8 +48,6 @@ public class gestionPartie {
     }
     public void actionTour(){
         //Pour toutes les tours de la BDD
-            //Si la vie de la tour est négative:
-                //disparitionMonstre(ID);
             // On rajoute 1 au compteur de vitesse dans la BDD d'action
             // On compare le compteur dans la BDD catalogue
             //Si ils sont égaux 
