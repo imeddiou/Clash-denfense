@@ -65,9 +65,10 @@ public class PartieRequête {
          for (int i=0;i<20;i++){
             ArrayList<Integer> ligneMap = new ArrayList<Integer>();
             for (int j=0;j<20;j++){
-                ligneMap.add(Integer.parseInt(mapStringSplitted[i+j]));}
+                ligneMap.add(Integer.parseInt(mapStringSplitted[i*20+j]));}
             mapFinal.add(ligneMap);
          }
+         //System.out.println(mapFinal);
         return mapFinal;
     }
     

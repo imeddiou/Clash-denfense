@@ -339,12 +339,14 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
             }
             
             //on dessine le chemin           
+            
             for(int i=0 ; i<map.get(0).size(); i++){
+                //System.out.println(map.get(i));
                 for(int j=0 ; j<map.get(0).size(); j++){
                     if (map.get(i).get(j)<0){
                         ImageIcon icon = new ImageIcon(getClass().getResource("/Image/image30x30/chemin.png"));
                         JLabel img = new JLabel(icon);
-                        img.setBounds(i*30, j*30, 30, 30);
+                        img.setBounds(j*30, i*30, 30, 30);
                         jLabel1.add(img);
                     }
                     
