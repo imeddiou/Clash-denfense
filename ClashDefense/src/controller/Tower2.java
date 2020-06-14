@@ -19,7 +19,7 @@ public class Tower2 {
     private int niveau;//le niveau est initialement 1 et augmente par l'intermédiaire des joueurs pour augmenter les performances de la tour
     private int type;//le type de la tour et le type de sort qu'elle afflige, ce sera détaillé plus bas
     private double coordonnees[];//les coordonnées de la tour 
-    private Database db;
+    private Database db = new Database();
     
     public Tower2(int vie,double rayon,int degat,double vitesse,double timing,int nombreDeMonstreTouches,int niveau,int type,double[] coordonnees){
         this.vie=vie;

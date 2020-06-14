@@ -16,7 +16,7 @@ public class MSDC2 {//Monstre Suiveur De Chemin version 2
     private int avancee;//l'avancée un un compteur qui s'incrémente à chaque fois que le monstre avance pour pouvoir ensuite savoir quels sont les monstres les plus avancés
     private int chemin;//le chemin est une constante choisit aléatoirement au départ qui définit si le monstre devra suivre le chemin de gauche, du centre ou de droite
     private double[] coordonnees;//trivialement les coordonnées du monstre
-    private Database db;
+    private Database db = new Database();
 
     
     public MSDC2(int pdv,double vitesse,int atk,int[] dureeEffet,int direction,int avancee,int chemin,double[] coordonnees){
