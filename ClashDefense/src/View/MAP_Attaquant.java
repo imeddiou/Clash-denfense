@@ -35,6 +35,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
     private JoueurDAO joueur;
     private ArrayList<ArrayList<Integer>> map;
     private int idJoueur;
+    int compteur = 0;
 
     public JoueurDAO getJoueur() {
         return joueur;
@@ -81,9 +82,12 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jTextField4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 800));
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 800));
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -93,7 +97,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         });
         getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(100, 800));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 800));
         jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPanel1KeyPressed(evt);
@@ -151,20 +155,59 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         jTextField2.setMinimumSize(new java.awt.Dimension(30, 25));
         jTextField2.setPreferredSize(new java.awt.Dimension(30, 25));
 
+        jLabel7.setFont(new java.awt.Font("Harrington", 1, 18)); // NOI18N
+        jLabel7.setText("Elixir Rouge :");
+
+        jLabel8.setFont(new java.awt.Font("Harrington", 1, 18)); // NOI18N
+        jLabel8.setText("Elixir Bleu :");
+
+        jTextField3.setEditable(false);
+        jTextField3.setFont(new java.awt.Font("Harrington", 1, 18)); // NOI18N
+        jTextField3.setText("20");
+        jTextField3.setMaximumSize(new java.awt.Dimension(30, 25));
+        jTextField3.setMinimumSize(new java.awt.Dimension(30, 25));
+        jTextField3.setPreferredSize(new java.awt.Dimension(30, 25));
+
+        jTextField4.setEditable(false);
+        jTextField4.setFont(new java.awt.Font("Harrington", 1, 18)); // NOI18N
+        jTextField4.setText("20\n");
+        jTextField4.setMaximumSize(new java.awt.Dimension(30, 25));
+        jTextField4.setMinimumSize(new java.awt.Dimension(30, 25));
+        jTextField4.setPreferredSize(new java.awt.Dimension(30, 25));
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,12 +221,22 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,6 +267,10 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
     private void jPanel1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyTyped
         // TODO add your handling code here:        
     }//GEN-LAST:event_jPanel1KeyTyped
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -352,6 +409,20 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
                     
                 }
             }
+            Double elixirBleue = 0.0;
+            Double elixirRouge = 0.0;
+        
+            res=bdd.executeQuery("SELECT Elixir FROM équipe WHERE Couleur='Bleue'");
+            while(res.next()){
+                elixirBleue = res.getDouble(1);
+            }
+            res=bdd.executeQuery("SELECT Elixir FROM équipe WHERE Couleur='Rouge'");
+            while(res.next()){
+                elixirRouge = res.getDouble(1);
+            }
+            jTextField3.setText(""+elixirRouge);
+            jTextField4.setText(""+elixirBleue);
+            
         }
         catch (SQLException ex) {
             Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
@@ -364,6 +435,35 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
     
     
     public void actionPerformed(ActionEvent e) {
+        Double elixirBleue = 0.0;
+        Double elixirRouge = 0.0;
+        try {
+                res=bdd.executeQuery("SELECT Elixir FROM équipe WHERE Couleur='Bleue'");
+                while(res.next()){
+                    elixirBleue = res.getDouble(1);
+                }
+                res=bdd.executeQuery("SELECT Elixir FROM équipe WHERE Couleur='Rouge'");
+                while(res.next()){
+                    elixirRouge = res.getDouble(1);
+                }
+            }
+            catch (SQLException ex) {
+                Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        if (compteur==5){
+            if (elixirRouge<20){
+                elixirRouge+=0.25;
+                bdd.executeQuery("UPDATE équipe SET Elixir="+elixirRouge+"WHERE Couleur='Rouge'");
+            }
+            if (elixirBleue<20){
+                elixirBleue+=0.25;
+                bdd.executeQuery("UPDATE équipe SET Elixir="+elixirBleue+"WHERE Couleur='Bleue'");
+            }
+            compteur=0;
+        }else{
+            compteur++;
+        }
+        
         raffraichir();
     }
 
@@ -374,9 +474,13 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 
     @Override
