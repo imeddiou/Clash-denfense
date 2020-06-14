@@ -299,8 +299,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
         while (res.next()){
             String couleur = res.getString(1);
-            
-            
+                        
             joueur.apparitionMonstre(2, couleur);
         }
         
