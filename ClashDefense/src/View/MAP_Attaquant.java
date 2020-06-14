@@ -450,7 +450,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
             catch (SQLException ex) {
                 Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        if (compteur==5){
+        if (compteur==4){
             if (elixirRouge<20){
                 elixirRouge+=0.25;
                 bdd.executeQuery("UPDATE équipe SET Elixir="+elixirRouge+"WHERE Couleur='Rouge'");
