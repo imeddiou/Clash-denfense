@@ -26,11 +26,11 @@ public class TestDatabase {
         Database baseDeDonnee = new Database();
         baseDeDonnee.connect(); 
         ResultSet res=baseDeDonnee.executeQuery("SELECT Description,PositionX,PositionY FROM tour");
-        while (res.next()){
-            System.out.println(res.getString(1));
-            System.out.println(res.getDouble(2));
-            System.out.println(res.getDouble(3));
-        }
+//        while (res.next()){
+//            System.out.println(res.getString(1));
+//            System.out.println(res.getDouble(2));
+//            System.out.println(res.getDouble(3));
+//        }
         OutilsJDBC.afficherResultSet(res);
         baseDeDonnee.disconnect();
         
