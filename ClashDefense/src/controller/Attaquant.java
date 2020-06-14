@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class Attaquant extends Joueur{
     
-    public Attaquant(int id, String pseudo, Connection connexion, CarteTest carte) {
+    public Attaquant(int id, String pseudo, Connection connexion, ArrayList<ArrayList<Integer>> carte) {
         super(id, pseudo, connexion, carte);
     }
 
@@ -134,8 +134,14 @@ public class Attaquant extends Joueur{
 //On choisit un monstre et on l'introduit dans la BDD de monstre au combat    
     public void introduireMonstreDansLaBDD(Monstre monstre0){
         try {
-            PreparedStatement requete = connexion.prepareStatement("INSERT INTO monstre VALUES (?,?,?,?,?,?,?,?,?)");
-            requete.setInt(1, monstre0.getIdMonstre());
+            PreparedStatement requete = connexion.prepareStatement("SELECT MAX(IdMonstre) FROM monstre");
+            ResultSet resultat = requete.executeQuery();
+            int idMonstreMax = 0;
+            while (resultat.next()){
+                idMonstreMax = resultat.getInt(1);
+            }
+            requete = connexion.prepareStatement("INSERT INTO monstre VALUES (?,?,?,?,?,?,?,?,?)");
+            requete.setInt(1, idMonstreMax+1);
             requete.setString(2, monstre0.getDescription());
             requete.setDouble(3, monstre0.getPositionX());
             requete.setDouble(4, monstre0.getPositionY());
@@ -173,15 +179,17 @@ public class Attaquant extends Joueur{
                 idMonstre=500;
             }
             // Grâce aux 3 if précèdemments on a fait correspondre l'ID de Type à un Id de catalogue
-            System.out.println("IdMonstre="+idMonstre);
-            if(couleur=="Rouge"){
+            
+            if(couleur.equals("Rouge")){
                 idMonstre=idMonstre+100;
             } 
+            
+            System.out.println("IdMonstre="+idMonstre);
             // Grâce au if précèdent on a modifié l'Id du catalogue si l'attaquant qui place le monstre est rouge
             
             Monstre monstre=this.extraireMonstreDuCatalogueMonstre(idMonstre); // On récupère un monstre dans le catalogue
             monstre.setPositionX(monstre.getPositionX()+(((int)(3*random()))-1)*1.0);       //Le monstre est par défaut au milieu du chemin créé et d'épaisseur 3, on modifie aléatoirement sa position pour déterminer si il est au milieu, à gauche ou a droite sur le chemin
-            System.out.println(monstre.getPositionX());
+            //System.out.println(monstre.getPositionX());
             this.introduireMonstreDansLaBDD(monstre);                           // On introduit le monstre pour lequel on a modifié la position sur le chemin dans la BDD de combat
             this.setElixir(-this.coutMonstreType(idTypeMonstre));               // On enlève à l'équipe le coût en Elixir de la création de ce monstre      
         }       

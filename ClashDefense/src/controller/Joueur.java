@@ -17,13 +17,13 @@ import java.util.ArrayList;
  * @author PC d'Adrien
  */
 public class Joueur {   // Adapter pour retirer "connection" des arguments
-    private int id;
-    private String pseudo;
+    int id;
+    String pseudo;
     Connection connexion;
-    CarteTest carte;
+    ArrayList<ArrayList<Integer>> carte;
     
     
-    public Joueur(int id, String pseudo, Connection connexion, CarteTest carte){
+    public Joueur(int id, String pseudo, Connection connexion, ArrayList<ArrayList<Integer>> carte){
         this.id=id;
         this.pseudo=pseudo;
         this.connexion=connexion;
@@ -79,7 +79,7 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         return this.getLocalisationJoueur()[1];
     }
     
-    public CarteTest getCarte(){    
+    public ArrayList<ArrayList<Integer>> getCarte(){    
         return this.carte;
     }
     
@@ -110,100 +110,100 @@ public class Joueur {   // Adapter pour retirer "connection" des arguments
         this.pseudo=nouveauPseudo;
     }
     
-    public void faireApparaitreJoueurSurLaCarte(){
-        if (this.carte.getCase(new int[] {this.getX(),this.getY()})==0){
-            this.carte.setCase(new int[] {this.getX(),this.getY()}, 2);
-                }
-    }
+//    public void faireApparaitreJoueurSurLaCarte(){
+//        if (this.carte.getCase(new int[] {this.getX(),this.getY()})==0){
+//            this.carte.setCase(new int[] {this.getX(),this.getY()}, 2);
+//                }
+//    }
     
     
-    public boolean peutTIlSedeplacerADroite() {         // Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
-        if (this.carte.getDimension()[1]-2<this.getY()){
-            return false;
-        }
-        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
-        listeCasesAutorisees.add(0);  //Ensemble des cases où le déplacement du personnage est autorisé, aujourd'hui seulement la case "0" correspondant à du vide
-        int[] caseDeDroite=new int[]{this.getX(),this.getY()+1};
-        if (listeCasesAutorisees.contains(this.carte.getCase(caseDeDroite))){
-            return true;
-        }
-        return false;
-        }
-    
-    public void deplacementADroite() {          // Déplacement sur la carte et la BDD
-        int[] caseDeDroite=new int[]{this.getX(),this.getY()+1};
-        if (this.peutTIlSedeplacerADroite()){
-            this.carte.setCase(this.getLocalisationJoueur(), 0);
-            this.setLocalisationJoueur(caseDeDroite);
-            this.carte.setCase(this.getLocalisationJoueur(), 2);
-        }
-    }
-    
-        public boolean peutTIlSedeplacerAGauche() {// Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
-        if (1>this.getY()){
-            return false;
-        }
-        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
-        listeCasesAutorisees.add(0);
-        int[] caseDeGauche=new int[]{getX(),this.getY()-1};
-        if (listeCasesAutorisees.contains(this.carte.getCase(caseDeGauche))){
-            return true;
-        }
-        return false;
-        }
-    
-    public void deplacementAGauche() {          // Déplacement sur la carte et la BDD
-        int[] caseDeGauche=new int[]{this.getX(),this.getY()-1};
-        if (this.peutTIlSedeplacerAGauche()){
-            this.carte.setCase(this.getLocalisationJoueur(), 0);
-            this.setLocalisationJoueur(caseDeGauche);
-            this.carte.setCase(this.getLocalisationJoueur(), 2);
-        }
-    }
-    
-    public boolean peutTIlSedeplacerEnBas() {// Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
-        if (this.carte.getDimension()[0]-2<this.getY()){
-            return false;
-        }
-        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
-        listeCasesAutorisees.add(0);
-        int[] caseDuBas=new int[]{this.getX()+1,this.getY()};
-        if (listeCasesAutorisees.contains(this.carte.getCase(caseDuBas))){
-            return true;
-        }
-        return false;
-        }
-    
-    public void deplacementEnBas() {            // Déplacement sur la carte et la BDD
-        int[] caseDuBas=new int[]{this.getX()+1,this.getY()};
-        if (this.peutTIlSedeplacerEnBas()){
-            this.carte.setCase(this.getLocalisationJoueur(), 0);
-            this.setLocalisationJoueur(caseDuBas);
-            this.carte.setCase(this.getLocalisationJoueur(), 2);
-        }
-    }
-    
-    public boolean peutTIlSedeplacerEnHaut() {// Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
-        if (1>this.getX()){
-            return false;
-        }
-        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
-        listeCasesAutorisees.add(0);
-        int[] caseDuHaut=new int[]{this.getX()-1,this.getY()};
-        if (listeCasesAutorisees.contains(this.carte.getCase(caseDuHaut))){
-            return true;
-        }
-        return false;
-        }
-    
-    public void deplacementEnHaut() {       // Déplacement sur la carte et la BDD
-        int[] caseDuHaut=new int[]{this.getX()-1,this.getY()};
-        if (this.peutTIlSedeplacerEnHaut()){
-            this.carte.setCase(this.getLocalisationJoueur(), 0);
-            this.setLocalisationJoueur(caseDuHaut);
-            this.carte.setCase(this.getLocalisationJoueur(), 2);
-        }
-    }
+//    public boolean peutTIlSedeplacerADroite() {         // Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
+//        if (this.carte.getDimension()[1]-2<this.getY()){
+//            return false;
+//        }
+//        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
+//        listeCasesAutorisees.add(0);  //Ensemble des cases où le déplacement du personnage est autorisé, aujourd'hui seulement la case "0" correspondant à du vide
+//        int[] caseDeDroite=new int[]{this.getX(),this.getY()+1};
+//        if (listeCasesAutorisees.contains(this.carte.getCase(caseDeDroite))){
+//            return true;
+//        }
+//        return false;
+//        }
+//    
+//    public void deplacementADroite() {          // Déplacement sur la carte et la BDD
+//        int[] caseDeDroite=new int[]{this.getX(),this.getY()+1};
+//        if (this.peutTIlSedeplacerADroite()){
+//            this.carte.setCase(this.getLocalisationJoueur(), 0);
+//            this.setLocalisationJoueur(caseDeDroite);
+//            this.carte.setCase(this.getLocalisationJoueur(), 2);
+//        }
+//    }
+//    
+//        public boolean peutTIlSedeplacerAGauche() {// Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
+//        if (1>this.getY()){
+//            return false;
+//        }
+//        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
+//        listeCasesAutorisees.add(0);
+//        int[] caseDeGauche=new int[]{getX(),this.getY()-1};
+//        if (listeCasesAutorisees.contains(this.carte.getCase(caseDeGauche))){
+//            return true;
+//        }
+//        return false;
+//        }
+//    
+//    public void deplacementAGauche() {          // Déplacement sur la carte et la BDD
+//        int[] caseDeGauche=new int[]{this.getX(),this.getY()-1};
+//        if (this.peutTIlSedeplacerAGauche()){
+//            this.carte.setCase(this.getLocalisationJoueur(), 0);
+//            this.setLocalisationJoueur(caseDeGauche);
+//            this.carte.setCase(this.getLocalisationJoueur(), 2);
+//        }
+//    }
+//    
+//    public boolean peutTIlSedeplacerEnBas() {// Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
+//        if (this.carte.getDimension()[0]-2<this.getY()){
+//            return false;
+//        }
+//        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
+//        listeCasesAutorisees.add(0);
+//        int[] caseDuBas=new int[]{this.getX()+1,this.getY()};
+//        if (listeCasesAutorisees.contains(this.carte.getCase(caseDuBas))){
+//            return true;
+//        }
+//        return false;
+//        }
+//    
+//    public void deplacementEnBas() {            // Déplacement sur la carte et la BDD
+//        int[] caseDuBas=new int[]{this.getX()+1,this.getY()};
+//        if (this.peutTIlSedeplacerEnBas()){
+//            this.carte.setCase(this.getLocalisationJoueur(), 0);
+//            this.setLocalisationJoueur(caseDuBas);
+//            this.carte.setCase(this.getLocalisationJoueur(), 2);
+//        }
+//    }
+//    
+//    public boolean peutTIlSedeplacerEnHaut() {// Test s'il n'y a pas un chemin ou un bords de carte dans la direction voulue
+//        if (1>this.getX()){
+//            return false;
+//        }
+//        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
+//        listeCasesAutorisees.add(0);
+//        int[] caseDuHaut=new int[]{this.getX()-1,this.getY()};
+//        if (listeCasesAutorisees.contains(this.carte.getCase(caseDuHaut))){
+//            return true;
+//        }
+//        return false;
+//        }
+//    
+//    public void deplacementEnHaut() {       // Déplacement sur la carte et la BDD
+//        int[] caseDuHaut=new int[]{this.getX()-1,this.getY()};
+//        if (this.peutTIlSedeplacerEnHaut()){
+//            this.carte.setCase(this.getLocalisationJoueur(), 0);
+//            this.setLocalisationJoueur(caseDuHaut);
+//            this.carte.setCase(this.getLocalisationJoueur(), 2);
+//        }
+//    }
     
 
     

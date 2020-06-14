@@ -6,6 +6,7 @@
 package controller;
 
 import Adrien.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -14,15 +15,15 @@ import java.util.Arrays;
  */
 public class CarteTest {
     private int[] dimensions;
-    private int[][] carte;
+    private ArrayList<ArrayList<Integer>> carte;
     
     public CarteTest(int[] dimensions) {
         this.dimensions=dimensions;
         this.carte=carte;
     }
     
-    public int[][] creerUneCarteVierge(){   // Creer une carte de dimension voulue
-        this.carte = new int[this.dimensions[0]][this.dimensions[1]];
+    public ArrayList<ArrayList<Integer>> creerUneCarteVierge(){   // Creer une carte de dimension voulue
+        this.carte = new ArrayList<ArrayList<Integer>>();
         return (this.carte);
     }
     
@@ -32,26 +33,26 @@ public class CarteTest {
         return this.dimensions;
     }
     
-    public int[][] getCarte(){
+    public ArrayList<ArrayList<Integer>> getCarte(){
         return this.carte;
     }
     
-    public int getCase(int[] coordonnees){
-        return this.carte[coordonnees[0]][coordonnees[1]];
-    }
+//    public int getCase(int[] coordonnees){
+//        return this.carte[coordonnees[0]][coordonnees[1]];
+//    }
     
     // Set
-    public void setCase(int[] coordonnees, int nouvelleValeure){
-        carte[coordonnees[0]][coordonnees[1]]=nouvelleValeure;
-    }
+//    public void setCase(int[] coordonnees, int nouvelleValeure){
+//        carte[coordonnees[0]][coordonnees[1]]=nouvelleValeure;
+//    }
     
-    public int[][] creerUnCheminDroitAuMilieu(int largeur){ //la largeur doit etre de la meme parite que la dimension de la carte
+    public ArrayList<ArrayList<Integer>> creerUnCheminDroitAuMilieu(int largeur){ //la largeur doit etre de la meme parite que la dimension de la carte
         this.carte=this.creerUneCarteVierge();
         int milieu=this.dimensions[1]/2;
         int[] intervalChemin=new int[] {milieu-largeur/2,milieu+largeur/2};
         for (int i=intervalChemin[0]-1;i<intervalChemin[1]-1;i=i+1){
             for(int j=0;j<this.dimensions[0];j=j+1){
-                carte[j][i]=1;
+                carte.get(i).set(j,1);
             }
         }
         return(carte);
@@ -59,7 +60,7 @@ public class CarteTest {
     
     public void afficherPlan(){             // Afficher le plan sous la forme de carte 2D et pas sous la forme d'une ligne
         for (int i=0;i<this.dimensions[0];i=i+1){
-            System.out.println(Arrays.toString(carte[i]));
+            System.out.println(carte);
         }
 }    
 }

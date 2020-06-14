@@ -9,6 +9,7 @@ import Model.PartieRequête;
 import Ibrahim.Database;
 import Ibrahim.JoueurDAO;
 import controller.Attaquant;
+import controller.Defenseur;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -29,7 +30,7 @@ import javax.swing.Timer;
  *
  * @author ibrahim
  */
-public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener, KeyListener {
+public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener, KeyListener {
 
     private Timer timer;
     private static final int delay = 100;
@@ -49,7 +50,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         
     }
     
-    public MAP_Attaquant() {
+    public MAP_Defenseur() {
         try {
             this.bdd=new Database();
             bdd.connect();
@@ -117,7 +118,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         jLabel1.setPreferredSize(new java.awt.Dimension(600, 600));
 
         jLabel2.setBackground(new java.awt.Color(255, 102, 102));
-        jLabel2.setText("Géant");
+        jLabel2.setText("Incendiaire");
         jLabel2.setOpaque(true);
         jLabel2.setPreferredSize(new java.awt.Dimension(200, 200));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -127,7 +128,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 255, 0));
-        jLabel3.setText("Gobelin");
+        jLabel3.setText("Classique");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel3.setOpaque(true);
         jLabel3.setPreferredSize(new java.awt.Dimension(200, 200));
@@ -138,7 +139,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         });
 
         jLabel4.setBackground(new java.awt.Color(153, 51, 255));
-        jLabel4.setText("Chevalier");
+        jLabel4.setText("Précise");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel4.setOpaque(true);
         jLabel4.setPreferredSize(new java.awt.Dimension(200, 200));
@@ -295,13 +296,13 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         
         try{
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-        Attaquant joueur = new Attaquant(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
-        res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
+        Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
+        res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
         while (res.next()){
             String couleur = res.getString(1);
             
             
-            joueur.apparitionMonstre(2, couleur);
+            joueur.construireUneTourIci(1, couleur);
         }
         
         } catch (SQLException ex) {
@@ -314,11 +315,11 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         
         try{
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-        Attaquant joueur = new Attaquant(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
-        res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
+        Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
+        res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
         while (res.next()){
             String couleur = res.getString(1);
-            joueur.apparitionMonstre(1, couleur);
+            joueur.construireUneTourIci(2, couleur);
         }
         
         } catch (SQLException ex) {
@@ -331,11 +332,11 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         
         try{
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-        Attaquant joueur = new Attaquant(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
-        res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
+        Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
+        res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
         while (res.next()){
             String couleur = res.getString(1);
-            joueur.apparitionMonstre(3, couleur);
+            joueur.construireUneTourIci(3, couleur);
         }
         
         } catch (SQLException ex) {
@@ -361,21 +362,23 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MAP_Attaquant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAP_Defenseur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MAP_Attaquant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAP_Defenseur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MAP_Attaquant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAP_Defenseur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MAP_Attaquant.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MAP_Defenseur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MAP_Attaquant().setVisible(true);
+                new MAP_Defenseur().setVisible(true);
                 
             }
         });

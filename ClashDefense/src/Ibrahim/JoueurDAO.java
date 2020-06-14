@@ -58,7 +58,7 @@ public class JoueurDAO {
 
     @Override
     public String toString() {
-        return "JoueurDAO{" + " pseudo=" + pseudo + '}';
+        return "JoueurDAO{ id="+ id + " pseudo=" + pseudo + '}';
     }
     public void insertJoeurbdd(JoueurDAO j) throws SQLException{
     Database db = new Database();

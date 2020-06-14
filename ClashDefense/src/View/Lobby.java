@@ -36,6 +36,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
     private static final int delay = 200;
     private int compteur = 2;
     private int affichage = 5;
+    private String selection;
     /**
      * Get the value of joueur
      *
@@ -331,6 +332,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         attaquantRougeSelectionne=true;
         jLabel1.setText(joueur.getPseudo());
         aSelectionne=true;
+        selection="Attaquant";
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
@@ -339,6 +341,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         attaquantBleuSelectionne=true;
         jLabel2.setText(joueur.getPseudo());
         aSelectionne=true;
+        selection="Attaquant";
     }//GEN-LAST:event_jCheckBox2ActionPerformed
 
     private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
@@ -347,6 +350,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         defenseurRougeSelectionne=true;
         jLabel3.setText(joueur.getPseudo());
         aSelectionne=true;
+        selection="Défenseur";
     }//GEN-LAST:event_jCheckBox3ActionPerformed
 
     private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
@@ -355,6 +359,7 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
         defenseurBleuSelectionne=true;
         jLabel4.setText(joueur.getPseudo());
         aSelectionne=true;
+        selection="Défenseur";
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -371,6 +376,24 @@ public class Lobby extends javax.swing.JFrame implements ActionListener {
             jLabel5.setText("("+affichage+")"); //sert à lancer le décompte avant le début de partie
         }
         if (affichage==0){
+//            int IdJoueurAttaquantBleue = 0;
+//            int IdJoueurAttaquantRouge = 0;
+//            int IdJoueurDéfenseurBleue = 0;
+//            int IdJoueurDéfenseurRouge = 0;
+            bdd.executeQuery("UPDATE équipe SET IdJoueurAttaquant=(SELECT IdJoueur FROM partie WHERE Rôle='AttaquantBleu') WHERE Couleur='Bleue'");
+            bdd.executeQuery("UPDATE équipe SET IdJoueurDéfenseur=(SELECT IdJoueur FROM partie WHERE Rôle='DéfenseurBleu') WHERE Couleur='Bleue'");
+            bdd.executeQuery("UPDATE équipe SET IdJoueurAttaquant=(SELECT IdJoueur FROM partie WHERE Rôle='AttaquantRouge') WHERE Couleur='Rouge'");
+            bdd.executeQuery("UPDATE équipe SET IdJoueurDéfenseur=(SELECT IdJoueur FROM partie WHERE Rôle='DéfenseurRouge') WHERE Couleur='Rouge'");
+            if (selection.equals("Attaquant")){
+                MAP_Attaquant interfaceJoueur = new MAP_Attaquant();
+                interfaceJoueur.setJoueur(this.joueur);
+                interfaceJoueur.setVisible(true);
+            }
+            if (selection.equals("Défenseur")){
+                MAP_Defenseur interfaceJoueur = new MAP_Defenseur();
+                interfaceJoueur.setJoueur(this.joueur);
+                interfaceJoueur.setVisible(true);
+            }
             super.dispose();
         }
         

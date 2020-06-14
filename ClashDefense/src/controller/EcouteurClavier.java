@@ -25,26 +25,26 @@ public class EcouteurClavier implements KeyListener{
         this.joueur=new Joueur(j.getId(),j.getPseudo());
     }
     
-    public void keyPressed(KeyEvent e){
-        if (e.getKeyCode()==37){  //Gauche
-        joueur.deplacementAGauche();
-        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
-        }
-        if (e.getKeyCode()==39){  // Droite
-        joueur.deplacementADroite();    
-        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
-        }
-        if (e.getKeyCode()==38){  // Haut
-        joueur.deplacementEnHaut();    
-        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
-        }
-        if (e.getKeyCode()==40){  // Bas
-        joueur.deplacementEnBas();   
-        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
-        }
-        //System . out . print (" une touche a été appuyée - ") ;
-        //System . out . println (" le code de la touche est "+ e . getKeyCode () );
-        }
+//    public void keyPressed(KeyEvent e){
+//        if (e.getKeyCode()==37){  //Gauche
+//        joueur.deplacementAGauche();
+//        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
+//        }
+//        if (e.getKeyCode()==39){  // Droite
+//        joueur.deplacementADroite();    
+//        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
+//        }
+//        if (e.getKeyCode()==38){  // Haut
+//        joueur.deplacementEnHaut();    
+//        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
+//        }
+//        if (e.getKeyCode()==40){  // Bas
+//        joueur.deplacementEnBas();   
+//        System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
+//        }
+//        //System . out . print (" une touche a été appuyée - ") ;
+//        //System . out . println (" le code de la touche est "+ e . getKeyCode () );
+//        }
     
     public void keyTyped ( KeyEvent event ) {
         System . out . print (" un caractère a été frappé - ");
@@ -55,6 +55,11 @@ public class EcouteurClavier implements KeyListener{
     public void keyReleased ( KeyEvent event ) {
         System . out . println (" touche relachée : "+ event . getKeyCode () );
         System.out.println(Arrays.toString(joueur.getLocalisationJoueur()));
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -5,12 +5,14 @@
  */
 package controller;
 
-import Adrien.*;
+import View.BoutonJouer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,35 +20,56 @@ import java.util.ArrayList;
  */
 public class Defenseur extends Joueur{
     
-    public Defenseur(int id, String pseudo, Connection connexion, CarteTest carte) {
+    public Defenseur(int id, String pseudo, Connection connexion, ArrayList<ArrayList<Integer>> carte) {
         super(id, pseudo, connexion, carte);
     }
     
     public boolean puisJeConstruireUneTourIci(int X, int Y){ // A terme c est la position du joueur qui doit ce trouver là mais pour le bon fonctionnement des tests je met des X et Y provisoire
         boolean reponse=false;
-        int[] caseDuJoueur= new int[] {X,Y}; // remplacer X et Y par this.getX et this.getY
-        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
-        listeCasesAutorisees.add(0);
-        if (listeCasesAutorisees.contains(this.carte.getCase(caseDuJoueur))){
-            if (X>=0){ // remplacer X et Y par this.getX et this.getY
-                if (X<this.getCarte().getDimension()[0]){ // remplacer X et Y par this.getX et this.getY
-                    if (Y>=0){ // remplacer X et Y par this.getX et this.getY
-                        if (Y<this.getCarte().getDimension()[1]){ // remplacer X et Y par this.getX et this.getY
-                            reponse= true;
-                        }
-                    }
-            
-                }
-                
+//        int[] caseDuJoueur= new int[] {X,Y}; // remplacer X et Y par this.getX et this.getY
+//        ArrayList<Integer> listeCasesAutorisees= new ArrayList();
+//        listeCasesAutorisees.add(0);
+        ArrayList<ArrayList<Double>> listePositionTour = new ArrayList<ArrayList<Double>>();
+        try {
+            PreparedStatement requete = connexion.prepareStatement("SELECT PositionX,PositionY FROM tour ");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()){
+                ArrayList<Double> XY =  new ArrayList<Double>();
+                XY.add(resultat.getDouble(1));
+                XY.add(resultat.getDouble(2));
+                listePositionTour.add(XY);
             }
+            ArrayList<Double> XYaverifier=new ArrayList<Double>();            
+            XYaverifier.add((double)X);
+            XYaverifier.add((double)Y);
+            if (!listePositionTour.contains(XYaverifier)){
+                reponse=true;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Defenseur.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+
+//        if (listeCasesAutorisees.contains(carte.get(Y).get(X))){
+//            if (X>=0){ // remplacer X et Y par this.getX et this.getY
+//                if (X<this.getCarte().get(0).size()){ // remplacer X et Y par this.getX et this.getY
+//                    if (Y>=0){ // remplacer X et Y par this.getX et this.getY
+//                        if (Y<this.getCarte().get(0).size()){ // remplacer X et Y par this.getX et this.getY
+//                        }
+//                    }
+//            
+//                }
+//                
+//            }
+//        }
         return reponse;
     }
     
     
     public void faireApparaitreTourSurLaCarte(int posXTour, int posYTour){  
-        int[] caseTour= new int[] {posXTour,posYTour};
-        this.carte.setCase(caseTour, 4);
+        //int[] caseTour= new int[] {posXTour,posYTour};
+        //this.carte.get(posYTour).set(posXTour, 4);
     }
     
         public int IdMaxTour() throws SQLException{
@@ -108,14 +131,21 @@ public class Defenseur extends Joueur{
         }
     }
     
-    public void introduireTourDansLaBDD(Tour tour0){
+    public void introduireTourDansLaBDD(Tour tour0, String couleur){
         try {
-            PreparedStatement requete = connexion.prepareStatement("INSERT INTO tour VALUES (?,?,?,?,?,?,?,?,?,?)");
-            requete.setInt(1, tour0.getIdTour());
+            System.out.println("2eme try");
+            PreparedStatement requete = connexion.prepareStatement("SELECT MAX(IdTour) FROM tour");
+            ResultSet resultat = requete.executeQuery();
+            int idTourMax = 0;
+            while (resultat.next()){
+                idTourMax = resultat.getInt(1);
+            }
+            requete = connexion.prepareStatement("INSERT INTO tour VALUES (?,?,?,?,?,?,?,?,?,?)");
+            requete.setInt(1, idTourMax+1);
             requete.setString(2, tour0.getDesignation());
             requete.setDouble(3, tour0.getX());
             requete.setDouble(4, tour0.getY());
-            requete.setString(5, tour0.getEquipe());
+            requete.setString(5, couleur);
             requete.setDouble(6, tour0.getNiveau());
             requete.setDouble(7, tour0.getVie());
             requete.setDouble(8,tour0.getPortee());
@@ -137,37 +167,57 @@ public class Defenseur extends Joueur{
     
     
     
-    public void construireUneTourIci (int idTypeTour, String couleur){   // On va chercher une tour dans le catalogue, TOUR NON MISE DANS LA BDD POUR L INSTANT, JUSTE SUR LA CARTE, PAS DE DELAI D ATTENTE POUR L INSTANT, A terme l'id serait de mettre ici l'ID de la tour catalogue
-        if (this.aiJeAssezDElixirPourFaireCa(this.coutTourType(idTypeTour))){ // Pas de coût en Elixir pour la BDD pour l'instant
+    public void construireUneTourIci (int idTypeTour, String couleur){   // idTypeTour 1=classique 2 = précise 3= incendiaire
+        if (this.aiJeAssezDElixirPourFaireCa(this.coutTourType(idTypeTour))){ 
             Tour tour=this.extraireTourDuCatalogueTour(idTypeTour);
-            //if(this.puisJeConstruireUneTourIci(posXTour,posYTour)){   
-                this.setElixir(-this.coutTourType(idTypeTour));  
-                // Manque la partie de patience du temps
-                this.introduireTourDansLaBDD(tour);
-                //this.faireApparaitreTourSurLaCarte(posXTour, posYTour);       
+            
+            try {
+                System.out.println("1er try");
+                PreparedStatement requete = connexion.prepareStatement("SELECT PositionX,PositionY FROM partie WHERE IdJoueur="+this.id);
+                ResultSet resultat = requete.executeQuery();
+                Double posXTourDouble = 0.0;
+                Double posYTourDouble = 0.0;
+                while (resultat.next()) {
+                    posXTourDouble= resultat.getDouble(1);
+                    posYTourDouble= resultat.getDouble(2);
+                }
+                int posXTour = posXTourDouble.intValue();
+                int posYTour = posYTourDouble.intValue();
+                if(this.puisJeConstruireUneTourIci(posXTour,posYTour)){  
+                    System.out.println("1er if");
+                    this.setElixir(-this.coutTourType(idTypeTour));  
+                    this.introduireTourDansLaBDD(tour, couleur);
+                    this.faireApparaitreTourSurLaCarte(posXTour, posYTour);    
+                requete.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Erreur : Le cout de la tour n'a pas été trouvé");
+                ex.printStackTrace();
+            }
+               
         //}       
     }
 }
 
         public int coutTourType(int idTypeDeTour){  // 1 pour tourClassqiue, 2 pour toruPrécise, 3 pour tourIncendiaire
-        int idTour=0;
-        int coutTour=0;
-            
-        try {
-            PreparedStatement requete = connexion.prepareStatement("SELECT coût FROM catalogueTour WHERE IdTour="+idTypeDeTour+";");
-            ResultSet resultat = requete.executeQuery();
-            while (resultat.next()) {
-                coutTour = resultat.getInt("coût");
+            int idTour=0;
+            int coutTour=0;
+
+            try {
+                PreparedStatement requete = connexion.prepareStatement("SELECT coût FROM catalogueTour WHERE IdTour="+idTypeDeTour+";");
+                ResultSet resultat = requete.executeQuery();
+                while (resultat.next()) {
+                    coutTour = resultat.getInt(1);
+                }
+
+                requete.close();
+            } catch (SQLException ex) {
+                System.out.println("Erreur : Le cout de la tour n'a pas été trouvé");
+                ex.printStackTrace();
             }
 
-            requete.close();
-        } catch (SQLException ex) {
-            System.out.println("Erreur : Le cout de la tour n'a pas été trouvé");
-            ex.printStackTrace();
-        }
-            
-    return coutTour;
-}
+            return coutTour;
+        }   
 }
     
 
