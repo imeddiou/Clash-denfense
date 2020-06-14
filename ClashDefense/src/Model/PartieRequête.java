@@ -47,8 +47,6 @@ public class PartieRequête {
                  mapString += map.get(i).get(k)+ " ";
             }
         }
-       
-        
         System.out.println(mapString);
         baseDeDonnées.executeQuery("UPDATE partie SET Map = '" + mapString + "'"  );
     }
@@ -70,21 +68,6 @@ public class PartieRequête {
                 ligneMap.add(Integer.parseInt(mapStringSplitted[i+j]));}
             mapFinal.add(ligneMap);
          }
-        //System.out.println(mapStringSplitted.length);
-//        for(int i=0;i<mapStringSplitted.length;i++){
-//            for(int j=0;j<20;j++){
-//                for(int k=0; k<20; k++){
-//                    int nbr = Integer.parseInt(mapStringSplitted[i]);
-//                 mapFinal.get(j).set(k,nbr);
-//                }
-//              }
-//            }
-//            System.out.println(mapFinal);
-
-        
-      
-      
-        
         return mapFinal;
     }
     

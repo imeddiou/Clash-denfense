@@ -29,10 +29,10 @@ public class TestMonstreRequete {
             baseDeDonnées.connect();    
             MonstreRequête monstrerequête = new MonstreRequête();
             //monstrerequête.monstreInsertion(baseDeDonnées, "Géant", "Bleue");
-            //monstrerequête.pertePdV(baseDeDonnées, "tourClassique", 103);
-            monstrerequête.perteElixir(baseDeDonnées, "Chevalier", "Bleue");
+            monstrerequête.pertePdV(baseDeDonnées, "tourIncendiaire", 302);
+            //monstrerequête.perteElixir(baseDeDonnées, "Chevalier", "Bleue");
             //monstrerequête.ModificationPosition(baseDeDonnées, 2, 100, 100);
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM équipe");
+            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
             OutilsJDBC.afficherResultSet(resultat);
             
             } catch (SQLException ex) {

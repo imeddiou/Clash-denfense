@@ -41,18 +41,18 @@ public class PartieRequête {
     }
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
         String mapString = "";
-        for(int i=0; i< map.size();i++){
-            for(int k=0;k<map.get(0).size();k++){
-                 mapString += map.get(i).get(k)+ " ";
+        for(int i=0; i< 19;i++){
+            for(int k=0;k<19;k++){
+                 mapString += map.get(i).get(k)+" ";
+               //  System.out.println( map.get(i).get(k));
             }
         }
-       
-        
+        mapString += map.get(19).get(19);
         System.out.println(mapString);
-        baseDeDonnées.executeQuery("UPDATE partie SET Map = '" + mapString + "'"  );
+        baseDeDonnées.executeQuery("UPDATE partie SET Map = '"+ mapString +"'"  );
     }
     public ArrayList<ArrayList<Integer>> partieRequêteSelectMapAsMatrix(Database db){
-       ResultSet rs =  db.executeQuery("SELECT DISTINCT Map FROM partie");
+       ResultSet rs =  db.executeQuery("SELECT Map FROM partie");
       ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
        String mapString = "";
         try {
@@ -62,28 +62,26 @@ public class PartieRequête {
         } catch (SQLException ex) {
             Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String[] mapStringSplitted = mapString.split(" ");
+        System.out.println(mapString);
+        String[] mapStringSplitted = new String[400];
+        mapStringSplitted = mapString.split(" ");
+        System.out.println(mapStringSplitted.toString());
          for (int i=0;i<20;i++){
             ArrayList<Integer> ligneMap = new ArrayList<Integer>();
             for (int j=0;j<20;j++){
-                ligneMap.add(0);}
+                ligneMap.add(0);
+            }
             mapFinal.add(ligneMap);
          }
-        System.out.println(mapStringSplitted.length);
-        for(int i=0;i<mapStringSplitted.length;i++){
-            for(int j=0;j<20;j++){
+        System.out.println(mapFinal.size());
+       // System.out.println(mapStringSplitted.length);
+           for(int j=0;j<20;j++){
                 for(int k=0; k<20; k++){
-                    int nbr = Integer.parseInt(mapStringSplitted[i]);
-                 mapFinal.get(j).set(k,nbr);
+                    int nbr = Integer.parseInt(mapStringSplitted[k+j]);
+                      mapFinal.get(j).set(k,nbr);
                 }
-              }
             }
-             System.out.println(mapFinal);
-
-        
-      
-      
-        
+             System.out.println(mapFinal.toString());
         return mapFinal;
     }
     
