@@ -9,6 +9,8 @@ package controller;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -48,9 +50,9 @@ public class gestionPartie {
     //}
     
     public void actionMonstre(){
-        int n = TailleBDDmonstre();
-        for (int Id=1;Id<=n;Id++){//Pour tout les monstres de la BDD:
-            Monstre monstre = new Monstre(Id);
+        int n = ListeIdMonstres().size();
+        for (int i=1;i<=n;i++){//Pour tout les monstres de la BDD:
+            Monstre monstre = new Monstre(ListeIdMonstres().get(i));
 //            //Si dureeEffet(2)>0
 //                //On inflige dureeEffet(3) à la vie du monstre
 //                //dureeEffet(2)--;
@@ -68,27 +70,34 @@ public class gestionPartie {
             int vitessecatalogue = monstre.getVitesseCatalogueDAO();//On compare avec le compteur dans la BDD catalogue
             if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
                 monstre.setVitesseDAO(0);//On met à 0 le compteur
-                monstre.Avancer();//On avance le monstre
+                monstre.Avancer();}//On avance le monstre
             if (monstre.TestVie()){//Si la vie du monstre est négative:
-                disparitionMonstre(Id);//disparitionMonstre(ID);
+                disparitionMonstre(Id);}//disparitionMonstre(ID);
             if (monstre.TestChateau()){//Si le monstre a atteint le château
                 monstre.attaqueChateau();//enleverVieChateau(equipe,ID);
-                disparitionMonstre(Id);//disparitionMonstre(ID);
+                disparitionMonstre(Id);}//disparitionMonstre(ID);
+        }
     }
+
 //    public void nouvelleTour(){
 //        //On met à 0 le compteur de vitesse
 //        //On rajoute la  tour à la liste des tours de la BDD 
 //    }
     public void actionTour(){
-        int n = TailleBDDtour();
-        for (int Id=1;Id<=n;Id++){//Pour toutes les tours de la BDD
-            Tour tour = new Tour(Id);// On rajoute 1 au compteur de vitesse dans la BDD d'action
+        int n = ListeIdTours().size();
+        for (int i=1;i<=n;i++){//Pour toutes les tours de la BDD
+            Tour tour = new Tour(ListeIdTours().get(i));// On rajoute 1 au compteur de vitesse dans la BDD d'action
             tour.setVitesseDAO(tour.getVitesseDAO()+1);
             int vitesseactuelle = tour.getVitesseDAO();
             int vitessecatalogue = tour.getVitesseCatalogueDAO();//On compare avec le compteur dans la BDD catalogue
             if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
                 tour.setVitesseDAO(0);//On met à 0 le compteur
-                tour.action();//On avance le monstre
+                if (tour.getEquipe()=="Rouge"){
+                    ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = ListeIdMonstreBleus();
+                }else{
+                    ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = ListeIdMonstreRouges();
+                }
+                tour.action(listeDeTousLesMonstreRougesOuBleu);//On avance le monstre
             // On compare le compteur dans la BDD catalogue
             //Si ils sont égaux 
                 //On met à 0 le compteur
@@ -101,6 +110,8 @@ public class gestionPartie {
                 //Si le type de la tour est 4 (dégâts continus)
                     //dureeEffet(2) = 3 pour les n monstres les plus avancés
                     //dureeEffet(3) = 10 pour les n monstres les plus avancés
+            }
+        }
                 
     }
 

@@ -54,7 +54,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         return false;
     }
     
-    public ArrayList<Integer> lesNmonstresLesPlusAvances(ArrayList<MSDC2> listeMonstre){//On récupère les n monstres les plus avancés parmi tout les monstres sur le terrain
+    public ArrayList<Integer> lesNmonstresLesPlusAvances(ArrayList<Integer> listeMonstre){//On récupère les n monstres les plus avancés parmi tout les monstres sur le terrain
         ArrayList<Integer> listeId = new ArrayList<Integer>();//On va stocker l'Id des monstres
         ArrayList<Integer> listeAvancees = new ArrayList<Integer>();//Et leur avancée
         ArrayList<Integer> listeIdsortie = new ArrayList<Integer>();
@@ -86,14 +86,14 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         if (vie<=0){return true;}return false;//Si la vie est inférieure à 0 alors la tour est morte
     }*/
     
-    public void Type1(ArrayList<MSDC2> listeMonstre){//le type 1 est le dégât de zone, qui inflige des dégâts aux n monstres les plus avancés
+    public void Type1(ArrayList<Integer> listeMonstre){//le type 1 est le dégât de zone, qui inflige des dégâts aux n monstres les plus avancés
         double degat = this.getDegat();//On récupère les dégâts à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les n monstres les plus avancés qui sont dans la zone:
             Monstre monstre = new Monstre(listeMonstre.get(i));//On créé un monstre temporairement
-            int vieDuMonstre = monstre.getPdv();//On récupère sa vie
+            int vieDuMonstre = monstre.getPdvDAO();//On récupère sa vie
             vieDuMonstre = vieDuMonstre-(int)degat;//On lui retire de la vie et ce en fonction du niveau de la tour
             //Le coefficient 1,5 est bien évidemment arbitraire
-            monstre.setPdv(vieDuMonstre);//On implémente la vie au monstre
+            monstre.setPdvDAO(vieDuMonstre);//On implémente la vie au monstre
             //listeMonstre.set(i,monstre);//Et on le replace dans la liste
         }
     }
@@ -135,8 +135,8 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         }
     }*/
     
-    public void action(ArrayList<MSDC2> listeMonstreOfficielle){//On met en action la tour
-        ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(listeMonstreOfficielle);//On récupère les n monstres les plus avancées parmi la liste totale des monstres
+    public void action(ArrayList<Integer> listeMonstreOfficielle){//On met en action la tour
+        ArrayList<Integer> listeMonstre = this.lesNmonstresLesPlusAvances(listeMonstreOfficielle);//On récupère les n monstres les plus avancées parmi la liste totale des monstres
         //On afflige aux n monstres l'effet qui leur est affecté en fonction du type de la tour
         //PS: pour avoir une tour qui afflige seulement des dégâts au monstre le plus avancé, on choisit le type dégât de zone avec nombreDeMonstreTouches=1
         this.Type1(listeMonstre);
