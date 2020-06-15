@@ -41,7 +41,7 @@ public class gestionPartie {
         Database BDD = new Database();
         int n = listeIdMonstre(BDD).size();
         for (int i=0;i<n;i++){//Pour tout les monstres de la BDD:
-            Monstre monstre = new Monstre(listeIdMonstre(BDD).get(i));
+            Monstre monstre = creationMonstre(listeIdMonstre(BDD).get(i));
 //            //Si dureeEffet(2)>0
 //                //On inflige dureeEffet(3) à la vie du monstre
 //                //dureeEffet(2)--;
@@ -61,10 +61,10 @@ public class gestionPartie {
                 monstre.setVitesseDAO(0);//On met à 0 le compteur
                 monstre.Avancer();}//On avance le monstre
             if (monstre.TestVie()){//Si la vie du monstre est négative:
-                disparitionMonstre(ListeIdMonstres().get(i));}//disparitionMonstre(ID);
+                disparitionMonstre(listeIdMonstre(BDD).get(i));}//disparitionMonstre(ID);
             if (monstre.TestChateau()){//Si le monstre a atteint le château
                 monstre.attaqueChateau();//enleverVieChateau(equipe,ID);
-                disparitionMonstre(ListeIdMonstres().get(i));}//disparitionMonstre(ID);
+                disparitionMonstre(listeIdMonstre(BDD).get(i));}//disparitionMonstre(ID);
         }
     }
 
@@ -73,21 +73,23 @@ public class gestionPartie {
 //        //On rajoute la  tour à la liste des tours de la BDD 
 //    }
     public void actionTour(){
-        int n = ListeIdTours().size();
+        Database BDD = new Database();
+        int n = listeIdTour(BDD).size();
         for (int i=0;i<n;i++){//Pour toutes les tours de la BDD
-            Tour tour = new Tour(ListeIdTours().get(i));// On rajoute 1 au compteur de vitesse dans la BDD d'action
-            tour.setVitesseDAO(tour.getVitesseDAO()+1);
-            int vitesseactuelle = tour.getVitesseDAO();
-            int vitessecatalogue = tour.getVitesseCatalogueDAO();//On compare avec le compteur dans la BDD catalogue
+            Tour tour = creationTour(listeIdTour(BDD).get(i));// On rajoute 1 au compteur de vitesse dans la BDD d'action
+            tour.setFrequenceDeTirDAO(tour.getFrequenceDeTirDAO()+1);
+            double vitesseactuelle = tour.getFrequenceDeTirDAO();
+            double vitessecatalogue = tour.getFrequenceDeTirDAO();//On compare avec le compteur dans la BDD catalogue
             if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
-                tour.setVitesseDAO(0);//On met à 0 le compteur
+                tour.setFrequenceDeTirDAO(0);//On met à 0 le compteur
+                ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = new ArrayList<Integer>();
                 if (tour.getEquipeDAO()=="Rouge"){
-                    ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = ListeIdMonstreBleus();
+                    listeDeTousLesMonstreRougesOuBleu = listeIdMonstreBleu(BDD);
                 }else{
-                    ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = ListeIdMonstreRouges();
+                    listeDeTousLesMonstreRougesOuBleu = listeIdMonstreRouge(BDD);
                 }
                 tour.action(listeDeTousLesMonstreRougesOuBleu);//On avance le monstre
-            // On compare le compteur dans la BDD catalogue
+            //On compare le compteur dans la BDD catalogue
             //Si ils sont égaux 
                 //On met à 0 le compteur
                 //Si le type de la tour est 1 (degats de zone) Tour classique tour précise
@@ -144,7 +146,7 @@ public class gestionPartie {
     }
     
     public Tour creationTour(int Id){
-        Tour tour=new Tour (Id,"FausseTour",0.0,0.0,"Blanc",0.0,0.0,0.0,0.0,0.0); //Commentaire question : comment gérer les catchs dans ce type de méthode
+        Tour tour=new Tour (connexion,Id,"FausseTour",0.0,0.0,"Blanc",0.0,0.0,0.0,0.0,0.0); //Commentaire question : comment gérer les catchs dans ce type de méthode
         try{
             PreparedStatement requete = connexion.prepareStatement("SELECT Description,PositionX, PositionY, Equipe, Niveau, PdV, Portée, FréquenceDeTir, Dégât FROM tour WHERE IdTour="+Id +";");
             ResultSet resultat = requete.executeQuery();

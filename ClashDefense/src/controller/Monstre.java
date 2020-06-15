@@ -5,11 +5,14 @@
  */
 package controller;
 
+import Fanny.*;
+import Ibrahim.Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -118,8 +121,9 @@ public class Monstre {
         }
    }
 
-   public void attaqueChateau(double attaque){   // A terme il faut récupérer l'attauqe dans la BDD
+   public void attaqueChateau(){   // A terme il faut récupérer l'attauqe dans la BDD
        try{
+       double attaque = this.getAttaqueDAO();
        this.setVieAdversaire(-1.0*attaque);
        } catch (Exception ex) {
             Logger.getLogger(Monstre.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,6 +251,19 @@ public class Monstre {
         if (testDroite==testChemin){return true;}//Si les coordonnées du monstre s'il se dirigeait maintenant sur la droite sont sur le bon chemin, alors on déclare qu'il faut tourner à droite
         else{return false;}//sinon qu'il faut tourner à gauche
     }
+    
+    public int getMAP(int x,int y){
+        Database baseDeDonnées = new Database();
+        ArrayList<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
+        try{
+            baseDeDonnées.connect();  
+            PartieRequête requete = new PartieRequête();
+            Map = requete.partieRequêteSelectMapAsMatrix(baseDeDonnées);
+        }catch (SQLException ex) {
+            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Map.get(x).get(y);
+    }
     public void Avancer(){//Cette classe est la classe qui fait avancer le monstre
         int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         int avancee=this.getAvancee();//On récupère l'avancée à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
@@ -260,8 +277,8 @@ public class Monstre {
             if (this.FautIlAllerADroite()==true){direction=(direction+1)%4;//Si la voie à droite est libre alors on se tourne d'un cran sur la droite
             }else{direction=(direction+3)%4;}//Sinon on se tourne d'un cran sur la gauche 
         }
-        double nouvellesCoordonnees[]={coordonnees[0]+vecteur[direction][0],coordonnees[1]+vecteur[direction][1]};//On récupère alors les nouvelles coordonnées du monstre 
-        this.setCoordonneesDAO(nouvellesCoordonnees);////Et on les implémente avec le setter, car c'est ainsi qu'il faudra faire avec la BDD
+        int nouvellesCoordonnees[]={coordonnees[0]+vecteur[direction][0],coordonnees[1]+vecteur[direction][1]};//On récupère alors les nouvelles coordonnées du monstre 
+        this.setCoordonneesDAO(nouvellesCoordonnees[0],nouvellesCoordonnees[1]);////Et on les implémente avec le setter, car c'est ainsi qu'il faudra faire avec la BDD
         this.setDirection(direction);//De même on met à jour la direction
         avancee++;//On incrémente l'avancée puisque le monstre a fait un pas de plus
         this.setAvanceeDAO(avancee);//Et on met à jour l'avancée du monstre
@@ -427,7 +444,66 @@ public void setCoordonneesDAO(int X, int Y){
         }
         return attaque;
     }
-   
+   public double getVitesseDAO(){
+        double vitesse=0;
+            try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM monstre WHERE IdMonstre="+this.idMonstre+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                vitesse=resultat.getDouble("Vitesse");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+       return vitesse; 
+    }
+    
+    public void setVitesseDAO(double nouvelleVitesse){
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Vitesse=? WHERE IdMonstre="+this.idMonstre);
+            requete.setDouble(1, nouvelleVitesse);
+            requete.executeUpdate();
+
+            requete.close();
+            connexion.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    public void setPdVDAO(double nouvellePdV){
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET PdV=? WHERE IdMonstre="+this.idMonstre);
+            requete.setDouble(1, nouvellePdV);
+            System.out.println(requete);
+            requete.executeUpdate();
+
+            requete.close();
+            connexion.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
    
    

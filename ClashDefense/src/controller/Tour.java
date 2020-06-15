@@ -6,6 +6,11 @@
 package controller;
 
 import Adrien.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -24,8 +29,10 @@ public class Tour {   // A adapter suite aux changements dans la BDD
     private double portee;
     private double frequenceDeTire;
     private double degat;
+    Connection connexion;
     
-    public Tour( int idTour, String designation, double X, double Y, String equipe, double niveau, double PdV,double portee, double frequenceDeTire, double degat){   
+    public Tour(Connection connexion, int idTour, String designation, double X, double Y, String equipe, double niveau, double PdV,double portee, double frequenceDeTire, double degat){   
+        this.connexion=connexion;
         this.idTour=idTour;
         this.designation=designation;
         this.X=X;
@@ -38,8 +45,8 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         this.degat=degat;
         
     }
-    public double DistanceTowerMonstre(double[] coordonneesMonstre){//Cette classe retourne la distance qui sépare la tour du monstre
-        double[] coordonnees = this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+    public double DistanceTowerMonstre(int[] coordonneesMonstre){//Cette classe retourne la distance qui sépare la tour du monstre
+        double[] coordonnees = this.getCoordonneesTour();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         double x = coordonnees[0];
         double y = coordonnees[1];
         double X = coordonneesMonstre[0];
@@ -48,22 +55,61 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         double distance = Math.sqrt(Math.pow(X-x,2)+Math.pow(Y-y,2));//On calcule la distance géométrique entre le monstre et la tour
         return distance;
     }  
-    public boolean LeMonstreEstDansLeRayon(double[] coordonneesMonstre){//Cette classe affirme si un monstre donné est dans le rayon ou non
-        double rayon = this.getRayonDAO();//On récupère le rayon à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+    public boolean LeMonstreEstDansLeRayon(int[] coordonneesMonstre){//Cette classe affirme si un monstre donné est dans le rayon ou non
+        double rayon = this.getPorteeDAO();//On récupère le rayon à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         if (this.DistanceTowerMonstre(coordonneesMonstre)<=rayon){return true;}//Si la distance est plus petite que le rayon de la tour, alors le monstre est dans le rayon
         return false;
     }
     
+    public Monstre creationMonstre(int Id){
+        Monstre monstre=new Monstre (connexion,Id,"FauxMonstre",0.0,0.0,"Blanc",0.0,0,0,0); // On créé un faut monstre pour les sorties Catch
+        try{
+            PreparedStatement requete = connexion.prepareStatement("SELECT Description,PositionX,PositionY,Equipe,Vitesse,PdV,Direction,Avancée FROM monstre WHERE IdMonstre="+Id +";");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                
+                // On récupère les données
+                String  Description= resultat.getString("Description");                
+                Double PositionX=resultat.getDouble("PositionX");
+                Double PositionY=resultat.getDouble("PositionY");
+                String Equipe=resultat.getString("Equipe");
+                Double Vitesse=resultat.getDouble("Vitesse");
+                int PdV=resultat.getInt("PdV");
+                int Direction=resultat.getInt("Direction");                
+                int Avance=resultat.getInt("Avancée");
+                
+
+                //On modifie les données du monstre créé à partir de celles récupérer
+                monstre.setIdMonstre(Id);
+                monstre.setDescription(Description);
+                monstre.setPositionX(PositionX);
+                monstre.setPositionY(PositionY);
+                monstre.setEquipe(Equipe);
+                monstre.setVitesse(Vitesse);
+                monstre.setPdv(PdV);
+                monstre.setDirection(Direction);
+                
+               
+                }
+            requete.close();
+            return monstre; 
+        }catch(SQLException ex){
+            System.out.println("erreur dans la recherche du monstre");
+            return monstre; 
+            // IM-reponse : ex.printStackTrace();
+ 
+        }
+    }
     public ArrayList<Integer> lesNmonstresLesPlusAvances(ArrayList<Integer> listeMonstre){//On récupère les n monstres les plus avancés parmi tout les monstres sur le terrain
         ArrayList<Integer> listeId = new ArrayList<Integer>();//On va stocker l'Id des monstres
         ArrayList<Integer> listeAvancees = new ArrayList<Integer>();//Et leur avancée
         ArrayList<Integer> listeIdsortie = new ArrayList<Integer>();
         //ArrayList<MSDC2> nPremiersMonstre = new ArrayList<MSDC2>();//les n premiers monstres dans le rayon seront implémentés dans cette liste
-        int n = this.getNombreDeMonstreTouchesDAO();//on récupère la valeur indiquant le nombre de monstres touchés dans une variable temporaire
+        double n = this.getZoneDAO();//on récupère la valeur indiquant le nombre de monstres touchés dans une variable temporaire
         if (n>listeMonstre.size()){n = listeMonstre.size();}//Si n est plus grand que le nombre de monstre total alors on réduit n au nombre de monstres total
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les monstres sur le terrains
-            Monstre monstre = new Monstre(listeMonstre.get(i));//on créé temporairement un monstre
-            double[] coordonneesMonstre = monstre.getCoordonneesDAO();//On récupère les coordonnées du monstre
+            Monstre monstre = creationMonstre(listeMonstre.get(i));//on créé temporairement un monstre
+            int[] coordonneesMonstre = monstre.getCoordonneesDAO();//On récupère les coordonnées du monstre
             if (this.LeMonstreEstDansLeRayon(coordonneesMonstre)){//Si le monstre est dans le rayon:
                 //int id = monstre.getId()//On récupère l'id du monstre. Mais cela n'est pas encore possible sans la BDD
                 listeId.add(i);//On implémente à la liste des id l'id du monstre. Pour l'instant on rajoute i.
@@ -89,11 +135,11 @@ public class Tour {   // A adapter suite aux changements dans la BDD
     public void Type1(ArrayList<Integer> listeMonstre){//le type 1 est le dégât de zone, qui inflige des dégâts aux n monstres les plus avancés
         double degat = this.getDegat();//On récupère les dégâts à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les n monstres les plus avancés qui sont dans la zone:
-            Monstre monstre = new Monstre(listeMonstre.get(i));//On créé un monstre temporairement
-            int vieDuMonstre = monstre.getPdvDAO();//On récupère sa vie
+            Monstre monstre = creationMonstre(listeMonstre.get(i));//On créé un monstre temporairement
+            int vieDuMonstre = monstre.getPdVDAO();//On récupère sa vie
             vieDuMonstre = vieDuMonstre-(int)degat;//On lui retire de la vie et ce en fonction du niveau de la tour
             //Le coefficient 1,5 est bien évidemment arbitraire
-            monstre.setPdvDAO(vieDuMonstre);//On implémente la vie au monstre
+            monstre.setPdVDAO(vieDuMonstre);//On implémente la vie au monstre
             //listeMonstre.set(i,monstre);//Et on le replace dans la liste
         }
     }
@@ -246,7 +292,6 @@ public class Tour {   // A adapter suite aux changements dans la BDD
   public double[] getCoordonneesTour(){
         double[] coordonnees=new double[] {0.0,0.0};
         try {
-
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
             PreparedStatement requete = connexion.prepareStatement("SELECT PositionX, PositionY FROM tour WHERE IdTour="+this.idTour+" ;");
@@ -319,7 +364,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Equipe FROM tour WHERE IdTour=1 ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Equipe FROM tour WHERE IdTour="+this.idTour+" ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 equipe=resultat.getString("Equipe");
@@ -416,7 +461,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Zone FROM catalogueTour WHERE Description='tourClassique' ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Zone FROM catalogueTour WHERE Description="+this.designation+" ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 zone=resultat.getDouble("Zone");
