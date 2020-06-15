@@ -51,7 +51,7 @@ public class gestionPartie {
     
     public void actionMonstre(){
         int n = ListeIdMonstres().size();
-        for (int i=1;i<=n;i++){//Pour tout les monstres de la BDD:
+        for (int i=0;i<n;i++){//Pour tout les monstres de la BDD:
             Monstre monstre = new Monstre(ListeIdMonstres().get(i));
 //            //Si dureeEffet(2)>0
 //                //On inflige dureeEffet(3) à la vie du monstre
@@ -72,10 +72,10 @@ public class gestionPartie {
                 monstre.setVitesseDAO(0);//On met à 0 le compteur
                 monstre.Avancer();}//On avance le monstre
             if (monstre.TestVie()){//Si la vie du monstre est négative:
-                disparitionMonstre(Id);}//disparitionMonstre(ID);
+                disparitionMonstre(ListeIdMonstres().get(i));}//disparitionMonstre(ID);
             if (monstre.TestChateau()){//Si le monstre a atteint le château
                 monstre.attaqueChateau();//enleverVieChateau(equipe,ID);
-                disparitionMonstre(Id);}//disparitionMonstre(ID);
+                disparitionMonstre(ListeIdMonstres().get(i));}//disparitionMonstre(ID);
         }
     }
 
@@ -85,14 +85,14 @@ public class gestionPartie {
 //    }
     public void actionTour(){
         int n = ListeIdTours().size();
-        for (int i=1;i<=n;i++){//Pour toutes les tours de la BDD
+        for (int i=0;i<n;i++){//Pour toutes les tours de la BDD
             Tour tour = new Tour(ListeIdTours().get(i));// On rajoute 1 au compteur de vitesse dans la BDD d'action
             tour.setVitesseDAO(tour.getVitesseDAO()+1);
             int vitesseactuelle = tour.getVitesseDAO();
             int vitessecatalogue = tour.getVitesseCatalogueDAO();//On compare avec le compteur dans la BDD catalogue
             if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
                 tour.setVitesseDAO(0);//On met à 0 le compteur
-                if (tour.getEquipe()=="Rouge"){
+                if (tour.getEquipeDAO()=="Rouge"){
                     ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = ListeIdMonstreBleus();
                 }else{
                     ArrayList<Integer> listeDeTousLesMonstreRougesOuBleu = ListeIdMonstreRouges();
