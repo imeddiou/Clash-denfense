@@ -363,6 +363,71 @@ public class Monstre {
         }
         return PdV;
 }
+public void setCoordonneesDAO(int X, int Y){
+        try {
+
+            PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET PositionX=?,PositionY=? WHERE IdMonstre="+this.idMonstre);
+            requete.setInt(1, X);
+            requete.setInt(2,Y);
+            requete.executeUpdate();
+
+            requete.close();
+            connexion.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    
+    }
+    
+    public double getVitesseCatalogueDAO(){
+        double vitesse =0;
+                try {
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM catalogueMonstre WHERE IdMonstre="+this.description+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                vitesse =resultat.getDouble("Vitesse");
+                System.out.println(vitesse);
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vitesse;
+    }
+    
+    public int getAttaqueDAO(){
+        int attaque = 0;
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Attaque FROM catalogueMonstre WHERE Description="+this.description+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                attaque =resultat.getInt("Attaque");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return attaque;
+    }
+   
 
    
    

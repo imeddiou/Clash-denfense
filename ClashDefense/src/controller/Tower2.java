@@ -1,7 +1,7 @@
 
 package controller;
 
-import Model.Database;
+/*import Model.Database;
 import Nico.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -84,13 +84,13 @@ public class Tower2 {
     /*public boolean testVie(){//Cette classe retourne si la tour est encore vivante
         int vie = this.getVie();//On récupère la vie à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         if (vie<=0){return true;}return false;//Si la vie est inférieure à 0 alors la tour est morte
-    }*/
+    }
     
     public void Type1(ArrayList<MSDC2> listeMonstre){//le type 1 est le dégât de zone, qui inflige des dégâts aux n monstres les plus avancés
         double degat = this.getDegat();//On récupère les dégâts à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les n monstres les plus avancés qui sont dans la zone:
-            Monstre monstre = new Monstre(listeMonstre.get(i));//On créé un monstre temporairement
-            int vieDuMonstre = monstre.getPdv();//On récupère sa vie
+            //Monstre monstre = new Monstre(listeMonstre.get(i));//On créé un monstre temporairement
+            //int vieDuMonstre = monstre.getPdv();//On récupère sa vie
             vieDuMonstre = vieDuMonstre-(int)degat;//On lui retire de la vie et ce en fonction du niveau de la tour
             //Le coefficient 1,5 est bien évidemment arbitraire
             monstre.setPdv(vieDuMonstre);//On implémente la vie au monstre
@@ -133,17 +133,17 @@ public class Tower2 {
             monstre.setDureeEffet(dureeeffet);//On implémente ça dans le monstre
             listeMonstre.set(i,monstre);//Et on le replace dans la liste
         }
-    }*/
+    }
     
     public void action(ArrayList<MSDC2> listeMonstreOfficielle){//On met en action la tour
-        ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(listeMonstreOfficielle);//On récupère les n monstres les plus avancées parmi la liste totale des monstres
+        //ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(listeMonstreOfficielle);//On récupère les n monstres les plus avancées parmi la liste totale des monstres
         //On afflige aux n monstres l'effet qui leur est affecté en fonction du type de la tour
         //PS: pour avoir une tour qui afflige seulement des dégâts au monstre le plus avancé, on choisit le type dégât de zone avec nombreDeMonstreTouches=1
-        this.Type1(listeMonstre);
+        //this.Type1(listeMonstre);
         /*if(this.getType()==1){this.Type1(listeMonstre);}
         if(this.getType()==2){this.Type2(listeMonstre);}
         if(this.getType()==3){this.Type3(listeMonstre);}
-        if(this.getType()==4){this.Type4(listeMonstre);}*/
+        if(this.getType()==4){this.Type4(listeMonstre);}
     }
 //ci-dessous tout les getter et les setter qu'il faudra remplacer avec la mise en place de la BDD
     public int getVie() {
@@ -218,4 +218,5 @@ public class Tower2 {
     public void setNombreDeMonstreTouches(int nombreDeMonstreTouches) {
         this.nombreDeMonstreTouches = nombreDeMonstreTouches;
     }
-}
+    */
+

@@ -243,4 +243,196 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         System.out.println("Dégat = "+this.degat);
     }
     
+  public double[] getCoordonneesTour(){
+        double[] coordonnees=new double[] {0.0,0.0};
+        try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT PositionX, PositionY FROM tour WHERE IdTour="+this.idTour+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                double positionX=resultat.getDouble("PositionX");
+                double positionY=resultat.getDouble("PositionY");
+                coordonnees[0]=positionX;
+                coordonnees[1]=positionY;
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return coordonnees;
+    }
+    
+    public double getFrequenceDeTirDAO(){
+        double fdt=0.0;
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT FréquenceDeTir FROM tour WHERE IdTour="+this.idTour+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                fdt=resultat.getDouble("FréquenceDeTir");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return fdt;
+                
+    }
+    
+    public void setFrequenceDeTirDAO(double nouvelleFdc){
+               try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("UPDATE tour SET FréquenceDeTir=? WHERE IdTour="+this.idTour);
+            requete.setDouble(1, nouvelleFdc);
+            System.out.println(requete);
+            requete.executeUpdate();
+
+            requete.close();
+            connexion.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public String getEquipeDAO(){
+        String equipe="Blanc";
+        try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Equipe FROM tour WHERE IdTour=1 ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                equipe=resultat.getString("Equipe");
+                System.out.println(equipe);
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return equipe;
+    }
+    
+    public double getDegatDAO(){
+        double degat=0;
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Dégât FROM catalogueTour WHERE Description="+this.designation+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                degat=resultat.getDouble("Dégât");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return degat;
+    }
+    
+    public double getPorteeDAO(){
+        double portee=0;
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Portée FROM catalogueTour WHERE Description="+this.designation+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                portee=resultat.getDouble("Portée");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+                return portee;
+    }
+    
+    public double getFrequenceDeTirCatalogueDAO(){
+        double fdt=0;
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT FréquenceDeTir FROM catalogueTour WHERE Description="+this.designation+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                fdt=resultat.getDouble("FréquenceDeTir");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+                return fdt;
+    }
+    
+    public double getZoneDAO(){
+        double zone = 0;
+                try {
+
+            Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT Zone FROM catalogueTour WHERE Description='tourClassique' ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                zone=resultat.getDouble("Zone");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+                return zone;
+    }
+
+    
 }
