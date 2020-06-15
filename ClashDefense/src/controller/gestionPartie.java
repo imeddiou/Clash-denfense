@@ -48,7 +48,8 @@ public class gestionPartie {
     //}
     
     public void actionMonstre(){
-//        //Pour tout les monstres de la BDD:
+        for (int Id=0;Id<2;Id++){//Pour tout les monstres de la BDD:
+        Monstre monstre = new Monstre(Id);
 //            //Si dureeEffet(2)>0
 //                //On inflige dureeEffet(3) à la vie du monstre
 //                //dureeEffet(2)--;
@@ -61,15 +62,17 @@ public class gestionPartie {
 //                    //dureeEffet(0)--;
 //                //Sinon
 //                    ////On rajoute 1 au compteur de vitesse dans la BDD d'action
-            //On compare avec le compteur dans la BDD catalogue
-            //Si le compteur actif >= compteur catalogue
-                //On met à 0 le compteur
-                //On avance le monstre
-            //Si la vie du monstre est négative:
-                //disparitionMonstre(ID);
-            //Si le monstre a atteint le château
-                //enleverVieChateau(equipe,ID);
-                //disparitionMonstre(ID);
+        monstre.setVitesse(monstre.getVitesse()+1);
+        int vitesseactuelle = monstre.getVitesse();
+        int vitessecatalogue = monstre.getVitesseCatalogue();//On compare avec le compteur dans la BDD catalogue
+        if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
+            monstre.setVitesse(0);//On met à 0 le compteur
+            monstre.Avancer();//On avance le monstre
+        if (monstre.TestVie()){//Si la vie du monstre est négative:
+            disparitionMonstre(Id);//disparitionMonstre(ID);
+        if (monstre.TestChateau()){//Si le monstre a atteint le château
+            monstre.attaqueChateau();//enleverVieChateau(equipe,ID);
+            disparitionMonstre(Id);//disparitionMonstre(ID);
     }
 //    public void nouvelleTour(){
 //        //On met à 0 le compteur de vitesse
