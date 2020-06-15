@@ -79,11 +79,11 @@ public class TourRequête {
             while (resultat1.next()){
                 elixir = resultat1.getDouble("Elixir") - cout;
             }
-            if (elixir > 0){
+            if (elixir >= 0){
                 baseDeDonnées.executeQuery("UPDATE équipe SET Elixir = '"+elixir+"' WHERE Couleur = '"+couleur+"' ");
             }
             else {
-                baseDeDonnées.executeQuery("UPDATE équipe SET Elixir = '0' WHERE Couleur = '"+couleur+"' ");
+                System.out.println ("Vous n'avez pas assez d'élixir pour une telle action : veuillez choisir une autre tour ou attendre.");
             } 
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);

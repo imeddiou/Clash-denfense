@@ -100,11 +100,11 @@ public class MonstreRequête {
             while (resultat1.next()){
                 elixir = resultat1.getDouble("Elixir") - cout;
             }
-            if (elixir > 0){
+            if (elixir >= 0){
                 baseDeDonnées.executeQuery("UPDATE équipe SET Elixir = '"+elixir+"' WHERE Couleur = '"+couleur+"' ");
             }
             else {
-                baseDeDonnées.executeQuery("UPDATE équipe SET Elixir = '0' WHERE Couleur = '"+couleur+"' ");
+                System.out.println ("Vous n'avez pas assez d'élixir pour une telle action : veuillez choisir un autre monstre ou attendre.");
             } 
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,8 +113,7 @@ public class MonstreRequête {
     
     
     public void ModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  
-              
-            baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE idMonstre = '"+idMonstre+"' ");
+        baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE idMonstre = '"+idMonstre+"' ");
 
     }            
 }

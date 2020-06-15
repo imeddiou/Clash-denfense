@@ -29,15 +29,7 @@ public class PartieRequête {
     
     
     public void ModificationPosition (Database baseDeDonnées,String rôle, double positionX, double positionY){
-        try {
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Selectionné FROM partie WHERE Rôle = '"+rôle+"'");
-            if (resultat0.getBoolean("Selectionné")){
-                baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '"+positionX+"' WHERE Rôle = '"+rôle+"' ");
-                baseDeDonnées.executeQuery("UPDATE partie SET PositionY = '"+positionY+"' WHERE Rôle = '"+rôle+"' ");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE Rôle = '"+rôle+"' ");
     }
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
         String mapString = "";
