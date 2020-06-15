@@ -50,7 +50,7 @@ public class gestionPartie {
         //Pour toutes les tours de la BDD
             // On rajoute 1 au compteur de vitesse dans la BDD d'action
             // On compare le compteur dans la BDD catalogue
-            //Si ils sont égaux 
+            //Si ils sont égaux
                 //On met à 0 le compteur
                 //Si le type de la tour est 1 (degats de zone) Tour classique tour précise
                     //On enlève la vie aux n monstres de la BDD de l'équipe adverse

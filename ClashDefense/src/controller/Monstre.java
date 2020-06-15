@@ -161,19 +161,6 @@ public class Monstre {
     public String getEquipe() {
         return equipe;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   
-   
-    
 
     public void setIdMonstre(int idMonstre) {
         this.idMonstre = idMonstre;
@@ -206,6 +193,177 @@ public class Monstre {
     public void setVitesse(double vitesse) {
         this.vitesse = vitesse;
     }
+    
+    // Partie Nicolas
+    
+    public boolean TestVie(){//Cette classe permet de vérifier si le monstre est encore en vie
+        int pdv = this.getPdVDAO();//On récupère la vie à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        if (pdv<=0){return true;}//Si la vie est inférieure à 0 on déclare que le monstre est mort
+        return false;
+    }
+    
+    public boolean TestChateau(){//Cette classe permet de vérifier si le monstre a atteint le château
+        int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        if(this.getEquipeBDD()=="Rouge"){
+            if (coordonnees[1]==19){//Si l'ordonnée du monstre est celle du chêteau alors on déclare que le monstre a atteint le château
+                return true;
+            }
+        }
+        //le ==0 a été choisi arbitrairement ici, et il faudra faire attention à l'équipe à laquelle appartient le monstre. Pour l'autre équipe ce 0 serait ici un 19
+        if (this.getEquipeBDD()=="Bleue"){
+            if (coordonnees[1]==0){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+
+    
+    public boolean MurDevant(){//Cette classe permet de vérifier s'il y a un mur ou un chemin qui n'est pas le bon devant le monstre 
+        int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int direction=this.getDirectionDAO();//On récupère la direction à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int vecteur[][] = {{0,1},{1,0},{0,-1},{-1,0}};
+        // vecteur[0] est le déplacement vers la droite
+        // vecteur[1] est le déplacement vers le bas
+        // vecteur[2] est le déplacement vers la gauche
+        // vecteur[3] est le déplacement vers le haut
+        int sens[] = vecteur[direction];//Le principe du vecteur est détaillé plus loin, il permet de récupérer la direction du monstre
+        if (this.getMAP((int)(coordonnees[0]+sens[0]),(int)(coordonnees[1]+sens[1]))!=this.getMAP((int)(coordonnees[0]),(int)(coordonnees[1]))){return true;}//Si les coordonnées du monstre à l'étape suivante ne sont pas sur le bon chemin, alors on déclare qu'il y a un mur
+        return false;
+    }
+    
+    public boolean FautIlAllerADroite(){//Cette classe permet de savoir dans quel sens se tourner si il y'a un mur devant
+        int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int direction=this.getDirectionDAO();//On récupère la direction à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int vecteur[][] = {{0,1},{1,0},{0,-1},{-1,0}};
+        // vecteur[0] est le déplacement vers la droite
+        // vecteur[1] est le déplacement vers le bas
+        // vecteur[2] est le déplacement vers la gauche
+        // vecteur[3] est le déplacement vers le haut
+        int[] sensDroite = vecteur[(direction+1)%4];//Le principe du vecteur est détaillé plus loin, mais ici on récupère la direction à droite du monstre
+        int testDroite=this.getMAP((int)(coordonnees[0]+sensDroite[0]),(int)(coordonnees[1]+sensDroite[1]));//On stocke dans une variable temporaire les coordonnées du monstre s'il se dirigeait maintenant sur la droite
+        int testChemin=this.getMAP((int)(coordonnees[0]),(int)(coordonnees[1]));
+        if (testDroite==testChemin){return true;}//Si les coordonnées du monstre s'il se dirigeait maintenant sur la droite sont sur le bon chemin, alors on déclare qu'il faut tourner à droite
+        else{return false;}//sinon qu'il faut tourner à gauche
+    }
+    public void Avancer(){//Cette classe est la classe qui fait avancer le monstre
+        int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int avancee=this.getAvancee();//On récupère l'avancée à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int direction=this.getDirection();//On récupère la direction à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        int vecteur[][] = {{0,1},{1,0},{0,-1},{-1,0}};
+        // vecteur[0] est le déplacement vers la droite
+        // vecteur[1] est le déplacement vers le bas
+        // vecteur[2] est le déplacement vers la gauche
+        // vecteur[3] est le déplacement vers le haut
+        if(this.MurDevant()==true){//On regarde s'il y a un mur devant, et si oui:
+            if (this.FautIlAllerADroite()==true){direction=(direction+1)%4;//Si la voie à droite est libre alors on se tourne d'un cran sur la droite
+            }else{direction=(direction+3)%4;}//Sinon on se tourne d'un cran sur la gauche 
+        }
+        double nouvellesCoordonnees[]={coordonnees[0]+vecteur[direction][0],coordonnees[1]+vecteur[direction][1]};//On récupère alors les nouvelles coordonnées du monstre 
+        this.setCoordonneesDAO(nouvellesCoordonnees);////Et on les implémente avec le setter, car c'est ainsi qu'il faudra faire avec la BDD
+        this.setDirection(direction);//De même on met à jour la direction
+        avancee++;//On incrémente l'avancée puisque le monstre a fait un pas de plus
+        this.setAvanceeDAO(avancee);//Et on met à jour l'avancée du monstre
+    }
+    
+    public int[] getCoordonneesDAO(){
+        int[] coordonnees={0,0};
+        try {
+            //Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+
+            PreparedStatement requete = this.connexion.prepareStatement("SELECT PositionX, PositionY FROM monstre WHERE Id="+this.idMonstre+";");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                double positionX = resultat.getDouble("positionX");
+                double positionY = resultat.getDouble("positionY");
+                coordonnees[0]=(int) positionX;
+                coordonnees[1]=(int) positionY;
+            }
+
+            requete.close();
+            //connexion.close();
+       
+        } catch (SQLException ex){
+        }
+        return coordonnees;
+    }
+    
+    public int getDirectionDAO(){
+        int direction = 0;
+        try {
+            PreparedStatement requete = connexion.prepareStatement("SELECT Direction FROM Monstre WHERE IdMonstre="+this.idMonstre+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                direction=resultat.getInt("Direction");
+                }      
+            
+            requete.close();
+            connexion.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return direction;
+    }
+    
+    public int getAvanceeDAO(){
+        int avancee=0;
+        try {
+            PreparedStatement requete = connexion.prepareStatement("SELECT Avancee FROM Monstre WHERE IdMonstre="+this.idMonstre+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                avancee=resultat.getInt("Avancee");
+                }
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return avancee;
+    }
+    
+    public void setAvanceeDAO(int mouvement){
+        try {
+ 
+            PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Avance=? WHERE IdMonstre="+this.idMonstre);
+            requete.setInt(1, this.getAvancee()+mouvement);
+            System.out.println(requete);
+            requete.executeUpdate();
+
+            requete.close();
+            connexion.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+    
+    public int getPdVDAO(){
+        int PdV=0;    
+        try {
+
+            PreparedStatement requete = connexion.prepareStatement("SELECT PdV FROM Monstre WHERE IdMonstre="+this.idMonstre+" ;");
+            ResultSet resultat = requete.executeQuery();
+            while (resultat.next()) {
+                PdV=resultat.getInt("PdV");
+                }
+            
+            
+            
+            requete.close();
+            connexion.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return PdV;
+}
+
    
    
 }
