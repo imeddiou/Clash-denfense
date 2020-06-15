@@ -8,6 +8,7 @@ package Fanny;
 import Ibrahim.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -88,5 +89,21 @@ public class TourRequête {
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         } 
+    }
+    
+    public ArrayList<Integer> listeIdTour (Database baseDeDonnées){
+        ResultSet resultat =  baseDeDonnées.executeQuery("SELECT IdTour FROM tour");
+        ArrayList<Integer> listeIdTour = new ArrayList<Integer>();
+        int liste = 0;
+        try {
+            while(resultat.next()){
+                liste = resultat.getInt("IdTour");  
+                listeIdTour.add(liste);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listeIdTour;
     }
 }

@@ -8,6 +8,7 @@ package Fanny;
 import Ibrahim.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,5 +116,53 @@ public class MonstreRequête {
     public void ModificationPosition (Database baseDeDonnées,int idMonstre, double positionX, double positionY){  
         baseDeDonnées.executeQuery("UPDATE monstre SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE idMonstre = '"+idMonstre+"' ");
 
-    }            
+    }      
+    
+    public ArrayList<Integer> listeIdMonstre (Database baseDeDonnées){
+        ResultSet resultat =  baseDeDonnées.executeQuery("SELECT IdMonstre FROM monstre");
+        ArrayList<Integer> listeIdMonstre = new ArrayList<Integer>();
+        int liste = 0;
+        try {
+            while(resultat.next()){
+                liste = resultat.getInt("IdMonstre");  
+                listeIdMonstre.add(liste);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listeIdMonstre;
+    }
+    
+    public ArrayList<Integer> listeIdMonstreRouge (Database baseDeDonnées){
+        ResultSet resultat =  baseDeDonnées.executeQuery("SELECT IdMonstre FROM monstre WHERE Equipe = 'Rouge'");
+        ArrayList<Integer> listeIdMonstre = new ArrayList<Integer>();
+        int liste = 0;
+        try {
+            while(resultat.next()){
+                liste = resultat.getInt("IdMonstre");  
+                listeIdMonstre.add(liste);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listeIdMonstre;
+    }
+    
+    public ArrayList<Integer> listeIdMonstreBleu (Database baseDeDonnées){
+        ResultSet resultat =  baseDeDonnées.executeQuery("SELECT IdMonstre FROM monstre WHERE Equipe = 'Bleue'");
+        ArrayList<Integer> listeIdMonstre = new ArrayList<Integer>();
+        int liste = 0;
+        try {
+            while(resultat.next()){
+                liste = resultat.getInt("IdMonstre");  
+                listeIdMonstre.add(liste);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return listeIdMonstre;
+    }
 }

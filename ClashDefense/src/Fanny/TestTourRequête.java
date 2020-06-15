@@ -9,6 +9,7 @@ import Ibrahim.Database;
 import Utils.OutilsJDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,10 +29,12 @@ public class TestTourRequête {
             
             baseDeDonnées.connect();    
             TourRequête tourrequête = new TourRequête();
-            tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Blanc");
+            //tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Blanc");
             //tourrequête.perteElixir(baseDeDonnées, "tourClassique", "Rouge");
-            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
-            OutilsJDBC.afficherResultSet(resultat);
+            ArrayList<Integer> listeIdTour = tourrequête.listeIdTour(baseDeDonnées);
+            System.out.println(listeIdTour);
+            //ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
+            //OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 
             
             } catch (SQLException ex) {

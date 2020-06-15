@@ -9,6 +9,7 @@ import Ibrahim.Database;
 import Utils.OutilsJDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,7 +30,11 @@ public class TestMonstreRequete {
             baseDeDonnées.connect();    
             MonstreRequête monstrerequête = new MonstreRequête();
             //monstrerequête.monstreInsertion(baseDeDonnées, "Géant", "Bleue");
-            monstrerequête.pertePdV(baseDeDonnées, "tourIncendiaire", 302);
+            //monstrerequête.pertePdV(baseDeDonnées, "tourIncendiaire", 302);
+            //ArrayList<Integer> listeIdMonstre = monstrerequête.listeIdMonstre(baseDeDonnées);
+            //ArrayList<Integer> listeIdMonstre = monstrerequête.listeIdMonstreRouge(baseDeDonnées);
+            ArrayList<Integer> listeIdMonstre = monstrerequête.listeIdMonstreBleu(baseDeDonnées);
+            System.out.println(listeIdMonstre);
             //monstrerequête.perteElixir(baseDeDonnées, "Chevalier", "Bleue");
             //monstrerequête.ModificationPosition(baseDeDonnées, 2, 100, 100);
             ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
