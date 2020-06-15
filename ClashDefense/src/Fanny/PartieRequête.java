@@ -31,6 +31,7 @@ public class PartieRequête {
     public void ModificationPosition (Database baseDeDonnées,String rôle, double positionX, double positionY){
         baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE Rôle = '"+rôle+"' ");
     }
+    
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
         String mapString = "";
         for(int i=0; i< 19;i++){
