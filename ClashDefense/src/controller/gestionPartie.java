@@ -48,8 +48,9 @@ public class gestionPartie {
     //}
     
     public void actionMonstre(){
-        for (int Id=0;Id<2;Id++){//Pour tout les monstres de la BDD:
-        Monstre monstre = new Monstre(Id);
+        int n = TailleBDDmonstre();
+        for (int Id=1;Id<=n;Id++){//Pour tout les monstres de la BDD:
+            Monstre monstre = new Monstre(Id);
 //            //Si dureeEffet(2)>0
 //                //On inflige dureeEffet(3) à la vie du monstre
 //                //dureeEffet(2)--;
@@ -62,27 +63,32 @@ public class gestionPartie {
 //                    //dureeEffet(0)--;
 //                //Sinon
 //                    ////On rajoute 1 au compteur de vitesse dans la BDD d'action
-        monstre.setVitesse(monstre.getVitesse()+1);
-        int vitesseactuelle = monstre.getVitesse();
-        int vitessecatalogue = monstre.getVitesseCatalogue();//On compare avec le compteur dans la BDD catalogue
-        if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
-            monstre.setVitesse(0);//On met à 0 le compteur
-            monstre.Avancer();//On avance le monstre
-        if (monstre.TestVie()){//Si la vie du monstre est négative:
-            disparitionMonstre(Id);//disparitionMonstre(ID);
-        if (monstre.TestChateau()){//Si le monstre a atteint le château
-            monstre.attaqueChateau();//enleverVieChateau(equipe,ID);
-            disparitionMonstre(Id);//disparitionMonstre(ID);
+            monstre.setVitesseDAO(monstre.getVitesseDAO()+1);
+            int vitesseactuelle = monstre.getVitesseDAO();
+            int vitessecatalogue = monstre.getVitesseCatalogueDAO();//On compare avec le compteur dans la BDD catalogue
+            if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
+                monstre.setVitesseDAO(0);//On met à 0 le compteur
+                monstre.Avancer();//On avance le monstre
+            if (monstre.TestVie()){//Si la vie du monstre est négative:
+                disparitionMonstre(Id);//disparitionMonstre(ID);
+            if (monstre.TestChateau()){//Si le monstre a atteint le château
+                monstre.attaqueChateau();//enleverVieChateau(equipe,ID);
+                disparitionMonstre(Id);//disparitionMonstre(ID);
     }
 //    public void nouvelleTour(){
 //        //On met à 0 le compteur de vitesse
 //        //On rajoute la  tour à la liste des tours de la BDD 
 //    }
     public void actionTour(){
-        //Pour toutes les tours de la BDD
-            //Si la vie de la tour est négative:
-                //disparitionMonstre(ID);
-            // On rajoute 1 au compteur de vitesse dans la BDD d'action
+        int n = TailleBDDtour();
+        for (int Id=1;Id<=n;Id++){//Pour toutes les tours de la BDD
+            Tour tour = new Tour(Id);// On rajoute 1 au compteur de vitesse dans la BDD d'action
+            tour.setVitesseDAO(tour.getVitesseDAO()+1);
+            int vitesseactuelle = tour.getVitesseDAO();
+            int vitessecatalogue = tour.getVitesseCatalogueDAO();//On compare avec le compteur dans la BDD catalogue
+            if (vitesseactuelle>=vitessecatalogue){//Si le compteur actif >= compteur catalogue
+                tour.setVitesseDAO(0);//On met à 0 le compteur
+                tour.action();//On avance le monstre
             // On compare le compteur dans la BDD catalogue
             //Si ils sont égaux 
                 //On met à 0 le compteur

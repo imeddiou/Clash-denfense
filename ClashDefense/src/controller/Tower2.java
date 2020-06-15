@@ -39,7 +39,7 @@ public class Tower2 {
     }
     
     public double DistanceTowerMonstre(double[] coordonneesMonstre){//Cette classe retourne la distance qui sépare la tour du monstre
-        double[] coordonnees = this.getCoordonnees();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        double[] coordonnees = this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         double x = coordonnees[0];
         double y = coordonnees[1];
         double X = coordonneesMonstre[0];
@@ -49,54 +49,55 @@ public class Tower2 {
         return distance;
     }  
     public boolean LeMonstreEstDansLeRayon(double[] coordonneesMonstre){//Cette classe affirme si un monstre donné est dans le rayon ou non
-        double rayon = this.getRayon();//On récupère le rayon à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
+        double rayon = this.getRayonDAO();//On récupère le rayon à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         if (this.DistanceTowerMonstre(coordonneesMonstre)<=rayon){return true;}//Si la distance est plus petite que le rayon de la tour, alors le monstre est dans le rayon
         return false;
     }
     
-    public ArrayList<MSDC2> lesNmonstresLesPlusAvances(ArrayList<MSDC2> listeMonstre){//On récupère les n monstres les plus avancés parmi tout les monstres sur le terrain
+    public ArrayList<Integer> lesNmonstresLesPlusAvances(ArrayList<MSDC2> listeMonstre){//On récupère les n monstres les plus avancés parmi tout les monstres sur le terrain
         ArrayList<Integer> listeId = new ArrayList<Integer>();//On va stocker l'Id des monstres
         ArrayList<Integer> listeAvancees = new ArrayList<Integer>();//Et leur avancée
-        ArrayList<MSDC2> nPremiersMonstre = new ArrayList<MSDC2>();//les n premiers monstres dans le rayon seront implémentés dans cette liste
-        int n = this.getNombreDeMonstreTouches();//on récupère la valeur indiquant le nombre de monstres touchés dans une variable temporaire
+        ArrayList<Integer> listeIdsortie = new ArrayList<Integer>();
+        //ArrayList<MSDC2> nPremiersMonstre = new ArrayList<MSDC2>();//les n premiers monstres dans le rayon seront implémentés dans cette liste
+        int n = this.getNombreDeMonstreTouchesDAO();//on récupère la valeur indiquant le nombre de monstres touchés dans une variable temporaire
         if (n>listeMonstre.size()){n = listeMonstre.size();}//Si n est plus grand que le nombre de monstre total alors on réduit n au nombre de monstres total
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les monstres sur le terrains
-            MSDC2 monstre = listeMonstre.get(i);//on créé temporairement un monstre
-            double[] coordonneesMonstre = monstre.getCoordonnees();//On récupère les coordonnées du monstre
+            Monstre monstre = new Monstre(listeMonstre.get(i));//on créé temporairement un monstre
+            double[] coordonneesMonstre = monstre.getCoordonneesDAO();//On récupère les coordonnées du monstre
             if (this.LeMonstreEstDansLeRayon(coordonneesMonstre)){//Si le monstre est dans le rayon:
                 //int id = monstre.getId()//On récupère l'id du monstre. Mais cela n'est pas encore possible sans la BDD
                 listeId.add(i);//On implémente à la liste des id l'id du monstre. Pour l'instant on rajoute i.
-                int avancee = monstre.getAvancee();//On récupère l'avancee du monstre
+                int avancee = monstre.getAvanceeDAO();//On récupère l'avancee du monstre
                 listeAvancees.add(avancee);//On implémente à la liste des avancées l'avancée du monstre
             }
         }
-        if (listeAvancees.isEmpty()){return nPremiersMonstre;}//Si aucun monstre n'est dans le rayon alors on retourne d'ores et déjà la liste vide
+        if (listeAvancees.isEmpty()){return listeIdsortie;}//Si aucun monstre n'est dans le rayon alors on retourne d'ores et déjà la liste vide
         for (int i=0;i<n;i++){//Pour tout les monstres dans le rayon:
             int indexMaxAvancee = listeAvancees.indexOf(Collections.max(listeAvancees));//On récupère l'indexation du monstre le plus avancé
             int idMonstreLePlusAvance =listeId.get(indexMaxAvancee);//On récupère l'id du monstre à cette indexation
-            nPremiersMonstre.add(listeMonstre.get(idMonstreLePlusAvance));//On rajoute à la liste des monstres les plus avancés le monstre dont l'id est celui du monstre le plus avancé dans le rayon
+            listeIdsortie.add(idMonstreLePlusAvance);//On rajoute à la liste des monstres les plus avancés le monstre dont l'id est celui du monstre le plus avancé dans le rayon
             listeAvancees.remove(indexMaxAvancee);//Pour ne pas reprendre le même monstre au prochain passage
             listeId.remove(indexMaxAvancee);//Pour ne pas reprendre le même monstre au prochain passage
         }
-        return nPremiersMonstre;//On retourne la liste des n premiers monstres dans le rayon
+        return listeIdsortie;//On retourne la liste des n premiers monstres dans le rayon
     }   
-    public boolean testVie(){//Cette classe retourne si la tour est encore vivante
+    /*public boolean testVie(){//Cette classe retourne si la tour est encore vivante
         int vie = this.getVie();//On récupère la vie à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         if (vie<=0){return true;}return false;//Si la vie est inférieure à 0 alors la tour est morte
-    }
+    }*/
     
     public void Type1(ArrayList<MSDC2> listeMonstre){//le type 1 est le dégât de zone, qui inflige des dégâts aux n monstres les plus avancés
         double degat = this.getDegat();//On récupère les dégâts à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les n monstres les plus avancés qui sont dans la zone:
-            MSDC2 monstre = listeMonstre.get(i);//On créé un monstre temporairement
+            Monstre monstre = new Monstre(listeMonstre.get(i));//On créé un monstre temporairement
             int vieDuMonstre = monstre.getPdv();//On récupère sa vie
-            vieDuMonstre = vieDuMonstre-((int)degat+(int)(this.getNiveau()*1.5));//On lui retire de la vie et ce en fonction du niveau de la tour
+            vieDuMonstre = vieDuMonstre-(int)degat;//On lui retire de la vie et ce en fonction du niveau de la tour
             //Le coefficient 1,5 est bien évidemment arbitraire
             monstre.setPdv(vieDuMonstre);//On implémente la vie au monstre
-            listeMonstre.set(i,monstre);//Et on le replace dans la liste
+            //listeMonstre.set(i,monstre);//Et on le replace dans la liste
         }
     }
-    public void Type2(ArrayList<MSDC2> listeMonstre){//le type 2 est le ralentissement, qui ralentit les n monstres les plus avancés
+    /*public void Type2(ArrayList<MSDC2> listeMonstre){//le type 2 est le ralentissement, qui ralentit les n monstres les plus avancés
         double timing = this.getTiming();//On récupère le timing à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         for (int i=0;i<listeMonstre.size();i++){//Pour tout les n monstres les plus avancés qui sont dans la zone:
             MSDC2 monstre = listeMonstre.get(i);//On créé un monstre temporairement
@@ -132,16 +133,17 @@ public class Tower2 {
             monstre.setDureeEffet(dureeeffet);//On implémente ça dans le monstre
             listeMonstre.set(i,monstre);//Et on le replace dans la liste
         }
-    }
+    }*/
     
     public void action(ArrayList<MSDC2> listeMonstreOfficielle){//On met en action la tour
         ArrayList<MSDC2> listeMonstre = this.lesNmonstresLesPlusAvances(listeMonstreOfficielle);//On récupère les n monstres les plus avancées parmi la liste totale des monstres
         //On afflige aux n monstres l'effet qui leur est affecté en fonction du type de la tour
         //PS: pour avoir une tour qui afflige seulement des dégâts au monstre le plus avancé, on choisit le type dégât de zone avec nombreDeMonstreTouches=1
-        if(this.getType()==1){this.Type1(listeMonstre);}
+        this.Type1(listeMonstre);
+        /*if(this.getType()==1){this.Type1(listeMonstre);}
         if(this.getType()==2){this.Type2(listeMonstre);}
         if(this.getType()==3){this.Type3(listeMonstre);}
-        if(this.getType()==4){this.Type4(listeMonstre);}
+        if(this.getType()==4){this.Type4(listeMonstre);}*/
     }
 //ci-dessous tout les getter et les setter qu'il faudra remplacer avec la mise en place de la BDD
     public int getVie() {
