@@ -1,7 +1,7 @@
 package Archive_des_classes;
 
 
-import Ibrahim.Database;
+    import Archive_des_classes.Database;
 import Utils.OutilsJDBC;
 import java.sql.ResultSet;
 import java.sql.SQLException;

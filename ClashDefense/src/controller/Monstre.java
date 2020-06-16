@@ -254,7 +254,7 @@ public class Monstre {
     }
     
     public int getMAP(int x,int y){
-        Database baseDeDonnées = new Database();
+        Archive_des_classes.Database baseDeDonnées = new Database();
         ArrayList<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
         if(x>19 || x<0){
             return(-10);

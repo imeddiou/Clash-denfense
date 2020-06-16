@@ -6,7 +6,7 @@ package Model;
  * and open the template in the editor.
  */
 
-import Ibrahim.*;
+import Archive_des_classes.*;
 import Archive_des_classes.Database;
 import com.mysql.cj.api.mysqla.result.Resultset;
 import java.sql.ResultSet;
