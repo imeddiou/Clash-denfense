@@ -29,12 +29,12 @@ public class TestTourRequête {
             
             baseDeDonnées.connect();    
             TourRequête tourrequête = new TourRequête();
-            //tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Blanc");
+            tourrequête.tourInsertion(baseDeDonnées, "tourClassique", "Rouge");
             //tourrequête.perteElixir(baseDeDonnées, "tourClassique", "Rouge");
-            ArrayList<Integer> listeIdTour = tourrequête.listeIdTour(baseDeDonnées);
-            System.out.println(listeIdTour);
-            //ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
-            //OutilsJDBC.afficherResultSet(resultat);
+            //ArrayList<Integer> listeIdTour = tourrequête.listeIdTour(baseDeDonnées);
+            //System.out.println(listeIdTour);
+            ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM tour");
+            OutilsJDBC.afficherResultSet(resultat);
             baseDeDonnées.disconnect(); 
             
             } catch (SQLException ex) {

@@ -32,6 +32,15 @@ public class PartieRequête {
         baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE Rôle = '"+rôle+"' ");
     }
     
+    public void finDePartie (Database baseDeDonnées){
+        baseDeDonnées.executeQuery("DELETE FROM monstre ");
+        baseDeDonnées.executeQuery("DELETE FROM tour");
+        baseDeDonnées.executeQuery("DELETE FROM joueur");
+        baseDeDonnées.executeQuery("UPDATE équipe SET PdV = '1000', Elixir = '50', IdJoueurAttaquant = '0', IdJoueurDéfenseur = '0'");
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0', IdJoueur = '0', Sélectionnée = 'false', Map = ''");
+        
+    }
+    
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
         String mapString = "";
         for(int i=0; i< 19;i++){
