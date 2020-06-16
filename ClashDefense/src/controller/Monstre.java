@@ -409,7 +409,7 @@ public void setCoordonneesDAO(int X, int Y){
         double vitesse =0;
                 try {
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM catalogueMonstre WHERE IdMonstre="+this.idMonstre+" ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM catalogueMonstre WHERE IdMonstre='"+this.idMonstre+"' ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 vitesse =resultat.getDouble("Vitesse");
