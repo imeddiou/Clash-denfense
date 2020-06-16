@@ -30,29 +30,33 @@ public class PartieRequête {
     
     
     public void ModificationPosition (Database baseDeDonnées,String rôle, double positionX, double positionY){
-        try {
-            ResultSet resultat0 = baseDeDonnées.executeQuery("SELECT Selectionné FROM partie WHERE Rôle = '"+rôle+"'");
-            if (resultat0.getBoolean("Selectionné")){
-                baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '"+positionX+"' WHERE Rôle = '"+rôle+"' ");
-                baseDeDonnées.executeQuery("UPDATE partie SET PositionY = '"+positionY+"' WHERE Rôle = '"+rôle+"' ");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '"+positionX+"', PositionY = '"+positionY+"' WHERE Rôle = '"+rôle+"' ");
     }
+    
+    public void finDePartie (Database baseDeDonnées){
+        baseDeDonnées.executeQuery("DELETE FROM monstre ");
+        baseDeDonnées.executeQuery("DELETE FROM tour");
+        baseDeDonnées.executeQuery("DELETE FROM joueur");
+        baseDeDonnées.executeQuery("UPDATE équipe SET PdV = '1000', Elixir = '50', IdJoueurAttaquant = '0', IdJoueurDéfenseur = '0'");
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0', IdJoueur = '0', Sélectionnée = 'false', Map = ''");
+        
+    }
+    
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
         String mapString = "";
-        for(int i=0; i< map.size();i++){
-            for(int k=0;k<map.get(0).size();k++){
-                 mapString += map.get(i).get(k)+ " ";
+        for(int i=0; i< 19;i++){
+            for(int k=0;k<19;k++){
+                 mapString += map.get(i).get(k)+" ";
+               //  System.out.println( map.get(i).get(k));
             }
         }
+        mapString += map.get(19).get(19);
         System.out.println(mapString);
-        baseDeDonnées.executeQuery("UPDATE partie SET Map = '" + mapString + "'"  );
+        baseDeDonnées.executeQuery("UPDATE partie SET Map = '"+ mapString +"'"  );
     }
     public ArrayList<ArrayList<Integer>> partieRequêteSelectMapAsMatrix(Database db){
-       ResultSet rs =  db.executeQuery("SELECT DISTINCT Map FROM partie");
-       ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
+       ResultSet rs =  db.executeQuery("SELECT Map FROM partie");
+      ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
        String mapString = "";
         try {
             while(rs.next()){
@@ -61,14 +65,26 @@ public class PartieRequête {
         } catch (SQLException ex) {
             Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String[] mapStringSplitted = mapString.split(" ");
+        System.out.println(mapString);
+        String[] mapStringSplitted = new String[400];
+        mapStringSplitted = mapString.split(" ");
+        System.out.println(mapStringSplitted.toString());
          for (int i=0;i<20;i++){
             ArrayList<Integer> ligneMap = new ArrayList<Integer>();
             for (int j=0;j<20;j++){
-                ligneMap.add(Integer.parseInt(mapStringSplitted[i*20+j]));}
+                ligneMap.add(0);
+            }
             mapFinal.add(ligneMap);
          }
-         //System.out.println(mapFinal);
+        System.out.println(mapFinal.size());
+       // System.out.println(mapStringSplitted.length);
+           for(int j=0;j<20;j++){
+                for(int k=0; k<20; k++){
+                    int nbr = Integer.parseInt(mapStringSplitted[k+j]);
+                      mapFinal.get(j).set(k,nbr);
+                }
+            }
+             System.out.println(mapFinal.toString());
         return mapFinal;
     }
     

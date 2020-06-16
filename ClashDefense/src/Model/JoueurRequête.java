@@ -19,18 +19,12 @@ import javax.imageio.ImageIO;
  * @author fanny
  */
 public class JoueurRequête {
-    private Database baseDeDonnées;
 
     
     public JoueurRequête() {
-        try {
-            baseDeDonnées.connect();
-        } catch (SQLException ex) {
-            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }      
     
-    public void joueurRequêteInsertion(String pseudo){ 
+    public void joueurInsertion(Database baseDeDonnées, String pseudo){ 
           
         try {
             int dernierIdJoueur = 0; 
