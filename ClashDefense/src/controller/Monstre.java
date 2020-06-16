@@ -461,7 +461,7 @@ public void setCoordonneesDAO(int X, int Y){
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 vitesse=resultat.getDouble("Vitesse");
-                }
+            }
             
             
             
