@@ -9,6 +9,7 @@ import Model.PartieRequête;
 import Ibrahim.Database;
 import Ibrahim.JoueurDAO;
 import controller.Attaquant;
+import controller.gestionPartie;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -517,23 +518,29 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
                 while(res.next()){
                     elixirRouge = res.getDouble(1);
                 }
+//                Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+//                gestionPartie gestion = new gestionPartie(connexion,bdd);
+//                gestion.actionMonstre();
+//                gestion.actionTour();
+//                connexion.close();
+                if (compteur==4){
+                    if (elixirRouge<20){
+                        elixirRouge+=0.25/4;
+                        bdd.executeQuery("UPDATE équipe SET Elixir="+elixirRouge+"WHERE Couleur='Rouge'");
+                    }
+                    if (elixirBleue<20){
+                        elixirBleue+=0.25/4;
+                        bdd.executeQuery("UPDATE équipe SET Elixir="+elixirBleue+"WHERE Couleur='Bleue'");
+                    }
+                    compteur=0;
+                }else{
+                    compteur++;
+                }
             }
             catch (SQLException ex) {
                 Logger.getLogger(BoutonJouer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        if (compteur==4){
-            if (elixirRouge<20){
-                elixirRouge+=0.25/4;
-                bdd.executeQuery("UPDATE équipe SET Elixir="+elixirRouge+"WHERE Couleur='Rouge'");
-            }
-            if (elixirBleue<20){
-                elixirBleue+=0.25/4;
-                bdd.executeQuery("UPDATE équipe SET Elixir="+elixirBleue+"WHERE Couleur='Bleue'");
-            }
-            compteur=0;
-        }else{
-            compteur++;
-        }
+        
         
         raffraichir();
     }

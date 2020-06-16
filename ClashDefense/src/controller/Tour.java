@@ -347,7 +347,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             PreparedStatement requete = connexion.prepareStatement("UPDATE tour SET FréquenceDeTir=? WHERE IdTour="+this.idTour);
             requete.setDouble(1, nouvelleFdc);
-            System.out.println(requete);
+//            System.out.println(requete);
             requete.executeUpdate();
 
             requete.close();
@@ -368,7 +368,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 equipe=resultat.getString("Equipe");
-                System.out.println(equipe);
+//                System.out.println(equipe);
                 }
             
             
@@ -389,7 +389,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Dégât FROM catalogueTour WHERE Description="+this.designation+" ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Dégât FROM catalogueTour WHERE Description='"+this.designation+"' ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 degat=resultat.getDouble("Dégât");
@@ -413,7 +413,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Portée FROM catalogueTour WHERE Description="+this.designation+" ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Portée FROM catalogueTour WHERE Description='"+this.designation+"' ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 portee=resultat.getDouble("Portée");
@@ -437,7 +437,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT FréquenceDeTir FROM catalogueTour WHERE Description="+this.designation+" ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT FréquenceDeTir FROM catalogueTour WHERE Description='"+this.designation+"' ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 fdt=resultat.getDouble("FréquenceDeTir");
@@ -461,7 +461,7 @@ public class Tour {   // A adapter suite aux changements dans la BDD
 
             Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Zone FROM catalogueTour WHERE Description="+this.designation+" ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Zone FROM catalogueTour WHERE Description='"+this.designation+"' ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 zone=resultat.getDouble("Zone");

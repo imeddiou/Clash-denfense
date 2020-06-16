@@ -94,7 +94,7 @@ public class Defenseur extends Joueur{
     }
     
     public Tour extraireTourDuCatalogueTour(double IdTour){
-        Tour tour=new Tour (0,"FausseTour",0.0,0.0,"Blanc",0.0,0.0,0.0,0.0,0.0); //Commentaire question : comment gérer les catchs dans ce type de méthode
+        Tour tour=new Tour (this.connexion,0,"FausseTour",0.0,0.0,"Blanc",0.0,0.0,0.0,0.0,0.0); //Commentaire question : comment gérer les catchs dans ce type de méthode
         try{
             PreparedStatement requete = connexion.prepareStatement("SELECT Description, Niveau, PdV, Portée, FréquenceDeTir, Dégât FROM catalogueTour WHERE IdTour="+IdTour +";");
             ResultSet resultat = requete.executeQuery();

@@ -113,7 +113,7 @@ public class Monstre {
         try {
             PreparedStatement requete = connexion.prepareStatement("UPDATE équipe SET PdV=? WHERE Couleur='"+this.getEquipeAdverse()+"'");
             requete.setDouble(1, vieAdversaireInit+differencePdV);
-            System.out.println(requete);
+//            System.out.println(requete);
             requete.executeUpdate();
             requete.close();
         }catch (SQLException ex){
@@ -255,10 +255,17 @@ public class Monstre {
     public int getMAP(int x,int y){
         Database baseDeDonnées = new Database();
         ArrayList<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
+        if(x>19 || x<0){
+            return(-10);
+        }
+        if(y>19 || x<y){
+            return(-10);
+        }
         try{
             baseDeDonnées.connect();  
             PartieRequête requete = new PartieRequête();
             Map = requete.partieRequêteSelectMapAsMatrix(baseDeDonnées);
+            baseDeDonnées.disconnect();
         }catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -316,7 +323,7 @@ public class Monstre {
                 }      
             
             requete.close();
-            connexion.close();
+//            connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -333,7 +340,7 @@ public class Monstre {
                 }
             
             requete.close();
-            connexion.close();
+//            connexion.close();
             
 
         } catch (SQLException ex) {
@@ -345,13 +352,13 @@ public class Monstre {
     public void setAvanceeDAO(int mouvement){
         try {
  
-            PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Avance=? WHERE IdMonstre="+this.idMonstre);
+            PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Avancee=? WHERE IdMonstre="+this.idMonstre);
             requete.setInt(1, this.getAvancee()+mouvement);
-            System.out.println(requete);
+            //System.out.println(requete);
             requete.executeUpdate();
 
             requete.close();
-            connexion.close();
+//            connexion.close();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -372,7 +379,7 @@ public class Monstre {
             
             
             requete.close();
-            connexion.close();
+//            connexion.close();
             
 
         } catch (SQLException ex) {
@@ -389,7 +396,7 @@ public void setCoordonneesDAO(int X, int Y){
             requete.executeUpdate();
 
             requete.close();
-            connexion.close();
+//            connexion.close();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -402,17 +409,17 @@ public void setCoordonneesDAO(int X, int Y){
         double vitesse =0;
                 try {
 
-            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM catalogueMonstre WHERE IdMonstre="+this.description+" ;");
+            PreparedStatement requete = connexion.prepareStatement("SELECT Vitesse FROM catalogueMonstre WHERE IdMonstre="+this.idMonstre+" ;");
             ResultSet resultat = requete.executeQuery();
             while (resultat.next()) {
                 vitesse =resultat.getDouble("Vitesse");
-                System.out.println(vitesse);
+//                System.out.println(vitesse);
                 }
             
             
             
             requete.close();
-            connexion.close();
+//            connexion.close();
             
 
         } catch (SQLException ex) {
@@ -436,7 +443,7 @@ public void setCoordonneesDAO(int X, int Y){
             
             
             requete.close();
-            connexion.close();
+//            connexion.close();
             
 
         } catch (SQLException ex) {
@@ -459,7 +466,7 @@ public void setCoordonneesDAO(int X, int Y){
             
             
             requete.close();
-            connexion.close();
+//            connexion.close();
             
 
         } catch (SQLException ex) {
@@ -478,7 +485,7 @@ public void setCoordonneesDAO(int X, int Y){
             requete.executeUpdate();
 
             requete.close();
-            connexion.close();
+//            connexion.close();
 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -493,11 +500,11 @@ public void setCoordonneesDAO(int X, int Y){
 
             PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET PdV=? WHERE IdMonstre="+this.idMonstre);
             requete.setDouble(1, nouvellePdV);
-            System.out.println(requete);
+//            System.out.println(requete);
             requete.executeUpdate();
 
             requete.close();
-            connexion.close();
+//            connexion.close();
 
         } catch (SQLException ex) {
             ex.printStackTrace();

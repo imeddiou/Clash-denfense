@@ -18,8 +18,10 @@ import java.util.logging.Logger;
  */
 public class gestionPartie {
         Connection connexion;
-     public gestionPartie(Connection connexion){
+        Database BDD;
+     public gestionPartie(Connection connexion, Database BDD){
          this.connexion=connexion;
+         this.BDD=BDD;
      }
     
     public void disparitionMonstre(int ID){
@@ -38,7 +40,6 @@ public class gestionPartie {
     }
 
     public void actionMonstre(){
-        Database BDD = new Database();
         int n = listeIdMonstre(BDD).size();
         for (int i=0;i<n;i++){//Pour tout les monstres de la BDD:
             Monstre monstre = creationMonstre(listeIdMonstre(BDD).get(i));
@@ -73,7 +74,6 @@ public class gestionPartie {
 //        //On rajoute la  tour à la liste des tours de la BDD 
 //    }
     public void actionTour(){
-        Database BDD = new Database();
         int n = listeIdTour(BDD).size();
         for (int i=0;i<n;i++){//Pour toutes les tours de la BDD
             Tour tour = creationTour(listeIdTour(BDD).get(i));// On rajoute 1 au compteur de vitesse dans la BDD d'action
