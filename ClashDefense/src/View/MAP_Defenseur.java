@@ -94,6 +94,11 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         setSize(new java.awt.Dimension(1000, 800));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -298,6 +303,7 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
+        connexion.close();
         while (res.next()){
             String couleur = res.getString(1);
             
@@ -317,6 +323,7 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
+        connexion.close();
         while (res.next()){
             String couleur = res.getString(1);
             joueur.construireUneTourIci(2, couleur);
@@ -334,6 +341,7 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
+        connexion.close();
         while (res.next()){
             String couleur = res.getString(1);
             joueur.construireUneTourIci(3, couleur);
@@ -343,6 +351,11 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        bdd.disconnect();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
