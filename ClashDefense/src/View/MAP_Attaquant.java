@@ -303,13 +303,13 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Attaquant joueur = new Attaquant(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
-        connexion.close();
+        
         while (res.next()){
             String couleur = res.getString(1);
                         
             joueur.apparitionMonstre(2, couleur);
         }
-        
+        connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -322,12 +322,12 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Attaquant joueur = new Attaquant(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
-        connexion.close();
+        
         while (res.next()){
             String couleur = res.getString(1);
             joueur.apparitionMonstre(1, couleur);
         }
-        
+        connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -340,12 +340,12 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Attaquant joueur = new Attaquant(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurAttaquant="+this.joueur.getId());
-        connexion.close();
+        
         while (res.next()){
             String couleur = res.getString(1);
             joueur.apparitionMonstre(3, couleur);
         }
-        
+        connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

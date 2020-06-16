@@ -303,14 +303,14 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
-        connexion.close();
+        
         while (res.next()){
             String couleur = res.getString(1);
             
             
             joueur.construireUneTourIci(1, couleur);
         }
-        
+        connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -323,12 +323,12 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
-        connexion.close();
+        
         while (res.next()){
             String couleur = res.getString(1);
             joueur.construireUneTourIci(2, couleur);
         }
-        
+        connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -341,12 +341,12 @@ public class MAP_Defenseur extends javax.swing.JFrame implements ActionListener,
         Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
         Defenseur joueur = new Defenseur(this.joueur.getId(),this.joueur.getPseudo(),connexion,this.map);
         res=bdd.executeQuery("SELECT Couleur FROM équipe WHERE IdJoueurDéfenseur="+this.joueur.getId());
-        connexion.close();
+        
         while (res.next()){
             String couleur = res.getString(1);
             joueur.construireUneTourIci(3, couleur);
         }
-        
+        connexion.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
