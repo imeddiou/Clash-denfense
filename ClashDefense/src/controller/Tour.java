@@ -45,6 +45,20 @@ public class Tour {   // A adapter suite aux changements dans la BDD
         this.degat=degat;
         
     }
+
+    public Tour(int idTour, String designation, double X, double Y, String equipe, double niveau, double PdV) {
+        this.idTour = idTour;
+        this.designation = designation;
+        this.X = X;
+        this.Y = Y;
+        this.equipe = equipe;
+        this.niveau = niveau;
+        this.PdV = PdV;
+    }
+
+    Tour(int i, String fausseTour, double d, double d0, String blanc, double d1, double d2, double d3, double d4, double d5) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     public double DistanceTowerMonstre(int[] coordonneesMonstre){//Cette classe retourne la distance qui sépare la tour du monstre
         double[] coordonnees = this.getCoordonneesTour();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         double x = coordonnees[0];
