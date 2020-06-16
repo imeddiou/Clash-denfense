@@ -1,7 +1,7 @@
 package Model;
 
 
-import Ibrahim.*;
+import Archive_des_classes.*;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;

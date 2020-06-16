@@ -30,7 +30,7 @@ public class MSDC2 {//Monstre Suiveur De Chemin version 2
          try {
             this.db.connect();
         } catch (SQLException ex) {
-            Logger.getLogger(Tower2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MSDC2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
