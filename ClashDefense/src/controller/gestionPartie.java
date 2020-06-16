@@ -2,8 +2,8 @@
 package controller;
 
 
-import Fanny.PartieRequête;
-import Ibrahim.Database;
+import Archive_des_classes.PartieRequête;
+import Archive_des_classes.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

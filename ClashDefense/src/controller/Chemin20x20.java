@@ -1,7 +1,6 @@
 
 package controller;
 
-import Nico.*;
 import java.util.ArrayList;
 
 public class Chemin20x20 {

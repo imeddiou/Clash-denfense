@@ -7,7 +7,7 @@ package Model;
  */
 
 import Ibrahim.*;
-import Ibrahim.Database;
+import Archive_des_classes.Database;
 import com.mysql.cj.api.mysqla.result.Resultset;
 import java.sql.ResultSet;
 import java.sql.SQLException;

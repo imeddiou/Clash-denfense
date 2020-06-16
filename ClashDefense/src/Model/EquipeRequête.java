@@ -5,8 +5,7 @@
  */
 package Model;
 
-import Fanny.*;
-import Ibrahim.Database;
+import Archive_des_classes.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

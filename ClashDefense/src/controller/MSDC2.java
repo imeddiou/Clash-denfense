@@ -1,7 +1,6 @@
 package controller;
 
 import Model.Database;
-import Nico.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;

@@ -5,8 +5,6 @@
  */
 package View;
 
-import Arnaud.*;
-
 /**
  *
  * @author ibrahim

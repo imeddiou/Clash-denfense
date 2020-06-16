@@ -1,8 +1,7 @@
 package View;
 
-import Arnaud.*;
-import Ibrahim.Database;
-import Ibrahim.JoueurDAO;
+import Archive_des_classes.Database;
+import Archive_des_classes.JoueurDAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;

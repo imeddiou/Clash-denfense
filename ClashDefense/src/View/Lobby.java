@@ -1,9 +1,8 @@
 package View;
 
 
-import Arnaud.*;
-import Ibrahim.JoueurDAO;
-import Ibrahim.Database;
+import Archive_des_classes.JoueurDAO;
+import Archive_des_classes.Database;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;

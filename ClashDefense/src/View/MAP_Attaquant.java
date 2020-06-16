@@ -6,8 +6,8 @@
 package View;
 
 import Model.PartieRequête;
-import Ibrahim.Database;
-import Ibrahim.JoueurDAO;
+import Archive_des_classes.Database;
+import Archive_des_classes.JoueurDAO;
 import controller.Attaquant;
 import controller.gestionPartie;
 import java.awt.Color;

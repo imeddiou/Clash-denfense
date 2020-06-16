@@ -5,8 +5,9 @@
  */
 package controller;
 
-import Fanny.*;
-import Ibrahim.Database;
+import Archive_des_classes.JoueurRequête;
+import Archive_des_classes.PartieRequête;
+import Archive_des_classes.Database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

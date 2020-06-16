@@ -5,7 +5,7 @@
  */
 package controller;
 
-import Ibrahim.JoueurDAO;
+import Archive_des_classes.JoueurDAO;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;

@@ -5,7 +5,6 @@
  */
 package View;
 
-import Silvere.*;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -25,7 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
-import Nico.Chemin20x20;
+import Archive_des_classes.Chemin20x20;
 import javax.swing.JOptionPane;
 
 /**
