@@ -7,7 +7,7 @@ package controller;
 
 import java.util.ArrayList;
 import Model.PartieRequête;
-import Archive_des_classes.Database;
+import Model.Database;
 import java.sql.SQLException;
 /**
  *
@@ -17,7 +17,7 @@ public class MAPinsertionBDDTest {
     public static void main(String[] args) {
         Chemin20x20 chemin = new Chemin20x20();
         ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
-        Archive_des_classes.Database baseDeDonnées = new Database();
+        Database baseDeDonnées = new Database();
         PartieRequête partieRequete = new PartieRequête();
         partieRequete.partieRequêteStockageMap(baseDeDonnées,map);
     }

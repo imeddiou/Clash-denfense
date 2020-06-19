@@ -3,7 +3,7 @@ package controller;
 
 
 import Archive_des_classes.PartieRequête;
-import Archive_des_classes.Database;
+import Model.Database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
