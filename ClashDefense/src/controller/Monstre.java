@@ -239,14 +239,16 @@ public class Monstre { //essai
         int sens[] = vecteur[direction];//Le principe du vecteur est détaillé plus loin, il permet de récupérer la direction du monstre
         System.out.println("Sens x= "+sens[0]);
         System.out.println("Sens y= "+sens[1]);
-        if (this.getMAP((int)(coordonnees[0]+sens[0]),(int)(coordonnees[1]+sens[1]))==this.getMAP((int)(coordonnees[0]),(int)(coordonnees[1]))){return true;}//Si les coordonnées du monstre à l'étape suivante ne sont pas sur le bon chemin, alors on déclare qu'il y a un mur
+        System.out.println("Test x = "+coordonnees[0]+sens[0]);
+        System.out.println("Test y = "+coordonnees[1]+sens[1]);
+        if (this.getMAP((int)(coordonnees[0]+sens[0]),(int)(coordonnees[1]+sens[1]))!=this.getMAP((int)(coordonnees[0]),(int)(coordonnees[1]))){return true;}//Si les coordonnées du monstre à l'étape suivante ne sont pas sur le bon chemin, alors on déclare qu'il y a un mur
         return false;
     }
     
     public boolean FautIlAllerADroite(){//Cette classe permet de savoir dans quel sens se tourner si il y'a un mur devant
         int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         int direction=this.getDirectionDAO();//On récupère la direction à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
-        int vecteur[][] = {{0,1},{1,0},{0,-1},{-1,0}};
+        int vecteur[][] = {{1,0},{0,1},{-1,0},{0,-1}};
         // vecteur[0] est le déplacement vers la droite
         // vecteur[1] est le déplacement vers le bas
         // vecteur[2] est le déplacement vers la gauche
@@ -258,31 +260,73 @@ public class Monstre { //essai
         else{return false;}//sinon qu'il faut tourner à gauche
     }
     
-    public int getMAP(int ncolonne,int nligne){
-        Archive_des_classes.Database baseDeDonnées = new Database();
-        ArrayList<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
-        if(nligne>19 || nligne<0){
-            return(-10);
+//    public int getMAP(int ncolonne,int nligne){
+//        Archive_des_classes.Database baseDeDonnées = new Database();
+//        ArrayList<ArrayList<Integer>> Map = new ArrayList<ArrayList<Integer>>();
+//        if(nligne>19 || nligne<0){
+//            return(-10);
+//        }
+//        if(ncolonne>19 || ncolonne<0){
+//            return(-10);
+//        }
+//        try{
+//            baseDeDonnées.connect();  
+//            PartieRequête requete = new PartieRequête();
+//            Map = requete.partieRequêteSelectMapAsMatrix(baseDeDonnées);
+//            baseDeDonnées.disconnect();
+//        }catch (SQLException ex) {
+//            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
+//            System.out.println("Erreur getMap");
+//        }
+//        return Map.get(nligne).get(ncolonne);
+//    }
+    
+        public int getMAP(int ncolonne,int nligne){
+                        ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
+         try {
+             PreparedStatement requete = connexion.prepareStatement("SELECT DISTINCT Map FROM partie ;");
+            ResultSet resultat = requete.executeQuery();
+            
+            String mapString = "";
+            
+            while (resultat.next()) {
+           
+
+                  mapString = resultat.getString("Map");
+                  String[] mapStringSplitted = mapString.split(" ");
+                  
+                   for (int i=0;i<20;i++){
+            ArrayList<Integer> ligneMap = new ArrayList<Integer>();
+            for (int j=0;j<20;j++){
+                ligneMap.add(Integer.parseInt(mapStringSplitted[i*20+j]));}
+            mapFinal.add(ligneMap);
+         }
+            for(int i=0;i<20;i++){
+                //System.out.println(mapFinal.get(4).get(i)) ;  
+            }       
+                
+
+                }
+            
+            
+            
+            requete.close();
+            
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        if(ncolonne>19 || ncolonne<0){
-            return(-10);
-        }
-        try{
-            baseDeDonnées.connect();  
-            PartieRequête requete = new PartieRequête();
-            Map = requete.partieRequêteSelectMapAsMatrix(baseDeDonnées);
-            baseDeDonnées.disconnect();
-        }catch (SQLException ex) {
-            Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Erreur getMap");
-        }
-        return Map.get(nligne).get(ncolonne);
+   
+        return mapFinal.get(nligne).get(ncolonne);
     }
+    
+    
+    
     public void Avancer(){//Cette classe est la classe qui fait avancer le monstre
         int[] coordonnees=this.getCoordonneesDAO();//On récupère les coordonnées à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         int avancee=this.getAvanceeDAO();//On récupère l'avancée à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
         int direction=this.getDirectionDAO();//On récupère la direction à l'aide du getter, car c'est ainsi qu'il faudra faire avec la BDD
-        int vecteur[][] = {{0,1},{1,0},{0,-1},{-1,0}};
+        int vecteur[][] = {{1,0},{0,1},{-1,0},{0,-1}};
         // vecteur[0] est le déplacement vers la droite
         // vecteur[1] est le déplacement vers le bas
         // vecteur[2] est le déplacement vers la gauche
@@ -299,7 +343,7 @@ public class Monstre { //essai
         System.out.println("y = "+nouvellesCoordonnees[1]);
         System.out.println("Direction = "+direction);
         this.setCoordonneesDAO(nouvellesCoordonnees[0],nouvellesCoordonnees[1]);////Et on les implémente avec le setter, car c'est ainsi qu'il faudra faire avec la BDD
-        this.setDirection(direction);//De même on met à jour la direction
+        this.setDirectionDAO(direction);//De même on met à jour la direction
         avancee=this.getAvanceeDAO()+1;//On incrémente l'avancée puisque le monstre a fait un pas de plus
         this.setAvanceeDAO(avancee);//Et on met à jour l'avancée du monstre
     }
@@ -540,4 +584,20 @@ public void setCoordonneesDAO(int X, int Y){
     System.out.println();        
     }
    
-}
+        public void setDirectionDAO(int nouvelleDirection){
+            int direction=this.getDirectionDAO();
+            try{
+                       PreparedStatement requete = connexion.prepareStatement("UPDATE monstre SET Direction=? WHERE IdMonstre="+this.idMonstre);
+            requete.setDouble(1, nouvelleDirection);
+
+            requete.executeUpdate();
+
+            requete.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    
+    }  
+        }
