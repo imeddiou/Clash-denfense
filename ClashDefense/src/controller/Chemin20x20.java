@@ -55,13 +55,13 @@ public class Chemin20x20 {
                     capteurDeCoin = 1;//On informe qu'on pourra faire le coin externe au tournant la prochaine fois que nous tournerons, car le fait d'avancer d'une seule case permet de faire un coin externe ou interne
                 }
                 else{//Si on touche les bords à la prochaine itération:
-                    direction = 0;//On se remet droit
-                    min =-longueurDesSegments-1;;//Et on s'assure de monter au moins d'une case pour éviter de revenir sur nos pas
                     if (capteurDeCoin==1){//Si il faut faire un coin:
                         map.get(XY[0]+1).set(XY[1]+GD[direction],-2);
                         map.get(XY[0]+1).set(XY[1],-2);
                         map.get(XY[0]).set(XY[1]+GD[direction],-2);
                     }//On implémente le chemin adjacent dans la coin externe au tournant
+                    direction = 0;//On se remet droit
+                    min =-longueurDesSegments-1;;//Et on s'assure de monter au moins d'une case pour éviter de revenir sur nos pas
                 }
             }else{
                 //Sinon si on décide de tourner...
