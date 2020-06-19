@@ -41,7 +41,7 @@ public class Chemin20x20 {
         int capteurDeCoin = 1;//cette variable détermine s'il faut faire un coin externe au tournant
         while(XY[0]>5){//On se fixe une limite à partir de laquelle on est sûr de pouvoir revenir vers l'arrivée
             int max = min+longueurDesSegments;//L'écart entre le min et le max est toujours constant, c'est max et le min qui changent
-            int chance = this.Random(min,max);//Le ratio "chance" augmente selon la position du min (ou du max)
+            int chance = max;//Le ratio "chance" augmente selon la position du min (ou du max)
             //Si le max est < 0 alors le "chance" sera forcément < 0
             //Si le min est > 0 alors le "chance" sera forcément > 0
             if(chance<0){//Si on décide de continuer sur la même direction...
@@ -67,7 +67,7 @@ public class Chemin20x20 {
                 //Sinon si on décide de tourner...
                 if (direction==0){//Et que la direction était vers le haut, alors on peut tourner à droite où à gauche
                     int variable = (int)((XY[1]-j)/concentricite);//On définit une variable qui évaluera arbitrairement l'écart entre l'axe central j et l'absisse actuelle du curseur, et qui ser plus ou moins négatif ou positif selon si l'on sde trouve à droite ou à gauche de l'axe central
-                    direction = this.Random(Math.min(0,variable),Math.max(1,variable));//Le résultat de ce tirage aléatoire veut que plus on est loin de l'axe central j alors plus on a de chance de revenir vers celui-ci
+                    direction = Math.max(1,variable);//Le résultat de ce tirage aléatoire veut que plus on est loin de l'axe central j alors plus on a de chance de revenir vers celui-ci
                     if (direction<1){direction = 1;}//On décide de partir vers la droite
                     else{direction = 2;}//On décide de partir sur la gauche
                     if (directionPrecedente!=direction && ordonneePrecedente-XY[0]<4 && directionPrecedente!=0){//C'est un cas particulier, car si en effet on effectue un demi tour trop serré alors le chemin adjacent interne au virage va se repasser par lui même

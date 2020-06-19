@@ -411,6 +411,7 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
             listeTour.add(new ArrayList<Double>());
             PartieRequête requeteMap = new PartieRequête();
             map=requeteMap.partieRequêteSelectMapAsMatrix(bdd);
+            System.out.println(map.toString());
             
             //on dessine les joueurs
             res=bdd.executeQuery("SELECT Rôle,PositionX,PositionY FROM partie");

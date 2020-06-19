@@ -60,7 +60,7 @@ public class PartieRequête {
         baseDeDonnées.executeQuery("UPDATE partie SET Map = '"+ mapString +"'"  );
     }
     public ArrayList<ArrayList<Integer>> partieRequêteSelectMapAsMatrix(Database db){
-       ResultSet rs =  db.executeQuery("SELECT DISTINCT Map FROM partie");
+       ResultSet rs =  db.executeQuery("SELECT  Map FROM partie");
        ArrayList<ArrayList<Integer>> mapFinal = new ArrayList<ArrayList<Integer>>();
        String mapString = "";
         try {
@@ -71,13 +71,18 @@ public class PartieRequête {
             Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
         }
         String[] mapStringSplitted = mapString.split(" ");
-         for (int i=0;i<20;i++){
-            ArrayList<Integer> ligneMap = new ArrayList<Integer>();
-            for (int j=0;j<20;j++){
-                ligneMap.add(Integer.parseInt(mapStringSplitted[i*10+j]));}
-            mapFinal.add(ligneMap);
-         }
-         //System.out.println(mapFinal);
+        for(int i=0;i<20;i++){
+          ArrayList<Integer> ligneMap = new ArrayList<Integer>();
+        for(int j =0;j<20;j++){
+            ligneMap.add(Integer.parseInt(mapStringSplitted[i*10+i]));
+        }
+          mapFinal.add(ligneMap);
+    }
+       
+         Chemin20x20 chemin = new Chemin20x20();
+        mapFinal = chemin.CreationMap();
+
+       
         return mapFinal;
     }
     
