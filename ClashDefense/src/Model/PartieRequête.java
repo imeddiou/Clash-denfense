@@ -5,11 +5,10 @@
  */
 package Model;
 
-import Model.Database;
+import controller.Chemin20x20;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,6 +41,9 @@ public class PartieRequête {
         baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '19', PositionY = '0' WHERE Rôle = 'DéfenseurBleu' ");
         baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0' WHERE Rôle = 'AttaquantRouge' ");
         baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '19' WHERE Rôle = 'DéfenseurRouge' ");
+        Chemin20x20 chemin = new Chemin20x20();
+        ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
+        partieRequêteStockageMap(baseDeDonnées, map);
     }
     
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){

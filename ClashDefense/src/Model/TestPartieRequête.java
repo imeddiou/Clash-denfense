@@ -31,13 +31,20 @@ public class TestPartieRequête {
             
             baseDeDonnées.connect();   
             PartieRequête partierequête = new PartieRequête();
+            JoueurRequête joueurrequête = new JoueurRequête();
+            joueurrequête.joueurInsertion(baseDeDonnées, "Bob");
+            joueurrequête.joueurInsertion(baseDeDonnées, "Maurice");
+            joueurrequête.joueurInsertion(baseDeDonnées, "Nemo");
             //partierequête.finDePartie(baseDeDonnées);
             //ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
-            //OutilsJDBC.afficherResultSet(resultat);
-            Chemin20x20 chemin = new Chemin20x20();
-            ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
-            partierequête.partieRequêteStockageMap(baseDeDonnées, map);
-            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM partie");
+            //OutilsJDBC.afficherResultSet(resultat);Chemin20x20 chemin = new Chemin20x20();
+//            ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
+//            partierequête.partieRequêteStockageMap(baseDeDonnées, map);
+//            Chemin20x20 chemin = new Chemin20x20();
+//            ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
+//            partierequête.partieRequêteStockageMap(baseDeDonnées, map);
+
+            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM joueur");
             OutilsJDBC.afficherResultSet(resultat1);
             //ResultSet resultat2 = baseDeDonnées.executeQuery("SELECT * FROM équipe");           
            // OutilsJDBC.afficherResultSet(resultat2);

@@ -5,7 +5,7 @@
  */
 package Model;
 
-import Archive_des_classes.Database;
+import Model.Database;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
