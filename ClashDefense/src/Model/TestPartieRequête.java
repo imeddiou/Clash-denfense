@@ -7,8 +7,10 @@ package Model;
 
 
 import Utils.OutilsJDBC;
+import controller.Chemin20x20;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,9 +31,12 @@ public class TestPartieRequête {
             
             baseDeDonnées.connect();   
             PartieRequête partierequête = new PartieRequête();
-            partierequête.finDePartie(baseDeDonnées);
+            //partierequête.finDePartie(baseDeDonnées);
             //ResultSet resultat = baseDeDonnées.executeQuery("SELECT * FROM monstre");
             //OutilsJDBC.afficherResultSet(resultat);
+            Chemin20x20 chemin = new Chemin20x20();
+            ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
+            partierequête.partieRequêteStockageMap(baseDeDonnées, map);
             ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM partie");
             OutilsJDBC.afficherResultSet(resultat1);
             //ResultSet resultat2 = baseDeDonnées.executeQuery("SELECT * FROM équipe");           
