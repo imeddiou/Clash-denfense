@@ -40,7 +40,7 @@ public class TestPartieRequête {
 //            ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
 //            partierequête.partieRequêteStockageMap(baseDeDonnées, map);
 
-            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM partie");
+            ResultSet resultat1 = baseDeDonnées.executeQuery("SELECT * FROM équipe");
             OutilsJDBC.afficherResultSet(resultat1);
             //ResultSet resultat2 = baseDeDonnées.executeQuery("SELECT * FROM équipe");           
            // OutilsJDBC.afficherResultSet(resultat2);
