@@ -37,8 +37,7 @@ public class PartieRequête {
         baseDeDonnées.executeQuery("DELETE FROM tour");
         baseDeDonnées.executeQuery("DELETE FROM joueur");
         baseDeDonnées.executeQuery("UPDATE équipe SET PdV = '1000', Elixir = '50', IdJoueurAttaquant = '0', IdJoueurDéfenseur = '0'");
-        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0', IdJoueur = '0', Sélectionnée = 'false', Map = ''");
-        
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0', IdJoueur = '0', Sélectionnée = 'false', Map = '[[]]'");        
     }
     
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){

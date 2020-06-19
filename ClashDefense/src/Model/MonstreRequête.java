@@ -145,8 +145,7 @@ public class MonstreRequête {
             }
         } catch (SQLException ex) {
             Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
         return listeIdMonstre;
     }
     
@@ -161,8 +160,7 @@ public class MonstreRequête {
             }
         } catch (SQLException ex) {
             Logger.getLogger(PartieRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }        
         return listeIdMonstre;
     }
 }

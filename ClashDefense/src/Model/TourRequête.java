@@ -97,8 +97,7 @@ public class TourRequête {
             baseDeDonnées.executeQuery("INSERT INTO tour VALUES ('"+dernierIdTour+"','"+description+"','"+positionX+"','"+positionY+"','"+couleur+"','"+niveau+"','"+pdV+"','"+portée+"','"+fréquenceDeTir+"','"+dégât+"')");
         } catch (SQLException ex) {
             Logger.getLogger(JoueurRequête.class.getName()).log(Level.SEVERE, null, ex);
-        }       
-        
+        }               
     }
     
     public void perteElixir (Database baseDeDonnées,String description, String couleur){
