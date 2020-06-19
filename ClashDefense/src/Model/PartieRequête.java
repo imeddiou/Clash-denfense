@@ -36,14 +36,15 @@ public class PartieRequête {
         baseDeDonnées.executeQuery("DELETE FROM tour");
         baseDeDonnées.executeQuery("DELETE FROM joueur");
         baseDeDonnées.executeQuery("UPDATE équipe SET PdV = '1000', Elixir = '50', IdJoueurAttaquant = '0', IdJoueurDéfenseur = '0'");
-        baseDeDonnées.executeQuery("UPDATE partie SET IdJoueur = '0', Selectionné = '0', Map = ''"); 
-        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '19', PositionY = '19' WHERE Rôle = 'AttaquantBleu' ");      
-        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '19', PositionY = '0' WHERE Rôle = 'DéfenseurBleu' ");
-        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0' WHERE Rôle = 'AttaquantRouge' ");
-        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '19' WHERE Rôle = 'DéfenseurRouge' ");
-        Chemin20x20 chemin = new Chemin20x20();
-        ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
-        partieRequêteStockageMap(baseDeDonnées, map);
+        baseDeDonnées.executeQuery("UPDATE partie SET IdJoueur = '0', Selectionné = '0', Map = '0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0' "); 
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '19', PositionY = '19' WHERE Rôle = 'AttaquantRouge' ");      
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '19', PositionY = '0' WHERE Rôle = 'DéfenseurRouge' ");
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '0' WHERE Rôle = 'AttaquantBleu' ");
+        baseDeDonnées.executeQuery("UPDATE partie SET PositionX = '0', PositionY = '19' WHERE Rôle = 'DéfenseurBleu' ");
+//        Chemin20x20 chemin = new Chemin20x20();
+//        ArrayList<ArrayList<Integer>> map = chemin.CreationMap();
+//        partieRequêteStockageMap(baseDeDonnées, map);
+//0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 -2 0 0 0 0 -2 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -2 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -1 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 -2 0 0 0 0 0 -2 -1 -2 0 0 0 0 0 0 0 0 -2 -1 -2 0 0 0
     }
     
     public void partieRequêteStockageMap(Database baseDeDonnées, ArrayList<ArrayList<Integer>> map){
