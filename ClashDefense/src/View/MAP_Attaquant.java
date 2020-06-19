@@ -531,11 +531,11 @@ public class MAP_Attaquant extends javax.swing.JFrame implements ActionListener,
                 while(res.next()){
                     elixirRouge = res.getDouble(1);
                 }
-                Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
-                gestionPartie gestion = new gestionPartie(connexion,bdd);
-                gestion.actionMonstre();
-                gestion.actionTour();
-                connexion.close();
+//                Connection connexion = DriverManager.getConnection("jdbc:mysql://nemrod.ens2m.fr:3306/20192020_s2_vs1_tp1_clashdefense?serverTimezone=UTC", "clashdefense", "WCvYk10DhJUNKsdX");
+//                gestionPartie gestion = new gestionPartie(connexion,bdd);
+//                gestion.actionMonstre();
+//                gestion.actionTour();
+//                connexion.close();
                 if (compteur==4){
                     if (elixirRouge<20){
                         elixirRouge+=0.25/4;
